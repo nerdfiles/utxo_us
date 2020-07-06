@@ -11,7 +11,7 @@ cmsplugin-filer==0.10.2
 colorama==0.3.3
 configobj==5.0.6
 coverage==4.0a5
-Django==1.8.4
+Django==1.11.29
 django-admin-enhancer==1.0.0
 -e git+https://github.com/rmaceissoft/django-ajax-crawling.git@dcd84a556b2daa59cec0fce02947d4b067e087ec#egg=django_ajax_crawling-master
 django-angular==0.7.15
