@@ -1,0 +1,9 @@
+@mixin pageHeaderDescription() {
+  header {
+    p {
+      line-height: 1.325;
+      font-size: .875rem;
+      @content;
+    }
+  }
+}

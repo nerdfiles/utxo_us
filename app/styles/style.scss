@@ -1,0 +1,179 @@
+/* ------------------------------ Interface: Dependencies  */
+
+@import "../static/bower_components/antigrid/_system/sass/_screen";
+@import "./animate-defaults";
+@import "../static/bower_components/animate-sass/animate";
+
+body {
+    -webkit-backface-visibility: hidden; // Addresses a small issue in webkit: http://bit.ly/NEdoDq
+}
+.animated {
+    @include animate-prefixer(animation-duration, $base-duration);
+    @include animate-prefixer(animation-fill-mode, both);
+
+    &.hinge {
+        @include animate-prefixer(animation-duration, $base-duration * 2);
+    }
+}
+
+
+@mixin _flex () {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+/* ------------------------------ Defaults  */
+
+$a--utxo-default : #ffffff;
+$a--utxo-link    : #ffffff;
+$a--utxo-visited : #ffffff;
+$a--utxo-hover   : #ffffff;
+$a--utxo-active  : #ffffff;
+
+$a--utxo-default-cms : #111111;
+$a--utxo-link-cms    : #111111;
+$a--utxo-visited-cms : #111111;
+$a--utxo-hover-cms   : #111111;
+$a--utxo-active-cms  : #111111;
+
+$a--admin-footer-menu__default : #222;
+$a--admin-footer-menu__link    : #222;
+$a--admin-footer-menu__visited : #222;
+$a--admin-footer-menu__hover   : #222;
+$a--admin-footer-menu__active  : #222;
+
+$fontCopy1   : 'Open Sans', Helvetica, sans-serif;
+$fontCopy2   : 'Roboto Slab', 'Enriqueta', serif; // Primarily for forms.
+$fontHeader1 : 'Roboto Slab', 'Enriqueta', serif; // Standard headers.
+$fontHeader2 : 'Roboto Slab', 'Enriqueta', serif;
+
+
+/* ------------------------------ Shame  */
+
+@import "_shame";
+
+
+/* ------------------------------ Layout: Class-based Views  */
+
+@mixin _listView($class-name: "_base") {
+  [class*="#{$class-name}"] {
+    ul { }
+    li { }
+  }
+}
+
+@mixin _detailView() {
+  [class*="#{$class-name}"] {
+    .btn { }
+    .form { }
+  }
+}
+
+
+/* ------------------------------ Layout: CMS  */
+
+@import "overrides/_cms";
+
+
+/* ------------------------------ Layout: Global  */
+
+@import "layout/_global";
+
+
+/* ------------------------------ Layout: Footer  */
+
+@import "footers/_base";
+
+
+/** ----------------------------- Layout: Global
+
+    @todo Implement antigrid split layout from abstract class.
+
+**/
+@import "layout/_base";
+
+
+/* ------------------------------ Anchors: App Global  */
+
+body {
+  @include anchors($default: $a--utxo-default, $link: $a--utxo-link, $visited: $a--utxo-visited, $hover: $a--utxo-hover, $active: $a--utxo-active) { }
+}
+
+#cms_toolbar {
+  @include anchors($default: $a--utxo-default-cms, $link: $a--utxo-link-cms, $visited: $a--utxo-visited-cms, $hover: $a--utxo-hover-cms, $active: $a--utxo-active-cms) { }
+}
+
+
+/* ------------------------------ Directive: admin-footer-menu  */
+
+@import "atoms/_admin-footer-menu";
+
+
+/* ------------------------------ Includes: Components  */
+
+@import "_pageHeader";
+@import "_pageHeaderDescription";
+@import "_formButtons";
+
+
+/* ------------------------------ Archschema  */
+
+@import "$meta/_nomenclatures";
+@import "$meta/_scaffoldings";
+
+
+/* ------------------------------ Molecules  */
+
+@import "molecules/_page";
+@import "molecules/_bitcoin-prices";
+@import "molecules/_testimonial";
+@import "molecules/_customer-navigation";
+@import "molecules/_contact-footer";
+
+
+/* ------------------------------ Forms: Global  */
+
+@import "forms/_base";
+
+
+/** ----------------------------- Includes: Pages
+
+    @description
+
+    Think of each page as a route contract. At the top level each 
+    page should contain a Class-based View facilitated by SASS @mixins.
+
+ */
+@import "pages/_dashboard";
+@import "pages/_verify";
+@import "pages/_main";
+@import "pages/orders/_place";
+@import "pages/orders/_base";
+@import "pages/orders/_detail";
+@import "pages/_verify-1";
+@import "pages/_verify-2";
+@import "pages/_verify-3";
+@import "pages/_verify-4";
+@import "pages/_terms";
+@import "pages/_history";
+@import "pages/_map-view";
+@import "pages/_reference-number";
+@import "pages/_generic-error";
+@import "pages/_take-selfie";
+
+@import "pages/_no-location-available";
+@import "pages/_take-selfie-confirmation";
+@import "pages/_error";
+@import "pages/_generic-error";
+
+@import "pages/_chat";
+@import "pages/_after-dark";
+@import "pages/_login";
+@import "pages/_complete-order";
+
+@import "pages/_about";
+@import "pages/_contact";
+@import "pages/_legal";

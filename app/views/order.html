@@ -1,0 +1,120 @@
+<!--
+# fileOverview
+
+@file OpenDetailView  
+-->
+
+<style>
+.base-template {
+  height: 100%;
+}
+.base-template .row {
+  height: 100%;
+}
+.base-template .row [ng-view] {
+  height: 100%;
+}
+</style>
+
+<div class="app--entry page--order-detail">
+
+  <div
+    customer-navigation
+    grid-layout="file-l4-m4-s4__centered"
+    class="rank"
+  ></div>
+
+  <form
+    name="current_order_form"
+    class="rank"
+    ng-submit="updatePerson()"
+  >
+
+    <div
+      class="field-block"
+      style="text-align: center;"
+    >
+      <img
+        style="width: 10%;"
+        class="invert"
+        src="/static/images/logo-only.png"
+      />
+      <div ng-show="loaded == false">
+        <div class="loader"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>
+      </div>
+
+      <p
+        style="text-align: center;"
+        ng-show="loaded == true && !person.order.last5"
+      >No order found.</p>
+
+      <h1
+        ng-show="person.order.last5"
+        style="text-align: center;"
+      >Current Order</h1>
+
+      <dl 
+        ng-show="person.order.last5"
+        class="current-order--detail file-l5-m5-s5__centered"
+      >
+
+        <dt ng-show="person.order.last5">Ref #:</dt>
+        <dd ng-show="person.order.last5">
+          {{person.order.last5}} | {{person.order.string_construct}}
+        </dd>
+
+        <dt>Amount</dt>
+        <dd>USD {{person.order.usd}} - {{person.order.btc}} <span class="fa fa-btc"></span></dd>
+
+        <dt>Status</dt>
+        <dd>
+          <ul>
+            <li data-hint="This order is open." class="hint--top" ng-show="person.order.status === '0'">
+              <i class="material-icons">alarm_on</i>
+            </li>
+            <li ng-show="person.order.forced_exp == 'true' || person.order.expired == 'true'" data-hint="This order has expired." class="hint--top">
+              <i class="material-icons">alarm_off</i>
+            </li>
+          </ul>
+          &nbsp;
+        </dd>
+
+        <dt ng-show="person.order.updated__time || person.order.timestamp" style="text-align: center; width: 100%; display: block;">Timestamp</dt>
+        <dd ng-show="person.order.updated__time || person.order.timestamp" style="text-align: center; width: 100%; display: block;">{{moment(person.order.updated__time).toString() || moment(person.order.timestamp).toString()}}</dd>
+
+        <dt ng-show="person.order.discovered_address">Bank Address</dt>
+        <dd ng-show="person.order.discovered_address">
+          <a ng-click="openWithDirectionsInMap(person.order.discovered_address)" target="_blank">
+            <i class="material-icons">account_balance</i>
+          </a>
+          {{person.order.discovered_address}}
+        </dd>
+
+        <dt ng-show="person.order.btc_address" style="text-align: center; width: 100%; display: block;">BTC Address Link</dt>
+        <dd ng-show="person.order.btc_address" style="text-align: center; width: 100%; display: block;"><a target="_blank" href="https://blockchain.info/address/{{person.order.btc_address}}"><span class="fa fa-link"></span> {{person.order.btc_address}}</a></dd>
+
+        <dt ng-show="person.order.city_code" style="text-align: center; width: 100%; display: block;">Geographic Metadata</dt>
+        <dd ng-show="person.order.city_code" style="text-align: center; width: 100%; display: block;">{{person.order.city_code}} | {{person.order.city_name }} | {{person.order.country_name}} | {{person.order.continent_name}}</dd>
+
+        <dt ng-show="person.order.user_agent_string" style="text-align: center; width: 100%; display: block;">User Agent</dt>
+        <dd ng-show="person.order.user_agent_string" style="text-align: center; width: 100%; display: block;">{{person.order.user_agent_string}}</dd>
+
+        <dt ng-show="person.order.selfie_link">Selfie</dt>
+        <dd ng-show="person.order.selfie_link"><img src="{{person.order.selfie_link}}" /></dd>
+
+      </dl>
+    </div>
+
+    <div class="field-block submit-block" style="clear: both;">
+      <div class="input-field">
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+          <span class="fa fa-star"></span>
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+  <div admin-footer-menu></div>
+
+</div>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/scripts/services/person.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/scripts/services/person.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">73.15</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">312</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">42.57</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">2.01</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">&#039;use strict&#039;;
+
+/**
+ * @ngdoc service
+ * @name utxoPmc.person
+ * @description
+ * # person
+ * Service in the utxoPmc.
+ */
+angular.module(&#039;utxoPmc&#039;)
+  .factory(&#039;people&#039;, function ($q, $http, $timeout, $cookies, notification, $location) {
+    var __service__ = {};
+    __service__.list = null;
+    return __service__;
+  })
+  .factory(&#039;person&#039;, function ($q, $http, $timeout, $cookies, notification, $location, people, Auth, localStorageService, crypto) {
+
+    var __service__ = {};
+
+    __service__.session = {};
+
+    // Persistent session.
+    __service__.session.user = Auth.$getAuth();
+    __service__.current = {};
+    __service__.current.order = null;
+
+    __service__.sendSms = function (handle, message_construct) {
+      /**
+       * Send Arbitrary Message to Number
+       */
+      var baseUrl = environment.rest.sendSms.create;
+      var def = $q.defer();
+
+      var _formObject = {
+        handle: handle,
+        message_construct: message_construct
+      }
+
+      var payload = $.param(_formObject);
+
+      $http
+        .post(
+          baseUrl,
+          payload
+        )
+        .success(function (responseData) {
+          def.resolve(responseData);
+        })
+        .error(function (errorData) {
+          def.reject(errorData);
+        });
+
+      return def.promise;
+    };
+
+    __service__.isAfterdark = function () {
+      var _now = moment().hour(18);
+      var __now = moment().hour(8);
+      var now = moment();
+      return now.isAfter(_now) || now.isBefore(__now)
+    };
+
+    __service__.push = function (_strategy) {
+      /**
+       * @param {object} _strategy
+       *    .payload {object}
+       * @usage
+       *     curl -X POST -d &#039;{&quot;user_id&quot; : &quot;jack&quot;, &quot;text&quot; : &quot;Ahoy!&quot;}&#039; \
+       *       &#039;https://utxo.firebaseio.com/people.json&#039;
+       * @response
+       *     { &quot;name&quot;: &quot;-INOQPH-aV_psbk3ZXEX&quot; }
+       */
+      var payload = $.param(_strategy.payload);
+      var _url = (_strategy.property !== null &amp;&amp; _strategy.property !== undefined)
+        ? environment.rest.people.person.__update__(_strategy.handle, _strategy.property)
+        : environment.rest.people.person.__base__();
+      return $http.post(
+        _url,
+        payload
+      )
+      .success(function (response) {
+        console.log(response);
+        return response;
+      })
+      .error(function (errorResponse) {
+        console.log(errorResponse);
+        return errorResponse;
+      });
+    };
+
+    __service__.order = function (_strategy) {
+      /**
+       * @param {object} _strategy
+       *     .handle   {string}
+       *     .property {string}
+       *     .payload  {object} A map of property-value pairs to update with values.
+       * @usage
+       *     curl -X PUT -d &#039;{ &quot;first&quot;: &quot;Jack&quot;, &quot;last&quot;: &quot;Sparrow&quot; }&#039; \
+       *       &#039;https://utxo.firebaseio.com/people/&lt;number&gt;/&lt;property&gt;.json&#039;
+       * @response
+       *     { &quot;first&quot;: &quot;Jack&quot;, &quot;last&quot;: &quot;Sparrow&quot; }
+       */
+      if (_strategy.payload === undefined) {
+        $location.path(&#039;/&#039;);
+      }
+      var payload = null;
+      try {
+        payload = $.param(_strategy.payload);
+      } catch (e) {
+
+        console.dir(e);
+      }
+
+      return $http.put(
+          environment.rest
+            .orders.order
+              .__update__(
+                _strategy.handle,
+                _strategy.property
+              ),
+          payload
+        )
+          .success(function (response) {
+            console.log(response);
+            return response;
+          })
+          .error(function (errorResponse) {
+            console.log(errorResponse);
+            return errorResponse;
+          });
+    };
+
+    __service__.write = function (_strategy) {
+      /**
+       * @param {object} _strategy
+       *     .handle   {string}
+       *     .property {string}
+       *     .payload  {object} A map of property-value pairs to update with values.
+       * @usage
+       *     curl -X PUT -d &#039;{ &quot;first&quot;: &quot;Jack&quot;, &quot;last&quot;: &quot;Sparrow&quot; }&#039; \
+       *       &#039;https://utxo.firebaseio.com/people/&lt;number&gt;/&lt;property&gt;.json&#039;
+       * @response
+       *     { &quot;first&quot;: &quot;Jack&quot;, &quot;last&quot;: &quot;Sparrow&quot; }
+       */
+      var payload = $.param(_strategy.payload);
+      return $http.put(
+          environment.rest
+            .people.person
+              .__update__(
+                _strategy.handle,
+                _strategy.property
+              ),
+          payload
+        )
+          .success(function (response) {
+            console.log(response);
+            return response;
+          })
+          .error(function (errorResponse) {
+            console.log(errorResponse);
+            return errorResponse;
+          });
+    };
+
+    __service__.update = function (_strategy) {
+      /**
+       * @param {object} _strategy
+       *     .handle   {string}
+       *     .property {string}
+       *     .payload  {object} A property-value pair.
+       * @usage
+       *     curl -X PATCH -d &#039;{&quot;last&quot;:&quot;Jones&quot;}&#039; \
+       *       &#039;https://utxo.firebaseio.com/people/&lt;number&gt;/&lt;property&gt;/.json&#039;
+       * @response
+       *     { &quot;last&quot;: &quot;Jones&quot; }
+       */
+      var strategy = _strategy ? _strategy : {};
+      var payload = $.param(_strategy.payload);
+      return $http.patch(
+        environment.rest.people.person.__update__(_strategy.handle),
+        payload
+      )
+        .success(function(response) {
+          console.log(response);
+          return response;
+        })
+        .error(function(errorResponse) {
+          console.log(errorResponse);
+          return errorResponse;
+        });
+    };
+
+    __service__.all = function () {
+      /**
+       * Load All Users
+       */
+      return $http.get(
+        environment.rest.people.person.__base__()
+      ).success(function(response) {
+        people.list = response;
+        return response;
+      }).error(function(errorResponse) {
+        return errorResponse;
+      });
+    };
+
+    __service__.get = function (_strategy) {
+      /**
+       * Get Person
+       *
+       * Template-based strategy to calling and capturing REST responses.
+       *
+       * @param {object} strategy
+       *     @property mode
+       *     @property handle
+       * @usage
+       *
+       *     personService
+       *      .getPerson({ mode: &#039;byId&#039;, handle: &#039;{{personId}}&#039;, property: &#039;{{propertyKey}}&#039; })
+       *      .then(noop, noop)
+       *
+       * @usage
+       *
+       *   curl &#039;https://utxo.firebaseio.com/people/&lt;number&gt;/&lt;property&gt;.json&#039;
+       *
+       * @response
+       *
+       *   { &quot;first&quot;: &quot;Jack&quot;, &quot;last&quot;: &quot;Sparrow&quot; }
+       */
+      var defaultStrategy = &#039;byId&#039;;
+      var strategy = _strategy ? _strategy : defaultStrategy;
+      var strategyConstruct = {};
+      var def = $q.defer();
+      var personData;
+      var errorMessageConstruct = {};
+      var now = new Date();
+      var sep = &#039;/&#039;;
+      console.time(strategy);
+
+      strategyConstruct.byId = function () {
+        /**
+         * @inner
+         */
+        personData = $http
+        .get(environment.rest.people.person.__get__(_strategy.handle)).
+          success(function (response) {
+            if (response &amp;&amp; response.data) {
+              def.resolve(response.data);
+            } else {
+              def.reject({});
+              console.log(&#039;Zero data for&#039;, this);
+            }
+            console.timeEnd(&#039;Complete:&#039; + strategy);
+          }).
+          error(function (errorData) {
+            if (errorData) {
+              errorMessageConstruct.message = errorData.error;
+              errorMessageConstruct.status = errorData.status;
+              notification.displayError(errorMessageConstruct);
+              def.reject(errorData);
+            } else {
+              errorMessageConstruct.message = &#039;No person found.&#039;;
+              console.log(errorMessageConstruct.message);
+              def.reject(errorData);
+            }
+            console.timeEnd(&#039;Complete:&#039; + strategy);
+          });
+
+      };
+
+      strategyConstruct.byProperty = function () {
+        /**
+         * @inner
+         */
+        personData = $http
+        .get(environment.rest.people.person.__get__(_strategy.handle)).
+          success(function (response) {
+            if (response &amp;&amp; response.data &amp;&amp; response.data[_strategy.property]) {
+              def.resolve(response.data[_strategy.property]);
+            } else {
+              def.reject({});
+              console.log(&#039;Zero data for&#039;, this);
+            }
+            console.timeEnd(&#039;Complete:&#039; + strategy);
+          }).
+          error(function (errorData) {
+            errorMessageConstruct.message = errorData.error;
+            errorMessageConstruct.status = error.status;
+            notification.displayError(errorMessageConstruct);
+            def.reject(errorData);
+            console.timeEnd(&#039;Complete:&#039; + strategy);
+          });
+      };
+
+      var initializeStrategy;
+
+      if (typeof strategyConstruct[strategy.mode] === &#039;function&#039;) {
+        initializeStrategy = strategyConstruct[strategy.mode];
+      }
+
+      try {
+        initializeStrategy();
+      } catch (e) {
+        console.log(e);
+      }
+
+      return def.promise;
+    };
+
+    return __service__;
+
+  });</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

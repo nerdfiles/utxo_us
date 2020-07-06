@@ -1,0 +1,64 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: History  */
+
+@include pageHeader() {
+  border-bottom: 2px solid #fff;
+  margin-bottom: 1rem ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 1rem;
+}
+
+
+.page--history {
+  th,
+  td { width: 25%; text-align: center; }
+  width: 100%;
+
+  [customer-navigation] {
+    top: 150px;
+  }
+
+  @media #{$small} {
+    /*
+     *bottom: -20vw;
+     *position: relative;
+     */
+    position: absolute;
+    height: 100%;
+  }
+
+  @media #{$slinder} {
+    /*
+     *bottom: -20vw;
+     *position: relative;
+     */
+    position: absolute;
+    height: 100%;
+
+  }
+
+  @media #{$medium} {
+    bottom: auto;
+    position: relative;
+  }
+
+  @media #{$large} {
+    bottom: auto;
+    position: relative;
+  }
+
+}
+
+tfoot td {
+  p {
+    text-align: center;
+  }
+}

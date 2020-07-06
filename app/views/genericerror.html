@@ -1,0 +1,62 @@
+<!--
+# fileOverview
+
+@file Error  
+-->
+
+<div class="app--entry page--error">
+
+  <form
+    action="#"
+    class="rank"
+  >
+
+    <header>
+      <h1
+        class="file-l4-m4-s4__centered"
+      >
+      <a href="{{baseUrl}}">
+        <img src="/static/images/logo-only-error.png" alt="UTXO" />
+      </a>
+      </h1>
+    </header>
+
+    <div class="guide-1">
+      <h2>Oops!</h2>
+    </div>
+
+    <div class="guide-2">
+
+      <!-- Ident -->
+      <div ng-show="person.current.unavailable">
+        <p>There was an issue with identification. Please call us at <a href="tel:956-648-2089">956-648-2089</a>.</p>
+      </div>
+
+      <!-- OFAC, etc. -->
+      <div ng-show="person.current.suspect">
+        <p>You did not pass our identification. Please call us at <a href="tel:956-648-2089">956-648-2089</a>.</p>
+      </div>
+
+      <!-- Question Set Failure -->
+      <div ng-show="person.current.questionable">
+        <p>You failed to verify. Please call us at <a href="tel:956-648-2089">956-648-2089</a>.</p>
+      </div>
+
+      <!-- Generic Error Conditions -->
+      <div
+        ng-hide="person.current.questionable || person.current.suspect || person.current.unavailable"
+      >
+      <p>Something went wrong! <span ng-show="person.current.orders">Go back or view your <a href="{{baseUrl}}openOrders">Open Orders</a>.</span></p>
+      <p>If you need to get in touch with us, call <br /> <a href="tel:956-648-2089">956-648-2089</a>.</p>
+      </div>
+
+    </div>
+
+  </form>
+
+  <div admin-footer-menu></div>
+
+</div>
+
+
+

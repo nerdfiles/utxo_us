@@ -1,0 +1,78 @@
+.page--place-order {
+
+  form > div:nth-child(1) {
+    margin-top: -7vh;
+  }
+
+  @include DetailView((orders _place)) {
+    background-color: transparent;
+  };
+
+  [customer-navigation] + .rank {
+    /*margin-top: 15vh;*/
+  }
+
+  .our-process {
+    font-size: .85rem;
+    h2 { font-size: 1.325rem;
+    line-height: 1; }
+  }
+
+  .place-order__purse-stats { 
+    display: block;
+    line-height: 1;
+  }
+
+  @media #{$small} {
+    /*bottom: -20vw;*/
+    position: relative;
+    /*padding-top: 20%;*/
+    position: absolute;
+    height: 100%;
+  }
+
+  @media #{$slinder} {
+    /*bottom: -20vw;*/
+    position: relative;
+    /*padding-top: 20%;*/
+    position: absolute;
+    height: 100%;
+  }
+
+  @media #{$medium} {
+    bottom: auto;
+    position: relative;
+    padding-top: 0;
+  }
+
+  @media #{$large} {
+    bottom: auto;
+    position: relative;
+    padding-top: 0;
+  }
+
+
+}
+
+body.page--E24a4f9e18cf2fbba29b82d9b6b899aff70e10ea {
+  [cms-view] { 
+
+    @media #{$small} {
+      display: none;
+    }
+
+    @media #{$slinder} {
+      display: none;
+    }
+
+    @media #{$medium} {
+      @include _flex();
+    }
+
+    @media #{$large} {
+      @include _flex();
+    }
+
+
+  }
+}

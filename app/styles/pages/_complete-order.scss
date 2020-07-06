@@ -1,0 +1,81 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Complete Order  */
+
+@include pageHeader() {
+  border-bottom: 2px solid #fff;
+  margin-bottom: 1rem ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 1rem;
+}
+
+img.invert {
+  -webkit-filter: invert(100%);
+  -moz-filter: invert(100%);
+  -ms-filter: invert(100%);
+  -o-filter: invert(100%);
+  filter: invert(100%);
+}
+.page--complete-order {
+
+  background-color: #006699;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  form[name="complete_order_form"] {
+    color: #fff;
+    min-height: 25vh;
+    img {
+      -webkit-filter: invert(100%);
+      -moz-filter: invert(100%);
+      -ms-filter: invert(100%);
+      -o-filter: invert(100%);
+      filter: invert(100%);
+    }
+    .field-block {
+      p { text-align: center; }
+    }
+    .field-block:not(.submit-block) {
+      margin-bottom: 0px;
+
+      @media #{$small} {
+        padding: 15vh 0 15vh;
+      }
+
+      @media #{$slinder} {
+        padding: 15vh 0 15vh;
+      }
+
+      @media #{$medium} {
+        padding: 5vh 0 15vh;
+      }
+
+      @media #{$large} {
+        padding: 5vh 0 15vh;
+      }
+
+      text-align: center;
+    }
+
+    p {
+    }
+  }
+
+  .submit-block { 
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+
+}
+
+

@@ -1,0 +1,109 @@
+<style>
+.load-opacity--done { opacity: 0 !important; }
+</style>
+<figure
+  ng-hide="!timerAvailable"
+  ng-show="dataBtcPriceLoaded && btcPriceReady"
+  ng-class="{
+    'font-effect-3d-float': isAfterdark,
+    'animated': dataBtcPriceLoaded,
+    'fadeIn': dataBtcPriceLoaded,
+    'load-opacity--done': btcPriceReady == undefined
+  }"
+>
+
+  <div
+    id="chart_container"
+    ng-class="{}"
+  >
+    <div id="chart">
+      <img 
+        style="width: 75%;"
+        ng-show="!historical.bpi"
+        src="/static/images/static-historical.png"
+      />
+    </div>
+  </div>
+
+  <figcaption
+    class="file-l6-m5-s5__centered"
+    ng-class="{
+      'font-effect-3d-float': isAfterdark
+    }"
+    ng-show="!isAfterdark && btcPriceReady !== undefined"
+    ng-hide="timemode['1.06'] !== undefined || timemode['1.06'] === true"
+  >
+    <span class="base-price" data-btc-price="1.06">1.06</span>
+    <span class="sep sep--large">&nbsp;/</span>
+    <span class="base-price--currency">
+      <!--{{basePriceCurrency||"btc"}}-->
+      <span class="fa fa-btc"></span>
+    </span>
+    <span ng-show="!arrow_up" class="ticker-arrow up"><i class="material-icons">arrow_drop_up</i></span>
+    <span ng-show="arrow_up" class="ticker-arrow down"><i class="material-icons">arrow_drop_down</i></span>
+    <div
+      class="prices-subline"
+    >
+      <span
+        ng-class="{
+          'sub-price--prefix' : true,
+          'hint--bottom'      : true
+        }"
+        data-hint="This is the price between 6pm and 8am."
+      >{{subPricePrefix||"after dark"}}</span>
+      <span class="currency-sep">$</span><span class="sub-price">{{subPrice||"0.00"}}</span>/<span class="sub-price--currency">btc</span>
+
+      <span class="sep" ng-show="!unavailableCountdown">in</span> 
+      <span class="sub-price--countdown" ng-show="!unavailableCountdown"></span>
+
+      <span class="sep" ng-show="unavailableCountdownIsAfterdark && !timerAvailable">at</span> 
+      <span ng-show="unavailableCountdownIsAfterdark && !timerAvailable">6:00pm</span>
+
+      <span class="sep" ng-show="!unavailableCountdownIsAfterdark && !timerAvailable">at</span> 
+      <span ng-show="!unavailableCountdownIsAfterdark && !timerAvailable">8:00am</span>
+
+    </div>
+  </figcaption>
+
+  <figcaption
+    class="file-l6-m5-s5__centered"
+    ng-class="{
+      '~font-effect-3d-float': isAfterdark
+    }"
+    ng-show="isAfterdark && btcPriceReady !== undefined"
+    ng-hide="timemode['1.15'] !== undefined || timemode['1.15'] === true"
+  >
+    <span class="base-price" data-btc-price="1.15">1.15</span>
+    <span class="sep sep--large">&nbsp;/</span>
+    <span class="base-price--currency">
+      <!--{{basePriceCurrency||"btc"}}-->
+      <span class="fa fa-btc"></span>
+    </span>
+    <span ng-show="!arrow_up" class="ticker-arrow up"><i class="material-icons">arrow_drop_up</i></span>
+    <span ng-show="arrow_up" class="ticker-arrow down"><i class="material-icons">arrow_drop_down</i></span>
+    <div
+      class="prices-subline"
+    >
+      <span
+        ng-class="{
+          'sub-price--prefix' : true,
+          'hint--bottom'      : true,
+        }"
+        data-hint="This is the price between 8am and 6pm."
+
+      >{{subPricePrefix||"day price"}}</span>
+      <span class="currency-sep">$</span><span class="sub-price">{{subPrice||"0.00"}}</span>/<span class="sub-price--currency">btc</span>
+
+      <span class="sep" ng-show="!unavailableCountdown">in</span> 
+      <span class="sub-price--countdown" ng-show="!unavailableCountdown"></span>
+
+      <span class="sep" ng-show="!unavailableCountdownIsAfterdark && !timerAvailable">at</span> 
+      <span ng-show="unavailableCountdownIsAfterdark && !timerAvailable">6:00pm</span>
+
+      <span class="sep" ng-show="unavailableCountdownIsAfterdark && !timerAvailable">at</span> 
+      <span ng-show="!unavailableCountdownIsAfterdark && !timerAvailable">8:00am</span>
+
+    </div>
+  </figcaption>
+
+</figure>

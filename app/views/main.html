@@ -1,0 +1,157 @@
+<!--
+# fileOverview
+                 _
+                (_)
+     ____  _____ _ ____
+    |    \(____ | |  _ \
+    | | | / ___ | | | | |
+    |_|_|_\_____|_|_| |_|
+
+@file CustSite_Web_Landing-1-C.psd  
+-->
+
+<div 
+  itemprop="mainContentOfPage"
+  class="app--entry page--landing"
+>
+
+  <div
+    class="rank"
+    ng-show="!validate_phone_number_form.validated"
+  >
+    <div
+      bitcoin-prices
+      class="file-l3-m4-s6__centered"
+    ></div>
+  </div>
+
+  <form
+    name      = "validate_phone_number_form"
+    ng-submit = "validate_phone_number()"
+    class     = "rank"
+    itemprop  = "potentialAction"
+    itemscope
+    itemtype  = "http://schema.org/SearchAction"
+    ng-class="{
+      'adjust-to-center': validate_phone_number_form.validated
+    }"
+  >
+
+    <div class="file-l4-m4-s5__centered animated fadeIn">
+
+      <h2
+        ng-show="!validate_phone_number_form.validated"
+        ><span
+        ng-class="{
+          'font-effect-3d-float': isAfterdark
+        }">Buy now</span> <small>(texas residents only)</small></h2>
+
+      <div
+        class="field-block"
+        ng-show="!validate_phone_number_form.validated"
+        ng-class="{
+          'animated': !validate_phone_number_form.validated,
+          'fadeIn': !validate_phone_number_form.validated
+        }"
+      >
+        <div class="input-field">
+
+          <meta itemprop="target" content="https://api.utxo.us/authentication/request" />
+
+          <input
+            itemprop     = "query-input"
+            id           = "buy__now"
+            name         = "phone_number"
+            ng-model     = "smsAuthentication.phone_number"
+            type         = "tel"
+            class        = "validate"
+            ng-blur      = "buyNowPassed = document.querySelector('#buy__now--passed'); buyNowPassed.focus();"
+            ng-required  = "true"
+            ng-keypress  = "prepare()"
+          />
+          <!--
+            min          = "0"
+            inputmode    = "numeric"
+            ng-pattern   = "[0-9]*"
+            ng-pattern   = "/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/"
+          -->
+
+          <label
+            for="buy__now"
+            ng-class="{
+              'font-effect-3d-float': isAfterdark
+            }"
+          >
+            <span class="pro-label">enter phone # to verify</span>
+          </label>
+
+        </div>
+      </div>
+
+      <div
+        class="field-block animated fadeIn" 
+        ng-show="validate_phone_number_form.validated"
+      >
+
+        <div class="input-field">
+
+          <input
+            id       = "buy__now--passed"
+            name     = "sec_number"
+            ng-model = "smsAuthentication.sec_number"
+            type     = "text"
+            class    = "validate"
+            ng-class = "{
+              'error': error_sec
+            }"
+          />
+
+          <label for="buy__now--passed">
+            <span class="pro-label" style="font-size: .85rem;">Enter code (caps sensitive)</span>
+            <span
+              style="cursor: pointer;"
+              class="retry-label"
+              ng-click="resetForm()"
+            >
+              <span class="fa fa-close"></span>
+            </span>
+          </label>
+
+        </div>
+
+      </div>
+
+      <div
+        class="field-block main--submit"
+        ng-show="!validate_phone_number_form.validated"
+      >
+        <div class="input-field">
+
+          <button
+            id    = "buy__now__submit"
+            class = "btn waves-effect waves-light"
+            type  = "submit"
+          >
+
+            <i class="material-icons">check</i>
+          </button>
+          <label
+            for="buy__now__submit"
+            ng-class="{
+              '~font-effect-3d-float': isAfterdark
+            }"
+          >
+            submit
+          </label>
+
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+  <!--<div admin-footer-menu></div>-->
+
+  <feedback></feedback>
+
+</div>

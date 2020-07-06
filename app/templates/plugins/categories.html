@@ -1,0 +1,19 @@
+{% load i18n %}{% spaceless %}
+<div class="plugin plugin-app">
+    <h3>{% trans "Categories" %}</h3>
+    <ul class="app-categories">
+        {% for category in categories %}
+            <li><a href="{% url 'app:termsagreements-category' category=category.slug %}" class="app-categories-{{ category.count }}">
+                {{ category.name }}
+                <span>(
+                    {% if category.count > 0 %}
+                    {% blocktrans count termsagreements=category.count %}1 article{% plural %}{{ termsagreements }} terms agreements{% endblocktrans %}
+                    {% else %}{% trans "0 termsagreements" %}{% endif %}
+                )</span>
+            </a></li>
+        {% empty %}
+            <li class="app-empty"><p>{% trans "No categories found." %}</p></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endspaceless %}

@@ -1,0 +1,153 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Reference Number  */
+
+@include pageHeader() {
+  border-bottom: 0;
+  margin-bottom: 0 ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 0;
+}
+
+
+.page--ref-number {
+  #place_sig__btc_address {
+    margin-top: 2rem;
+  }
+
+  form {
+    overflow: auto;
+    height: 100%;
+
+    .field-block .input-field input:not(:focus):not(.valid), form .field-block .input-field textarea:not(:focus):not(.valid) {
+      border-bottom-color: #26a69a;
+    }
+
+    p {
+      text-align: center;
+      &:nth-child(2) {
+        font-size: 3rem;
+      }
+
+    }
+
+    position: absolute;
+    top: 0;
+
+    @media #{$small} {
+      width: 100%;
+      left: 0;
+    }
+
+    @media #{$slinder} {
+      width: 100%;
+      left: 0;
+    }
+
+    @media #{$medium} {
+      width: 100%;
+      left: auto;
+    }
+
+    @media #{$large} {
+      width: 100%;
+      left: auto;
+    }
+
+    header {
+      background-color    : #edeeee;
+      background-color    : #006699;
+      /*background-image    : url('/static/images/logo-only.png');*/
+      background-repeat   : no-repeat;
+      background-size     : 10vh;
+      background-position : center 5vh;
+      padding-bottom: 5vh;
+
+      a {
+        text-align: left;
+        text-indent: -9999px;
+        display: block;
+        padding: 15vh 0 0;
+      }
+      h1 { 
+        border-bottom: 0;
+        margin: 0;
+      }
+      /*
+       *h1 {
+       *  border-bottom: none;
+       *  line-height: 1;
+       *  margin: 0;
+       *}
+       */
+      .field-block .input-field label {
+        text-align: center;
+        width: 100%;
+        color: #CB793C;
+        color: #fff;
+        line-height: 1;
+        margin-top: -.5rem;
+        z-index: 98;
+        input {
+        }
+      }
+      .fa {
+        color: #ccc;
+      }
+      input {
+        position: relative;
+        border-bottom: 2px #fff solid;
+        z-index: 99;
+
+        text-align: center;
+        color: #fff;
+      }
+    }
+
+    .guide-1 {
+      background-color: #737373;
+
+      div {
+        padding: 7vh 0 0;
+        p {
+          /*font-size: 2rem;*/
+        }
+      }
+    }
+
+    .guide-2 {
+      background-color: #2179a5;
+      background-color: #EF5350;
+      div {
+        padding: 7vh 0;
+      }
+      p {
+
+      }
+    }
+
+    .submit-block {
+      padding-bottom: 15vh;
+      padding-top: 0;
+
+      background-color: transparent;
+      background-color: #EF5350;
+      button.btn {
+        color: #fff;
+        background-color: transparent;
+        background-color: #EF5350;
+        padding-bottom: .5rem;
+      }
+
+    }
+  }
+
+}
+

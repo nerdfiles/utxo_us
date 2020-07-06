@@ -1,0 +1,17 @@
+
+@mixin customBtn() {
+  font-family     : $fontCopy2;
+  background-clip : inherit;
+  box-shadow      : none !important;
+  border-radius   : 0 !important;
+  font-size       : 2rem;
+  padding         : .5rem 1rem;
+  line-height     : 0;
+
+  i {
+    font-size: 2rem;
+  }
+  @content;
+}
+
+

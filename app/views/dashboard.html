@@ -1,0 +1,657 @@
+<!--
+# fileOverview
+
+@file AdminSite_1.psd  
+-->
+
+<style>
+.admin-row span:after { margin-bottom: -.25rem; }
+.admin-row span:before { margin-bottom: .25rem; }
+</style>
+
+<div class="admin-row">
+  <div class="inner">
+    <img src="/static/images/logo-only.png" alt="UTXO" />
+    <span class="hint--right" data-hint="Reload recent orders">
+      <i class="material-icons" ng-click="refreshOrdersList()">autorenew</i>
+    </span>
+    <span class="hint--right" data-hint="Review into Customer Flow">
+      <i class="material-icons" ng-click="exitAdmin()">exit_to_app</i>
+    </span>
+  </div>
+</div>
+
+<div class="app--entry page--dashboard">
+
+  <form
+    name="admin_dashboard_form"
+    class="rank"
+    ng-init="loadMoreManagementRows()"
+    ng-submit="submitManagementRow(loadedPerson)"
+  >
+
+    <div class="container">
+
+      <div class="row">
+
+        <div responsive-table class="split-1 col l6 m6 s6">
+
+          <!--
+
+                                _                  _       _       
+                               | |             _  (_)     | |      
+           ____  ____ _____  __| |_____ ____ _| |_ _ _____| |  ___ 
+          / ___)/ ___) ___ |/ _  | ___ |  _ (_   _) (____ | | /___)
+         ( (___| |   | ____( (_| | ____| | | || |_| / ___ | ||___ |
+          \____)_|   |_____)\____|_____)_| |_| \__)_\_____|\_|___/ 
+
+          -->
+
+          <div class="credentials-box" ng-init="adminCredentials()">
+            <span class="login-handle">
+              <span data-hint="Log out of Brokerage Aspect" class="hint--bottom">
+                <a href="{{logoutLink}}"><span class="fa fa-sign-out"></span></a>
+              </span>
+              <strong>{{admin.$meta.username}}</strong>
+            </span>
+            <span data-hint="Your last login" class="login-time hint--bottom" ng-init="adminTime()">
+              <span class="fa fa-angle-double-right"></span>
+              {{currentTime}}
+            </span>
+          </div>
+
+          <!--
+
+              ___ _ _                   
+             / __|_) |  _               
+           _| |__ _| |_| |_ _____  ____ 
+          (_   __) | (_   _) ___ |/ ___)
+            | |  | | | | |_| ____| |    
+            |_|  |_|\_) \__)_____)_|    
+
+          -->
+
+          <div filter-box>
+
+            <div class="search-box rank">
+              <div class="file-l3-m3-s3">
+                <input 
+                  type="text"
+                  ng-model="searchBoxFilterName"
+                  placeholder="Filter by name"
+                />
+              </div>
+              <div class="file-l3-m3-s3">
+                <input
+                  type="text"
+                  ng-model="searchBoxFilterAmt"
+                  placeholder="Filter by amount"
+                />
+              </div>
+            </div>
+
+            <ul>
+              <li
+                ng-click="filterBy(filterType.filterTypeAlias)"
+                ng-repeat="filterType in filterTypes"
+                class="filter-type__{{filterType.filterTypeAlias}} hint--top"
+                title="{{filterType.filterTypeAlias}}"
+                data-hint="{{filterType.filterTypeName}}"
+              >
+                <!--<i class="material-icons">panorama_fish_eye</i>-->
+              </li>
+            </ul>
+
+          </div>
+
+          <!--
+
+                                                                  _   
+           ____  _____ ____  _____  ____ _____ ____  _____ ____ _| |_ 
+          |    \(____ |  _ \(____ |/ _  | ___ |    \| ___ |  _ (_   _)
+          | | | / ___ | | | / ___ ( (_| | ____| | | | ____| | | || |_ 
+          |_|_|_\_____|_| |_\_____|\___ |_____)_|_|_|_____)_| |_| \__)
+                                  (_____|                             
+
+          -->
+
+          <div class="management-box">
+            <p style="text-align: center;" ng-show="managementRows.length == 0 && managementRows">
+              No orders exists.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <td colspan="5"></td>
+                </tr>
+              </thead>
+              <tbody class="filterBy--{{filterBySelected}}">
+
+                <tr
+                  ng-repeat="managementRow in managementRows | filter: { $person: { full_name: searchBoxFilterName } } | filter: { conversion_statement: searchBoxFilterAmt }"
+                  class="management-row filterBy--{{filterBySelected}}"
+                  ng-class="{
+                    'open'      : managementRow.status === '0',
+                    'confirmed' : managementRow.confirmed === 'true',
+                    'expired'   : managementRow.expired === 'true',
+                    'active'    : managementRow.$id === loadedPerson.$id,
+                    'fincen1'   : managementRow.fincen_state1 == 'true',
+                    'fincen2'   : managementRow.fincen_state2 == 'true',
+                    'scan-error1': managementRow.selfie_state1 == 'true',
+                    'scan-error2': managementRow.selfie_state2 == 'true',
+                    'scan-error3': managementRow.selfie_state3 == 'true',
+                    'paid'      : managementRow.paid == 'true',
+                    'default--show': (filterBy == null)
+                  }"
+                  id="order-{{managementRow.$id}}"
+                  ng-click="loadManagementRow(managementRow)"
+                >
+
+                  <td class="management-row--status">
+                    <span 
+                      ng-init="a = moment(managementRow.timestamp)"
+                      data-hint="{{a.from(moment())}}" class="hint--right"
+                    >
+                      <span ng-show="managementRow.status === '0'">
+                        <i class="material-icons">alarm_on</i>
+                      </span>
+                      <span ng-show="managementRow.forced_exp == 'true' || managementRow.expired == 'true'">
+                        <i class="material-icons">alarm_off</i>
+                      </span>
+                      <span ng-show="managementRow.cheesed === 'true'">
+                        <i class="material-icons">local_pizza</i>
+                      </span>
+                    </span>
+                  </td>
+
+                  <td class="management-row--conversion-statement">
+                    USD
+                    {{managementRow.conversion_statement}}
+                    <span class="fa fa-btc"></span>
+                  </td>
+
+                  <td class="management-row--full-name">{{managementRow.$person.full_name}}</td>
+
+                  <td class="management-row--state">
+                    <ul>
+                      <li ng-repeat="s in managementRow.state" class="state--{{s.alias}}">
+                        <span title="{{s.alias}}" ng-show="s.alias ===  'fincen1'">
+                          <i class="material-icons">notifications_paused</i>
+                        </span>
+                        <span title="{{s.alias}}" ng-show="s.alias ===  'fincen2'">
+                          <i class="material-icons">notifications_paused</i>
+                        </span>
+                        <span title="{{s.alias}}" ng-show="s.alias ===  'selfie1'">
+                          <i class="material-icons">portrait</i>
+                        </span>
+                        <span title="{{s.alias}}" ng-show="s.alias ===  'selfie2'">
+                          <i class="material-icons">portrait</i>
+                        </span>
+                        <span title="{{s.alias}}" ng-show="s.alias ===  'selfie3'">
+                          <i class="material-icons">portrait</i>
+                        </span>
+                        <span title="{{s.alias}}" ng-show="s.alias ===  'paid'">
+                          <i class="material-icons">account_balance</i>
+                        </span>
+                      </li>
+                    </ul>
+                  </td>
+
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <div interactive-form class="split-2 col l6 m6 s6" ng-show="loadedPerson">
+
+          <!--
+
+           _     _                  
+          (_)   | |             _   
+           _  __| |_____ ____ _| |_ 
+          | |/ _  | ___ |  _ (_   _)
+          | ( (_| | ____| | | || |_ 
+          |_|\____|_____)_| |_| \__)
+
+          -->
+
+          <div class="ident">
+
+            <header><abbr title="Id">D</abbr></header>
+            <div class="overview--phone-number">
+              {{loadedPerson.$handle}}
+            </div>
+            <div class="overview--handle">
+              {{loadedPerson.$person.full_name}}
+            </div>
+            <div class="overview--physical-address">
+              {{loadedPerson.$person.primary_address}}
+            </div>
+
+          </div>
+
+          <!--
+
+                                                          _             
+             _                                        _  (_)            
+           _| |_  ____ _____ ____   ___ _____  ____ _| |_ _  ___  ____  
+          (_   _)/ ___|____ |  _ \ /___|____ |/ ___|_   _) |/ _ \|  _ \ 
+            | |_| |   / ___ | | | |___ / ___ ( (___  | |_| | |_| | | | |
+             \__)_|   \_____|_| |_(___/\_____|\____)  \__)_|\___/|_| |_|
+
+          -->
+
+          <div class="transaction">
+
+            <header style="background-color: #99c2d6;"><abbr title="Transaction">T</header>
+            <div class="ident-id">
+              <span ng-show="loadedPerson.last5 && loadedPerson.string_construct">
+              {{loadedPerson.last5}} | {{loadedPerson.string_construct}}
+              </span>
+              <span ng-show="!loadedPerson.last5 && !loadedPerson.string_construct">
+                Reference # not available.
+              </span>
+            </div>
+            <div class="ident-conversion">
+              <span class="fa fa-usd"></span>{{loadedPerson.conversion_statement}}<span class="fa fa-btc"></span>
+            </div>
+            <div class="ident-footprint">
+              <ul>
+                <li class="last-timestamp" ng-show="loadedPerson.human_readable_timestamp">
+                  <span data-hint="Extended time: {{loadedPerson.updated__time}}" class="hint--top">
+                  <span class="fa fa-calendar"></span> {{moment(loadedPerson.human_readable_timestamp).format('MM/DD/YYYY HH:MM:SS')}}
+                </li>
+
+                <li class="last-locality" ng-show="loadedPerson.country_name">
+                <span class="hint--top" data-hint="City: {{loadedPerson.city_name}}, Country: {{loadedPerson.country_name}}">
+                  <span class="fa fa-map-marker"></span>
+                  {{loadedPerson.ip_address}} 
+                </span>
+                </li>
+
+                <li class="last-browser" ng-show="loadedPerson.user_agent_string">
+                  <span data-hint="{{loadedPerson.user_agent_string}}" class="hint--top">
+                    <span class="fa fa-globe"></span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!--
+
+                  _           _        
+            ___ _| |_ _____ _| |_  ___ 
+           /___|_   _|____ (_   _)/___)
+          |___ | | |_/ ___ | | |_|___ |
+          (___/   \__)_____|  \__|___/ 
+
+          -->
+
+          <div class="stats">
+
+            <div class="rank">
+
+              <div class="stats--check-selfie">
+
+                <div id="selfie-modal" class="modal">
+                  <div class="modal-content">
+                    <img src="{{loadedPerson.selfie_link}}" />
+                  </div>
+                  <div class="modal-footer">
+                    <ul class="group-field">
+                      <li>
+                        <input 
+                          id="selfie_state1"
+                          name="selfie_state1"
+                          type="checkbox"
+                          ng-model="loadedPerson.selfie_state1"
+                          ng-true-value="'true'"
+                          ng-false-value="'false'"
+                        />
+                        <label for="selfie_state1">unintelligible picture</label>
+                      </li>
+                      <li>
+                        <input
+                          id="selfie_state2"
+                          name="selfie_state2"
+                          type="checkbox"
+                          ng-model="loadedPerson.selfie_state2"
+                          ng-true-value="'true'"
+                          ng-false-value="'false'"
+                        />
+                        <label for="selfie_state2">information doesn't match</label>
+                      </li>
+                      <li>
+                        <input
+                          id="selfie_state3"
+                          name="selfie_state3"
+                          type="checkbox"
+                          ng-model="loadedPerson.selfie_state3"
+                          ng-true-value="'true'"
+                          ng-false-value="'false'"
+                        />
+                        <label for="selfie_state3">possible MITM vector</label>
+                      </li>
+                    </ul>
+                    <div
+                      class="sms-request hint--left"
+                      ng-click="sendSms('retake-selfie'); loadedPerson.sms_request__retake_selfie=true;"
+                      data-hint="Send SMS to Re-take Picture"
+                    >
+                      <i class="material-icons">phonelink_ring</i>
+                    </div>
+                  </div>
+                </div>
+
+                <header style="background-color: #6ea8c5;"><abbr title="Selfie">S</header>
+
+                <div class="banner">
+                  Check Selfie 
+                  <i
+                    ng-show="loadedPerson.selfie_link && (loadedPerson.status === '1' || loadedPerson.selfie_link || loadedPerson.confirmed == 'true' || loadedPerson.expired == 'true' || loadedPerson.fincen_state1 == 'true' || loadedPerson.fincen_state2 == 'true' || loadedPerson.fincen_state3 == 'true')"
+                    class="material-icons"
+                    style="position: relative; top: .25ch; cursor: pointer;"
+                    ng-click="check_selfie(loadedPerson)"
+                  >photo_camera</i>
+                  <span
+                    style="position: relative; top: .35ch;"
+                    ng-show="!loadedPerson.selfie_link" class="hint--top" data-hint="No selfie uploaded.">
+                  <i
+                    class="material-icons"
+                  >report_problem</i>
+                </div>
+
+                <div ng-show="!loadedPerson.selfie_link">
+                  No selfie uploaded.
+                </div>
+
+                <ul
+                  ng-show="loadedPerson.selfie_link && (loadedPerson.status === '1' || loadedPerson.selfie_link || loadedPerson.confirmed == 'true' || loadedPerson.expired == 'true' || loadedPerson.fincen_state1 == 'true' || loadedPerson.fincen_state2 == 'true' || loadedPerson.fincen_state3 == 'true')"
+                  class="group-field"
+                >
+                  <li>
+                    <input 
+                      id="selfie_state1"
+                      name="selfie_state1"
+                      type="checkbox"
+                      ng-model="loadedPerson.selfie_state1"
+                      ng-true-value="'true'"
+                      ng-false-value="'false'"
+                    />
+                    <label for="selfie_state1">unintelligible picture</label>
+                  </li>
+                  <li>
+                    <input
+                      id="selfie_state2"
+                      name="selfie_state2"
+                      type="checkbox"
+                      ng-model="loadedPerson.selfie_state2"
+                      ng-true-value="'true'"
+                      ng-false-value="'false'"
+                    />
+                    <label for="selfie_state2">information doesn't match</label>
+                  </li>
+                  <li>
+                    <input
+                      id="selfie_state3"
+                      name="selfie_state3"
+                      type="checkbox"
+                      ng-model="loadedPerson.selfie_state3"
+                      ng-true-value="'true'"
+                      ng-false-value="'false'"
+                    />
+                    <label for="selfie_state3">possible MITM vector</label>
+                  </li>
+                </ul>
+
+              </div>
+
+              <div class="stats--fincen-management">
+
+                <header style="background-color: #6ea8c5;"><abbr title="Financials">F</header>
+
+                <div class="banner">
+                  FinCEN Management <i class="material-icons" style="position: relative; top: .25ch;">beenhere</i>
+                </div>
+
+                <ul class="group-field">
+
+                  <li>
+                    <input
+                      id="fincen_state1"
+                      type="checkbox"
+                      ng-model="loadedPerson.fincen_state1"
+                      ng-true-value="'true'"
+                      ng-false-value="'false'"
+                    />
+                    <label for="fincen_state1">10K &amp; above</label>
+                  </li>
+
+                  <li>
+                    <input
+                      id="fincen_state2"
+                      type="checkbox"
+                      ng-model="loadedPerson.fincen_state2"
+                      ng-true-value="'true'"
+                      ng-false-value="'false'"
+                    />
+                    <label for="fincen_state2">Suspicious activity</label>
+                  </li>
+
+                  <li>
+                    <div
+                      class="pdf-exists"
+                      ng-show="loadedPerson.fincen_state3 != 'false'"
+                      ng-click="openPdf()"
+                    ><i class="material-icons" style="position: relative; top: .25ch;">description</i> Open Report</div>
+                    <div class="fileUpload">
+                      <span><i class="material-icons">attachment</i></span>
+                      <input
+                        id="fincen_state3"
+                        type="file"
+                        custom-on-change="uploadReport"
+                        class="upload"
+                      />
+                      <label for="fincen_state3">attach report submitted</label>
+                    </div>
+                  </li>
+
+                </ul>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!--
+
+                     _     _                       
+                    | |   | |                      
+           _____  __| | __| | ____ _____  ___  ___ 
+          (____ |/ _  |/ _  |/ ___) ___ |/___)/___)
+          / ___ ( (_| ( (_| | |   | ____|___ |___ |
+          \_____|\____|\____|_|   |_____|___/(___/ 
+
+          -->
+
+          <div class="address">
+
+            <header style="background-color: #3385ad;"><abbr title="Confirmation">C</abbr></header>
+
+            <qrcode
+              version="2"
+              error-correction-level="M"
+              size="150"
+              data="loadedPerson.btc_address"
+              ng-show="loadedPerson.confirmed == 'true' || loadedPerson.paid == 'true'"
+            ></qrcode>
+
+            <div class="address--block">
+
+              <div 
+                class="address--btc file-l6-m6-s6"
+              >
+                <div class="input-field file-l6-m6-s6">
+                  <div ng-show="loadedPerson.paid == 'true' || loadedPerson.confirmed == 'true'">
+                    <input
+                      style='padding-left: 1rem;'
+                      id="btc_address"
+                      ng-model="loadedPerson.btc_address"
+                      type="text"
+                    />
+                    <label for="btc_address"><span class="fa fa-btc"></span></label>
+                  </div>
+                  <!--
+                     -<div ng-show="loadedPerson.btc_address">
+                     -  prev addr: <span>{{loadedPerson.btc_address_prev || loadedPerson.btc_address}}</span>
+                     -</div>
+                     -->
+                </div>
+              </div>
+
+              <div
+                class="address--transaction-status"
+                ng-show="loadedPerson.paid == 'true'"
+              >
+                <input
+                  id="trn__completed"
+                  ng-model="loadedPerson.confirmed"
+                  ng-true-value="'true'"
+                  ng-false-value="'false'"
+                  type="checkbox"
+                />
+                <label for="trn__completed">transaction completed</label>
+                <span
+                  ng-show="loadedPerson.status === '1' && (loadedPerson.confirmed == 'true' || loadedPerson.paid == 'false') && loadedPerson.expired == 'false' && loadedPerson.fincen_state1 == 'false' && loadedPerson.fincen_state2 == 'false' && loadedPerson.selfie_state1 == 'false' && loadedPerson.selfie_state2 == 'false' && loadedPerson.selfie_state3 == 'false'"
+                >
+                  (<a href="http://utxo.us/blockchain/address/{{loadedPerson.btc_address}}">transaction link</a>)
+                </span>
+                <i class="material-icons sms-request" ng-click="sendSms('completed'); loadedPerson.sms_request__completed=true;">phonelink_ring</i>
+              </div>
+
+              <div
+                class="address--forced-exp"
+                ng-show="loadedPerson.status === '0' || loadedPerson.paid == 'true'"
+                ng-hide="loadedPerson.confirmed == 'true' || loadedPerson.expired == 'true'"
+              >
+                <input
+                  id="force_exp"
+                  type="checkbox"
+                  ng-model="loadedPerson.force_exp"
+                  ng-true-value="'true'"
+                  ng-false-value="'false'"
+                />
+                <label for="force_exp">force-expire order</label>
+                <i class="material-icons sms-request" ng-click="sendSms('force-exp'); loadedPerson.sms_request__force_exp=true;">phonelink_ring</i>
+              </div>
+
+              <div
+                class="address--extend-order rank"
+                ng-show="loadedPerson.status === '0' || loadedPerson.expired == 'true' || loadedPerson.paid == 'true'"
+                ng-hide="loadedPerson.confirmed == 'true'"
+              >
+
+                <div class="input-field file-l3-m3-s3">
+                  <label for="extend__time">extend order (MM:SS)</label>
+                  <input
+                    id="extend__time"
+                    ng-model="loadedPerson.extend__time"
+                    type="text"
+                  />
+                </div>
+
+                <div class="input-field file-l3-m3-s3"
+                  ng-hide="loadedPerson.confirmed == 'true'"
+                >
+                  <input
+                    id="extend__price_lock"
+                    ng-model="loadedPerson.extend__price"
+                    ng-true-value="'true'"
+                    ng-false-value="'false'"
+                    type="checkbox"
+                  />
+                  <label for="extend__price_lock" style="overflow: visible;">
+                    <span style="position: relative; top: -.5rem;">update price
+                    <i 
+                      class="material-icons sms-request" 
+                      ng-click="sendSms('update-price')"
+                    >phonelink_ring</i>
+                    </span>
+                  </label>
+                </div>
+
+              </div>
+
+              <!--
+                 -<div class="" style="padding-top: .5vh;">
+                 -  <div class="">
+                 -    <input
+                 -      id="order__confirmed"
+                 -      ng-model="loadedPerson.confirmed"
+                 -      ng-true-value="'true'"
+                 -      ng-false-value="'false'"
+                 -      type="checkbox"
+                 -    />
+                 -    <label for="order__confirmed">Test Confirm</label>
+                 -  </div>
+                 -</div>
+                 -->
+
+            </div>
+
+          </div>
+
+          <!--
+
+                           _ _    ___       
+                          | (_)  / __)      
+           ____   ___   __| |_ _| |__ _   _ 
+          |    \ / _ \ / _  | (_   __) | | |
+          | | | | |_| ( (_| | | | |  | |_| |
+          |_|_|_|\___/ \____|_| |_|   \__  |
+                                    (____/ 
+
+          -->
+
+          <div class="modify">
+
+            <div class="input-field" style="margin-top: 2rem;">
+              <textarea
+                style="margin-top: 2ch;"
+                class="materialize-textarea"
+                id="kyc_notes"
+                ng-model="loadedPerson.notes"
+              >{{loadedPerson.notes}}</textarea>
+              <label for="kyc_notes"><i class="material-icons" style="position: relative; top: .25ch;">mode_edit</i> Edit <abbr title="Know Your Customer">KYC</abbr> &amp; customer notes</label>
+            </div>
+
+            <!--<p><small>All checks ok. Report submitted to FinCEN on 13 november 2015. Uploaded here on 14 November.</small></p>-->
+
+          </div>
+
+          <button 
+            type="submit" 
+            data-hint="Update this order" 
+            class="hint--top btn"
+            message="'Updated'"
+            duration="3000"
+            toast='click'
+          >
+            Update
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <div admin-footer-menu></div>
+
+</div>

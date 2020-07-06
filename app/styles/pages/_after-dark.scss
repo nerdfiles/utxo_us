@@ -1,0 +1,41 @@
+.page--after-dark {
+  height: 100%;
+  background-color: #111;
+  color: #fff;
+
+  .callout {
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #111;
+  }
+
+  .callout--inner {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    h1 { font-size: 10vh; }
+
+    @media #{$small} {
+      margin-top: -25vh;
+      width: 100%;
+    }
+
+    @media #{$slinder} {
+      margin-top: -25vh;
+      width: 100%;
+    }
+
+    @media #{$medium} {
+      margin-top: -40vh;
+      width: 50%;
+    }
+
+    @media #{$large} {
+      margin-top: -30vh;
+      width: 50%;
+    }
+
+  }
+}

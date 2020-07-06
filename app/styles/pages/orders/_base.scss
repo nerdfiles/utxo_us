@@ -1,0 +1,161 @@
+body.base-template {
+
+  .spread:active,
+  .spread:focus,
+  .spread:hover {
+    letter-spacing: .5rem;
+  }
+
+  span, div, th, td, p, h1, h2, h3, h4, h5, h6, li, dt, dl, {
+    font-weight: 100;
+  }
+
+  dl {
+    dt {
+      font-variant: small-caps;
+      text-transform: lowercase;
+    }
+  }
+
+  input, textarea {
+    @extend .font-effect-3d-float !optional;
+  }
+}
+
+.page--open-orders {
+  span.table-label {
+    font-variant: small-caps;
+    text-transform: lowercase;
+    width: 100%;
+    float: left;
+    clear: left;
+  }
+  @include ListView((orders _base)) {
+    background-color: transparent;
+  }
+
+  thead {
+    position: absolute;
+    left: -9999px;
+  }
+  table {
+    /*border: 1px solid #ccc;*/
+    width: 100%;
+    margin:0;
+    padding:0;
+    /*
+     *border-collapse: collapse;
+     *border-spacing: 0;
+     */
+  }
+
+  table tr {
+    /*border: 1px solid #ddd;*/
+    padding: 0;
+  }
+
+  table th {
+    padding: 0 !important;
+    text-align: center;
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  table td { 
+    padding: 0 !important;
+    text-align: right;
+    border-radius: 0 !important;
+  }
+
+  @media screen and (max-width: 600px) {
+
+    table {
+      border: 0;
+    }
+
+    table thead {
+      display: none;
+    }
+
+    table tr {
+      margin-bottom: 10px;
+      display: block;
+      /*border-bottom: 2px solid #ddd;*/
+    }
+
+    table td {
+      display: block;
+      text-align: right !important;
+      font-size: 13px;
+      /*border-bottom: 1px dotted #ccc;*/
+    }
+
+    table td:last-child {
+      border-bottom: 0;
+    }
+
+    table td:before {
+      content: attr(data-label);
+      float: left;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+
+
+  @media #{$small} {
+    /*
+     *bottom: -20vw;
+     *position: relative;
+     */
+  }
+
+  @media #{$slinder} {
+    /*
+     *bottom: -20vw;
+     *position: relative;
+     */
+  }
+
+  @media #{$medium} {
+    bottom: auto;
+    position: relative;
+  }
+
+  @media #{$large} {
+    bottom: auto;
+    position: relative;
+  }
+
+  .open-order--display {
+    text-align: center;
+    border-top: 1px solid gold;
+    padding: 0;
+    border-radius: 0;
+    margin-top: .5rem;
+    padding-top: .5rem;
+    & > div {
+      /*margin-left: -2vw;*/
+    }
+  }
+
+  .page--open-orders--view {
+    td {
+      padding: 2vh 0 2vh 0 !important;
+      font-weight: 200;
+    }
+
+  }
+
+  .page--open-orders--view table table {
+    /*margin-top: 1.5rem;*/
+    border-top: 10px rgba(203, 121, 60, .4) double;
+
+  }
+  /*
+   *td,
+   *th { width: 25%; }
+   */
+}

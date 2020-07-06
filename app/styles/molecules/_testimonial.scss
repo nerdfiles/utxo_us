@@ -1,0 +1,121 @@
+figure.testimonial {
+
+  background-color: rgba(20, 20, 20, .5);
+  color: #fff;
+  overflow: hidden;
+  overflow: visible;
+  position: absolute;
+
+  & > div {
+    text-align: center;
+    padding-right: 2rem;
+  }
+
+  @media #{$small} {
+    bottom: -63vh;
+  }
+
+  @media #{$slinder} {
+    bottom: -43vh;
+  }
+
+  @media #{$medium} {
+    bottom: -36vh;
+    max-height: 19vh;
+  }
+
+  @media #{$large} {
+    bottom: -36vh;
+    max-height: 19vh;
+  }
+
+  img {
+    position: relative;
+    top: -1rem;
+    width: auto;
+
+    @media #{$small} {
+    }
+
+    @media #{$slinder} {
+    }
+
+    @media #{$medium} {
+      min-height: 21.5vh;
+      max-height: 30vh;
+      left: 2vh;
+    }
+
+    @media #{$large} {
+      left: 2vh;
+      min-height: 21.5vh;
+      max-height: 30vh;
+    }
+
+  }
+
+  figcaption {
+    padding-top: .5rem;
+    padding-left: 0 !important;
+    padding-right: 0;
+    @media #{$small} {
+    }
+
+    @media #{$slinder} {
+    }
+
+    @media #{$medium} {
+      padding-left: 0;
+    }
+
+    @media #{$large} {
+      padding-left: 0;
+    }
+
+    .fa {
+      color: #FFEB3B;
+    }
+  }
+
+  div.byline {
+    a { text-transform: uppercase; font-size: 1.325rem; font-weight: 6000; }
+    /*@include anchors();*/
+  }
+
+  div.score {
+    /*display: flex;*/
+    & > span {
+      display: inline-block;
+    }
+    ul {
+      display: inline-block;
+    }
+    li {
+      display: inline;
+    }
+  }
+
+  blockquote.content {
+    padding-left: 0;
+    border-left: none;
+    line-height: 1;
+    margin-top: 0.5rem;
+    &:before {
+      display: inline;
+      content: '"';
+    }
+
+    &:after {
+      display: inline;
+      content: '"';
+    }
+    p {
+      color: #fff;
+      line-height: 1.5;
+      display: inline;
+      font-weight: 300;
+      font-size: .75rem !important;
+    }
+  }
+
+}

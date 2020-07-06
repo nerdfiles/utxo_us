@@ -1,0 +1,141 @@
+<!--
+# fileOverview
+
+@file Account  
+-->
+
+<div class="app--entry page--account">
+
+  <div
+    class="rank"
+  >
+
+    <header>
+      <h1
+        class="file-l4-m4-s4__centered"
+      >
+      <a href="{{baseUrl}}">
+        UTXO
+      </a>
+      </h1>
+      <div class="file-l5-m5-s5__centered">
+
+        <div class="rank">
+          <div class="field-block file-l6-m6-s6">
+            <div class="input-field">
+              <input 
+                id="place_sig__btc_address"
+                type="text"
+                class="validate"
+              />
+              <label for="place_order__usd_amount">Enter your bitcoin address</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="file-l5-m5-s5__centered">
+
+      <h2>Account</h2>
+
+      <div class="row-fluid">
+<!--
+   -      <div class="{{user.provider === 'password'? 'col-md-4' : 'col-md-12'}}">
+   -        <h3>Profile</h3>
+   -
+   -        <form role="form">
+   -          <p class="form-group">
+   -            <label>Account ID</label>
+   -            <br />{{user.uid}}
+   -          </p>
+   -
+   -          <p class="form-group">
+   -            <label>Name:</label>
+   -            <input type="text" name="name" ng-model="profile.name" class="form-control" />
+   -          </p>
+   -
+   -          <p class="form-group">
+   -            <label>Email:</label>
+   -            <br />{{profile.email}}
+   -          </p>
+   -        </form>
+   -
+   -        <p>
+   -          <button role="button" ng-click="logout()" class="btn btn-danger">Log Out</button>
+   -        </p>
+   -      </div>
+   -->
+
+<!--
+   -      <div class="col-md-4" ng-show="{{user.provider === 'password'}}">
+   -      <form role="form">
+   -        <h3>Change Password</h3>
+   -
+   -        <p class="form-group">
+   -          <label>Old Password:</label>
+   -          <input type="password" ng-keypress="clear()" ng-model="oldpass" class="form-control" />
+   -        </p>
+   -
+   -        <p class="form-group">
+   -          <label>New Password:</label>
+   -          <input type="password" ng-keypress="clear()" ng-model="newpass" class="form-control" />
+   -        </p>
+   -
+   -        <p class="form-group">
+   -          <label>Confirm New Password:</label>
+   -          <input type="password" ng-keypress="clear()" ng-model="confirm" class="form-control" />
+   -        </p>
+   -
+   -        <button class="btn btn-primary" ng-click="changePassword(oldpass, newpass, confirm)">change password</button>
+   -
+   -        <p class="error" ng-show="err">{{err}}</p>
+   -        <p class="good" ng-show="msg">{{msg}}</p>
+   -      </form>
+   -      </div>
+   -->
+
+<!--
+   -      <div class="col-md-4" ng-show="{{user.provider === 'password'}}">
+   -      <form>
+   -        <h3>Change Email</h3>
+   -
+   -        <p class="form-group">
+   -          <label>New Email:</label>
+   -          <input type="text" ng-keypress="clear()" ng-model="newEmail" class="form-control" />
+   -        </p>
+   -
+   -        <p class="form-group">
+   -          <label>Password:</label>
+   -          <input type="password" ng-keypress="clear()" ng-model="pass" class="form-control" />
+   -        </p>
+   -
+   -        <button class="btn btn-primary" ng-click="changeEmail(pass, newEmail)">update email</button>
+   -      </form>
+   -      </div>
+   -->
+
+      </div>
+
+      <div ng-repeat="message in messages" class="alert alert-{{message.type}}">{{message.text}}</div>
+
+    </div>
+
+    <div class="field-block submit-block">
+      <div class="input-field">
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+          <i class="material-icons">check</i>
+          <span class="material-labels">Confirm</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div admin-footer-menu></div>
+
+</div>
+
+
+
+

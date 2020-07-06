@@ -1,0 +1,241 @@
+<!--
+# fileOverview
+
+@file CustSite_Web_OpenOrders-6.1.psd  
+-->
+
+<div class="app--entry page--open-orders">
+
+  <div
+    customer-navigation
+    grid-layout="file-l4-m4-s4__centered"
+    class="rank"
+  ></div>
+
+  <div class="page--open-orders--view">
+
+    <div class="rank">
+      <div
+        bitcoin-prices
+        class="file-l3-m4-s6__centered"
+      ></div>
+    </div>
+
+    <br />
+    <br />
+
+    <form 
+      name="open_orders_form"
+      class="rank"
+    >
+      <div class="scrollable file-l5-m4-s4__centered">
+
+        <div ng-show="loaded == false">
+          <div class="loader"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>
+        </div>
+
+        <table>
+          <thead class="accessibily-hidden">
+            <tr>
+              <th>Timestamp</th>
+              <th>USD Amount</th>
+              <th>BTC Amount</th>
+              <th>Review</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="order in orders">
+
+              <td 
+                style="position: absolute; left: -9999px;"
+                data-label="Timestamp"
+                class="accessibily-hidden timestamp--human-readable__open-order"
+                ng-init="(order.updated__time) ? a = moment(order.updated__time) : a = moment(order.timestamp)"
+              >
+                {{a.from(moment())}}
+              </td>
+
+              <td
+                style="position: absolute; left: -9999px;"
+                data-label="USD"
+                class="accessibily-hidden amount--human-readable__open-order"
+              >
+                <span class="fa fa-usd"></span>
+                {{numeral(order.usd).format('0,00')}}
+              </td>
+
+              <td
+                style="position: absolute; left: -9999px;"
+                data-label="BTC"
+                class="accessibily-hidden btc-amount--human-readable__open-order"
+              >
+                <span class="fa fa-btc"></span>
+                {{order.btc}}
+              </td>
+
+              <td>
+
+                <table 
+                  ng-class="{
+                    'font-effect-3d-float': isAfterdark
+                  }"
+                >
+                  <tr>
+                    <td 
+                      data-label="Timestamp"
+                      class="timestamp--human-readable__open-order"
+                    >
+                      <span data-hint="{{a.toString()}}" class="hint--right">{{a.from(moment())}}</span>
+                    </td>
+
+                    <td
+                      data-label="USD"
+                      class="amount--human-readable__open-order"
+                    >
+                      <span class="fa fa-usd"></span>
+                      {{numeral(order.usd).format('0,00')}}
+                    </td>
+
+                    <td
+                      data-label="BTC"
+                      class="btc-amount--human-readable__open-order"
+                    >
+                      <span class="fa fa-btc"></span>
+                      <a href="{{baseUrl_i18n}}order/opened/{{order.$$id}}" style="border-bottom: 1px solid gold;">{{order.btc}}</a>
+                    </td>
+
+                    <td 
+                      data-label="Status"
+                      class="review__open-order"
+                    >
+                      <span
+                        data-hint="Resume to Add BTC Address"
+                        class="hint--left status-control"
+                      >
+                      <a
+                        style="cursor: pointer;"
+                        ng-click="resumeOrderProcess(order, order.$$id)"
+                        ng-show="!order.selfie_link"
+                      >
+                        <i class="material-icons">create</i>
+                      </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+
+                    <td colspan="4" class="open-order--display">
+                      <div ng-show="!order.discovered_address">
+                        <p ng-show="!isAfterdark" style="text-align: center;"><small>For a list of Credit Unions near you, please go to
+                          <a href="https://co-opcreditunions.org/" target="_blank">Co-op Credit Unions</a>.</small>
+                        </p>
+                        <div ng-show="isAfterdark">
+                          <small>To Complete your order, please call us at <a href="tel:956-648-2089">956-648-2089</a>.</small></p>
+                        </div>
+                        <div ng-show="!isAfterdark && !order.paid">
+                          <p style="text-align: center;">
+                            <small>To Complete your order, please call us at <a href="tel:956-648-2089">956-648-2089</a>.</small></p>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div ng-show="order.discovered_address">
+                        <div ng-show="!order.paid">
+                          <p style="text-align: center;">
+                          <small>To Complete your order, please call us at <a href="tel:956-648-2089">956-648-2089</a>.</small></p>
+                          </p>
+                        </div>
+                        <span
+                          data-hint="Open in Google Maps"
+                          class="hint--top table-label"
+                        >
+                        <span class="table-label">
+                          Nearest <abbr 
+                                    class="hint--bottom" 
+                                    data-hint="Credit Union"
+                                  >CU</abbr>
+                        </span>
+                        </span>
+                        <span
+                          style="cursor: pointer;"
+                          class="table-label"
+                          ng-click="openWithDirectionsInMap(order.discovered_address)"
+                        >
+                          <span>
+                            {{order.discovered_address}}
+                            <span class="fa fa-bank"></span>
+                          </span>
+                          <span ng-show="order.discovered_address == '' && (!order.discovered_address || isAfterdark)">
+                            For afterdark purchases, call <a href="tel:956-648-2089">956-648-2089</a>.
+                          </span>
+                        </span>
+                      </div>
+
+                      <div ng-show="order.string_construct">
+                        <span class="table-label">
+                          Receipt #
+                        </span>
+
+                        <span class="table-value spread">
+                          {{order.last5}} | {{order.string_construct}}
+                        </span>
+                      </div>
+
+                      <div ng-show="order.btc_address">
+                        <span 
+                          data-hint="Open in blockchain.info"
+                          class="hint--top table-label"
+                        >
+                          BTC Address
+                        </span>
+
+                        <span class="tabel-value">
+                          <a href="https://blockchain.info/address/{{order.btc_address}}" target="_blank">{{order.btc_address}}
+                          <span class="fa fa-link"></span></a>
+                        </span>
+                      </div>
+
+                    </td>
+
+                  </tr>
+                </table>
+
+              </td>
+
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                <div ng-show="none && loaded">
+                  <div
+                    style="text-align: center;"
+                  >
+                    <a
+                      data-hint="Place an order"
+                      class="hint--top"
+                      ng-href="{{siteUrl}}/en/#/e24a4f9e18cf2fbba29b82d9b6b899aff70e10ea"
+                    >
+                      <i 
+                        class="material-icons"
+                      >add_shopping_cart</i>
+                    </a>
+                  </div>
+                  <p>You do not have any open orders.</p>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+    </form>
+  </div>
+
+  <div contact-footer></div>
+
+  <!--<div admin-footer-menu></div>-->
+
+  <feedback></feedback>
+
+</div>

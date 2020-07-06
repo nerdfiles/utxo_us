@@ -1,0 +1,7 @@
+@mixin __page($scope: '--') {
+  [class*="#{$scope}"][class*='page'][class*='map-view'] {
+    [customer-navigation] {
+      @content;
+    }
+  }
+}

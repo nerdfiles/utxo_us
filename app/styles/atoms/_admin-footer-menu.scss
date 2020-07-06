@@ -1,0 +1,26 @@
+[admin-footer-menu] {
+  position: fixed;
+  bottom: 0;
+  line-height: 2;
+  z-index: 999999999;
+
+  #mobile {
+    @include anchors(
+      $default : $a--admin-footer-menu__default,
+      $link    : $a--admin-footer-menu__link,
+      $visited : $a--admin-footer-menu__visited,
+      $hover   : $a--admin-footer-menu__hover,
+      $active  : $a--admin-footer-menu__active
+    ) { }
+  }
+
+  nav {
+    /*height: auto;*/
+  }
+
+  ul {
+    /*height: auto;*/
+  }
+
+  li { }
+}

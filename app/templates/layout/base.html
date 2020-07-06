@@ -1,0 +1,503 @@
+{% load page_meta_tags i18n staticfiles cms_tags sekizai_tags django_seo_js %}
+{% load url from future %}
+{% page_meta request.current_page as meta %}
+<!doctype html>
+
+<html class="no-js">
+  <head>
+    {% seo_js_head %}
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>utxo.us — {% block title %}{% page_attribute "page_title"%}{% endblock %} — Purveyors of Mined Bitcoins</title>
+
+    <meta name="author" content="UTXO" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <meta name='robots' content='index,follow' />
+    <meta name='target' content='all' />
+    <meta name='pagename' content='{% page_attribute "page_title"%}' />
+
+    <meta name='language' content='EN' />
+    <meta name='MobileOptimized' content='320'/>
+    <meta name='Classification' content='Business' />
+    <meta name='rating' content='General' />
+    <meta name='HandheldFriendly' content='True'>
+
+    <link rel="dns-prefetch" href="//api.bitcoinaverage.com" />
+    <!--<link rel="dns-prefetch" href="//api.coindesk.com" />-->
+    <link rel="dns-prefetch" href="//cdn.segment.io" />
+    <link rel="dns-prefetch" href="//cdn.mixpnl.com" />
+    <link rel="dns-prefetch" href="//api.mixpanel.com" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//ajax.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//csi.gstatic.com" />
+    <link rel="dns-prefetch" href="//maps.googleapis.com" />
+    <link rel="dns-prefetch" href="//crypto-js.googlecode.com" />
+    <link rel="dns-prefetch" href="//code.jquery.com" />
+
+    <link rel="subresource" href="//code.jquery.com/jquery-2.1.4.min.js">
+    <link rel='subresource' href="/static/bower_components/jquery/dist/jquery.min.js" />
+    <link rel='subresource' href="/static/bower_components/bitcoin-prices/bitcoinprices.js" />
+    <link rel='subresource' href="/static/bower_components/angular/angular.min.js" />
+
+    {% block css %}{% endblock %}
+
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="{% page_url request.current_page.get_root %}../../static/bower_components/keyboard/dist/css/keyboard.min.css" />
+    <link rel="stylesheet" href="{% page_url request.current_page.get_root %}../../static/bower_components/loaders.css/loaders.css" />
+    <link rel="stylesheet" href="{% page_url request.current_page.get_root %}../../static/bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <!-- endbuild -->
+
+    <!--[if IE]>
+        <link href="{% static 'css/ie.css' %}" media="screen, projection" rel="stylesheet" type="text/css" />
+    <![endif]-->
+
+    {% render_block "css" %}
+
+    <base href="/">
+
+    <link
+      rel="icon"
+      href="{% static 'images/ios/AppIcon.appiconset/Icon-Small.png' %}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/ios/AppIcon.appiconset/Icon-Small.png' %}"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="/static/style.css" />
+
+    <link rel="stylesheet" href="/static/bower_components/materialize/dist/css/materialize.min.css" />
+    <link rel="stylesheet" href="/static/bower_components/rickshaw/src/css/detail.css" />
+    <link rel="stylesheet" href="/static/bower_components/rickshaw/src/css/graph.css" />
+    <link rel="stylesheet" href="/static/bower_components/rickshaw/src/css/legend.css" />
+
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,300italic,300,200italic,200,100italic,100&effect=3d-float' />
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Roboto+Slab:400,700&effect=3d-float' />
+    <!--<link rel="stylesheet" href='//fonts.googleapis.com/css?family=Enriqueta&effect=3d-float' />-->
+
+    <!--<script src="/static/bower_components/loadcss/loadCSS.js"></script>-->
+    <!--
+       -<script>
+       -  var styleList = [
+       -    'https://fonts.googleapis.com/icon?family=Material+Icons',
+       -    '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css',
+       -    '/static/bower_components/hint.css/hint.min.css'
+       -  ];
+       -</script>
+       -->
+    <link rel="stylesheet" href='//fonts.googleapis.com/icon?family=Material+Icons' />
+    <link rel="stylesheet" href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css' />
+    <link rel="stylesheet" href='/static/bower_components/hint.css/hint.min.css' />
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="translucent black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    {% static_placeholder "AppIconHeader" or %}
+      {% include 'app_icon.html' %}
+    {% endstatic_placeholder %}
+
+    {% static_placeholder "GlobalSeoHeader" or %}
+      {% include 'djangocms_page_meta/meta.html' with meta=meta %}
+    {% endstatic_placeholder %}
+
+  </head>
+
+  <body
+    itemscope itemtype="https://schema.org/WebPage"
+    class="utxo_us body-class {% block body_class %}base-template page--{% page_attribute "page_title"%} {% endblock %}"
+    ng-app="utxoPmc"
+    ng-cloak
+    ng-show="cmsViewReady && loadedCmsViewReady"
+  >
+
+    {% verbatim %}
+    <div
+      breadcrumb
+      style="position: absolute; left: -9999px;"
+      itemprop="breadcrumb"
+      itemscope
+      itemtype="https://schema.org/BreadcrumbList"
+    >
+      <meta itemprop="numberOfItems" content="({{breadcrumbNavListView.length}}+1)" />
+
+      <ul>
+        <li
+          ng-repeat="itemLink in breadcrumbNavListView track by $index"
+          itemprop="itemListElement" itemscope
+          itemtype="https://schema.org/ListItem"
+        >
+
+          <dl>
+            <dt>
+              <a itemprop="item" href="https://utxo.us/{{itemLink.$id}}">{{itemLink.page_title}}</a>
+              <meta itemprop="position" content="$index" />
+            </dt>
+            <dd>
+              <menu type="context" id="__{{itemLink.$id}}">
+                <menuitem
+                  label="Return {{itemLink.page_title}}"
+                  ng-click="returnPage(itemLink.$id)"
+                />
+              </menu>
+            </dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+    {% endverbatim %}
+
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    {% cms_toolbar %}
+
+    <div
+      class="row"
+      itemscope
+      itemtype="https://schema.org/WebSite"
+      ng-show="cmsViewReady && loadedCmsViewReady"
+    >
+
+      <meta itemprop="url" content="https://utxo.us/"/>
+
+      <!--
+
+                                      _
+       ____ ____   ___ _ _____ ____ _| |_  ____ _   _
+      / ___)    \ /___|_) ___ |  _ (_   _)/ ___) | | |
+     ( (___| | | |___ |_| ____| | | || |_| |   | |_| |
+      \____)_|_|_(___/(_)_____)_| |_| \__)_|    \__  |
+                                                (____/
+
+      -->
+
+      <div
+        cms-view
+        itemprop="mainEntity"
+        itemscope
+        itemtype="https://schema.org/Corporation"
+        class="col s12 m6 l6"
+        ng-show="cmsViewReady"
+        ng-class="{
+          'animated' : cmsViewReady,
+          'fadeIn'   : cmsViewReady
+        }"
+      >
+
+        <meta itemprop="name" content="UTXO, LLC." />
+
+        <div style="position: absolute; left: -9999px;">
+          <p itemprop="description">Purveyors of Mined Bitcoins</p>
+          <dl>
+            <dt>Open</dt>
+            <dd><time itemprop="openingHours" datetime="Mo-Fr 07:00-23:00">Monday-Friday 8am-6pm </time></dd>
+            <dt>Phone</dt>
+            <dd><span itemprop="telephone" content="tel:1+713-287-8738">713-287-8738</span></dd>
+          </dl>
+        </div>
+
+        <section ng-show="loadedCmsViewReady">
+        {% block cmsSubPage %}
+        {% endblock %}
+        </section>
+
+        <footer class="cms-footer">
+          <div class="inner">
+            <nav class="mini-nav">
+              <ul class="nav-list">
+
+                <li class="nav-listing">
+                  <a href="{% page_url request.current_page.get_root %}#/about">About</a>
+                  {% if user.is_authenticated %}
+                  <a class="djangocms--custom-edit" href="{% page_url request.current_page.get_root %}about/?edit/#/about">
+                      <i class="material-icons">mode_edit</i>
+                  </a>
+                  {% endif %}
+                </li>
+
+                <li class="nav-listing">
+                  <a href="{% page_url request.current_page.get_root %}#/contact">Contact</a>
+                  {% if user.is_authenticated %}
+                  <a class="djangocms--custom-edit" href="{% page_url request.current_page.get_root %}contact/?edit/#/contact">
+                      <i class="material-icons">mode_edit</i>
+                  </a>
+                  {% endif %}
+                </li>
+
+                <li class="nav-listing">
+                  <a href="{% page_url request.current_page.get_root %}#/legal">Legal</a>
+                  {% if user.is_authenticated %}
+                  <a class="djangocms--custom-edit" href="{% page_url request.current_page.get_root %}legal/?edit/#/legal">
+                      <i class="material-icons">mode_edit</i>
+                  </a>
+                  {% endif %}
+                </li>
+
+              </ul>
+            </nav>
+            <div class="colophon">
+              <p>
+              Copyright &copy; 2015. <a href="https://utxo.us/en/#/">UTXO</a>, LLC. by <a href="https://thecoinsultants.com">TC</a>. All Rights Reserved. 
+                {% if user.is_authenticated %}
+                &#9672; 
+                <a href="{% page_url request.current_page.get_root %}admin/#/dashboard">Broker</a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                  &diams; 
+                  <a href="{% page_url request.current_page.get_root %}dashboard/">Dashboard</a>
+                  &diams; 
+                  <a href="{% page_url request.current_page.get_root %}dashboard/logout/">Logout</a>
+                {% else %}
+                  <!--<a href="{% page_url request.current_page.get_root %}dashboard/">Login</a>-->
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+
+      <!--
+
+                                       _
+       _____ ____  ____ _ _____ ____ _| |_  ____ _   _
+      (____ |  _ \|  _ (_) ___ |  _ (_   _)/ ___) | | |
+      / ___ | |_| | |_| || ____| | | || |_| |   | |_| |
+      \_____|  __/|  __(_)_____)_| |_| \__)_|    \__  |
+            |_|   |_|                           (____/
+
+      -->
+
+      <div
+        ng-view
+        class="col s12 m12 l12"
+        ng-class="{
+          'full-height': isAfterdark
+        }"
+      >
+
+        <div class="loader loader--basic">
+          <div class="loader-inner cube-transition">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+
+      </div>
+      {% render_placeholder terms_instance.terms_content "640" %}
+      {% placeholder "RightPanelContentArea" or %}
+      {% endplaceholder %}
+
+      <div itemprop="creator" itemscope itemtype="https://schema.org/Organization" style="position: absolute; left: -9999px;">
+
+        <span itemprop="name">The Coinsultants</span>
+
+        Contact Details:
+
+          <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+            Main address:
+              <span itemprop="streetAddress">2800 San Jacinto St., Level 2</span>
+              <span itemprop="postalCode">77004</span>
+              <span itemprop="addressLocality">Houston, TX</span>
+          </div>
+            Tel:<span itemprop="telephone">713-858-3448</span>,
+            E-mail: <span itemprop="email">E-mail, <a href="mailto:hello@thecoinsultants.com" style="direction: rtl; unicode-bidi: bidi-override;">com.stantlusnioceht@olleh</a></span>
+
+        Partners:
+          <span
+            itemprop="member"
+            itemscope
+            itemtype="https://schema.org/Person"
+          >
+            James Duchenne
+          </span>,
+          <span
+            itemprop="member"
+            itemscope
+            itemtype="https://schema.org/Person"
+          >
+            Adam Richard
+          </span>
+
+      </div>
+
+    </div>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../static/bower_components/jquery/dist/jquery.min.js">\x3C/script>')</script>
+    <script src="../static/bower_components/moment/min/moment.min.js"></script>
+    <script src="../static/bower_components/chance/dist/chance.min.js"></script>
+    <script src="../static/bower_components/numeral/min/numeral.min.js"></script>
+    <script src="../static/bower_components/userinfo-js/dist/userinfo.min.js"></script>
+    <script src="../static/bower_components/lodash/lodash.min.js"></script>
+    <script src="../static/bower_components/d3/d3.min.js"></script>
+    <script src="../static/bower_components/rickshaw/rickshaw.min.js"></script>
+    <script src="../static/bower_components/jquery.countdown/dist/jquery.countdown.min.js"></script>
+    <!--<script src="../static/bower_components/jquery-ui/jquery-ui.min.js"></script>-->
+    <script src="../static/bower_components/bitcoin-prices/bitcoinprices.js"></script>
+
+    <!--
+       -<script src="../static/bower_components/keyboard/dist/js/jquery.keyboard.min.js"></script>
+       -<script src="../static/bower_components/keyboard/dist/layouts/keyboard-layouts-combined.min.js"></script>
+       -<script src="../static/bower_components/keyboard/dist/layouts/keyboard-layouts-greywyvern.min.js"></script>
+       -<script src="../static/bower_components/keyboard/dist/layouts/keyboard-layouts-microsoft.min.js"></script>
+       -->
+
+    <script src="../static/bower_components/materialize/dist/js/materialize.min.js"></script>
+
+    <script src="../static/bower_components/webcamjs/webcam.js"></script>
+    <script src="../static/bower_components/sha1/index.js"></script>
+
+    <script src="../static/bower_components/cryptojs/locallib/sha256-min.js"></script>
+    <script src="../static/bower_components/cryptojs/locallib/hmac-sha256.js"></script>
+    <script src="../static/bower_components/cryptojs/locallib/aes.js"></script>
+
+    <script src="../static/bower_components/angular/angular.min.js"></script>
+    <script src="../static/bower_components/firebase/firebase.js"></script>
+    <script src="../static/bower_components/angularfire/dist/angularfire.min.js"></script>
+    <script src="../static/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="../static/bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="../static/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="../static/bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="../static/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="../static/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="../static/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../static/bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="../static/bower_components/ng-table/dist/ng-table.min.js"></script>
+    <!--<script src="../static/bower_components/loadcss/loadCSS.js"></script>-->
+    <script src="../static/bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+    <script src="../static/bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="../static/bower_components/ngGeolocation/ngGeolocation.min.js"></script>
+    <script src="../static/bower_components/ng.geotranslation/dist/ng-geotranslation.js"></script>
+    <script src="../static/bower_components/addressit/dist/addressit.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
+    <script src="../static/bower_components/angular-geocoder/main.js"></script>
+    <script src="../static/bower_components/ng-camera/dist/ng-camera.js"></script>
+    <script src="../static/bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="../static/bower_components/qrcode-generator/js/qrcode.js"></script>
+    <script src="../static/bower_components/qrcode-generator/js/qrcode_UTF8.js"></script>
+    <script src="../static/bower_components/angular-qrcode/angular-qrcode.js"></script>
+    <script src="../static/bower_components/angular-segmentio/angular-segmentio.js"></script>
+    <script src="../static/bower_components/ng-focus-if/focusIf.min.js"></script>
+    <script src="../static/bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+    <script src="../static/bower_components/angular-materialize/src/angular-materialize.js"></script>
+
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- Configurable Application Interface -->
+        <script src="/static/environment/base.js"></script>
+        <script src="/static/app.js"></script>
+
+        <!-- Core Authentication -->
+        <script src="/static/angularfire/config.js"></script>
+        <script src="/static/angularfire/firebase.ref.js"></script>
+
+        <!-- Needful Filters -->
+        <script src="/static/filters/reverse.js"></script>
+
+        <!-- Needful Services -->
+        <script src="/static/services/crypto.js"></script>
+        <script src="/static/services/authentication.js"></script>
+        <script src="/static/services/notification.js"></script>
+        <script src="/static/services/bank.js"></script>
+        <script src="/static/services/browser.js"></script>
+        <script src="/static/services/payments.js"></script>
+        <script src="/static/services/person.js"></script>
+        <script src="/static/services/sound.js"></script>
+        <script src="/static/services/map.js"></script>
+        <script src="/static/angularfire/auth.js"></script>
+
+        <!-- Needful Directives -->
+        <script src="/static/directives/ngShowAuth.js"></script>
+        <script src="/static/directives/ngHideAuth.js"></script>
+        <script src="/static/directives/customenter.js"></script>
+        <script src="/static/directives/bitcoinprices.js"></script>
+        <script src="/static/directives/customernavigation.js"></script>
+        <script src="/static/directives/contactfooter.js"></script>
+        <script src="/static/directives/adminfootermenu.js"></script>
+        <script src="/static/directives/pagestyle.js"></script>
+        <script src="/static/directives/virtualplacard.js"></script>
+        <script src="/static/directives/feedback.js"></script>
+
+        <!-- Routes Contract -->
+        <script src="/static/routes.js"></script>
+
+        <!-- Core Module Controller -->
+        <script src="/static/controllers/main.js"></script>
+
+        <!-- Brochure Site Controllers -->
+        <script src="/static/controllers/chat.js"></script>
+        <script src="/static/controllers/login.js"></script>
+        <script src="/static/controllers/account.js"></script>
+        <script src="/static/controllers/help.js"></script>
+        <script src="/static/controllers/contact.js"></script>
+
+        <!-- Brokerage Admin -->
+        <script src="/static/controllers/dashboard.js"></script>
+
+        <!-- Customer Front End -->
+        <script src="/static/controllers/verifyone.js"></script>
+        <script src="/static/controllers/verifytwo.js"></script>
+        <script src="/static/controllers/verifythree.js"></script>
+        <script src="/static/controllers/verifyfour.js"></script>
+        <script src="/static/controllers/placeorder.js"></script>
+        <script src="/static/controllers/completeorder.js"></script>
+        <script src="/static/controllers/terms.js"></script>
+        <script src="/static/controllers/openorders.js"></script>
+        <script src="/static/controllers/history.js"></script>
+        <script src="/static/controllers/mapview.js"></script>
+        <script src="/static/controllers/refnumber.js"></script>
+        <script src="/static/controllers/genericerror.js"></script>
+        <script src="/static/controllers/takeselfie.js"></script>
+        <script src="/static/controllers/takeselfieconfirm.js"></script>
+        <script src="/static/controllers/nolocationavailable.js"></script>
+        <script src="/static/controllers/order.js"></script>
+        <!-- endbuild -->
+
+    {% block js %}
+    <!--
+       -<script src="../static/bower_components/UpUp/dist/upup.min.js"></script>
+       -<script>
+       -UpUp.start({
+       -  'content-url': '/',
+       -  'assets': [
+       -    'https://fonts.googleapis.com/icon?family=Material+Icons',
+       -    '../static/bower_components/jquery/dist/jquery.js'
+       -  ]
+       -});
+       -</script>
+       -->
+    {% endblock %}
+
+    {% render_block "js" %}
+
+    <!--
+       -<script id="loadcss">
+       -  for (var i = 0; i < styleList.length; ++i) {
+       -    loadCSS( styleList[i], document.getElementById("loadcss") );
+       -  }
+       -</script>
+       -->
+
+    {% static_placeholder "GlobalFooter" or %}
+    {% endstatic_placeholder %}
+
+  </body>
+
+</html>
+

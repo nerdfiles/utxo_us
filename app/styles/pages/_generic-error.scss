@@ -1,0 +1,85 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Error  */
+
+@include pageHeader() {
+  border-bottom: 2px solid #fff;
+  margin-bottom: 1rem ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 1rem;
+}
+
+
+.page--error {
+
+  form {
+    position: absolute;
+    width: 50%;
+    top: 0;
+    header {
+      background-color: #d8c708;
+      img {
+        height: 50%;
+        width: 50%;
+      }
+      /*padding-bottom: 5vh;*/
+
+      a {
+        text-align: left;
+        text-indent: -9999px;
+        display: inline;
+        padding: 0;
+      }
+      h1 {
+        border-bottom: none;
+        line-height: 1;
+        margin: 0;
+        padding-top: 5vh;
+      }
+      .field-block .input-field label {
+        text-align: center;
+        width: 100%;
+        color: #666;
+      }
+      .fa {
+        color: #ccc;
+      }
+      input {
+        text-align: center;
+        color: #666;
+      }
+    }
+
+    .guide-1 {
+      h2 {
+        margin: 0;
+        text-align: center;
+        color: #111;
+      }
+      background-color: #d8c708;
+      padding: 5vh 0;
+    }
+
+    .guide-2 {
+      background-color: #1e7485;
+
+      div {
+        padding: 15vh 5vh 30vh;
+        p {
+          text-align: center;
+        }
+        font-size: 1.325rem;
+      }
+    }
+
+  }
+
+}
+

@@ -1,0 +1,25 @@
+<nav
+  class="{{gridLayout}}"
+  ng-class="{
+    'font-effect-3d-float': isAfterdark
+  }"
+>
+  <ul>
+    <li
+      ng-repeat="link in knownPaths"
+      ng-class="{
+        'hint--bottom' : true,
+        'active'       : link.active == true
+      }"
+      ng-attr-data-hint="{{link.desc}}"
+    >
+      <a href="{{baseUrl_i18n}}{{link.alias.stylize('hash')}}">
+        <span ng-show="link.label !== 'Logout'">{{link.label}}</span>
+        <span
+          ng-show="link.label === 'Logout'"
+          class="fa fa-power-off"
+        ></span>
+      </a>
+    </li>
+  </ul>
+</nav>

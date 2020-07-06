@@ -1,0 +1,42 @@
+[contact-footer] {
+  dl {
+    overflow: hidden;
+    margin-bottom: 1rem;
+    dt {
+      float: left;
+      clear: left;
+      min-width: 15ch;
+    }
+    dd {
+    }
+  }
+
+  @media #{$small} {
+    bottom: 0;
+  }
+
+  @media #{$slinder} {
+    bottom: 0;
+  }
+
+  @media #{$medium} {
+    bottom: 0;
+  }
+
+  @media #{$large} {
+    bottom: 0;
+  }
+
+  position: fixed;
+  padding: 1rem 2rem;
+  background-color: #71c384;
+  color: #fff;
+  font-size: .85rem;
+
+  h2 {
+    line-height: 1;
+    font-size: 1.325rem;
+    margin: 0 0 1rem 0; }
+  span { margin-right: 1rem; }
+  .footer--mini { margin-top: 1rem; }
+}

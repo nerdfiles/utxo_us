@@ -1,0 +1,20 @@
+{% load i18n thumbnail cms_tags %}
+
+<article id="terms-{{ terms.slug }}" class="terms-item">
+    <header>
+        <h3><a href="{{ terms.get_absolute_url }}">{{ terms.title }}</a></h3>
+        {% block app_meta %}
+            {% include "includes/app_meta.html" %}
+        {% endblock %}
+    </header>
+    <div class="app-lead">
+        {% if not TRUNCWORDS_COUNT %}
+            {% render_model terms "abstract" %}
+        {% else %}
+            {% render_model terms "abstract" "" "" 'truncatewords_html:TRUNCWORDS_COUNT'  %}
+        {% endif %}
+    </div>
+    <footer class="read-more">
+        <a href="{{ terms.get_absolute_url }}">{% trans "read more" %} &raquo;</a>
+    </footer>
+</article>

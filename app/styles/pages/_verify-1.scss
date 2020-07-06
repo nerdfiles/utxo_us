@@ -1,0 +1,52 @@
+.page--verify-one {
+  header {
+    p {
+      text-align: center;
+      font-size: .8rem;
+      font-weight: 200;
+      line-height: 1.25;
+    }
+
+    @media #{$small} {
+      h1 { font-size: 1rem; }
+    }
+
+    @media #{$slinder} {
+      h1 { font-size: 1rem; }
+    }
+
+    @media #{$medium} {
+      h1 { font-size: 2rem; }
+    }
+
+    @media #{$large} {
+      h1 { font-size: 2rem; }
+    }
+
+  }
+
+  form .submit-block {
+    margin-top: 2rem;
+  }
+
+  form {
+
+    @media #{$small} {
+      padding-bottom: 40%;
+    }
+
+    @media #{$slinder} {
+      padding-bottom: 40%;
+    }
+
+    @media #{$medium} {
+      padding-bottom: 20%;
+    }
+
+    @media #{$large} {
+      padding-bottom: 20%;
+    }
+
+    position: relative;
+  }
+}

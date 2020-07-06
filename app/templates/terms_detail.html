@@ -1,0 +1,31 @@
+{% extends "layout/base.html" %}
+{% load i18n thumbnail cms_tags %}
+
+{% block meta_description %}{{ terms.meta_description }}{% endblock meta_description %}
+{% block meta_keywords %}{{ terms.meta_keywords }}{% endblock meta_keywords %}
+{% block canonical_url %}<link rel="canonical" href="{{ SITE.domain }}{{ view.get_view_url }}"/>{% endblock canonical_url %}
+{% block title %}{{ terms.get_title }}{% endblock %}
+
+{% block content_app %}{% spaceless %}
+<article id="terms-{{ terms.slug }}" class="terms-item terms-detail">
+    <header>
+        <h2>{% render_model terms "title" %}</h2>
+        {% block app_meta %}
+            {% include "includes/app_meta.html" %}
+        {% endblock %}
+    </header>
+    {% if terms.main_image_id %}
+    <div class="app-visual">
+        {# thumbnail terms.main_image terms.full_image_options.size crop=terms.full_image_options.crop upscale=terms.full_image_options.upscale subject_location=terms.main_image.subject_location  as thumb #}
+        <img src="{{ thumb.url }}" alt="{{ terms.main_image.default_alt_text }}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
+    </div>
+    {% endif %}
+    {% endspaceless %}
+    {% if use_placeholder %}
+        <div class="app-content">{% render_placeholder terms.content %}</div>
+    {% else %}
+        <div class="app-content">{% render_model terms "terms_text" "terms_text" %}</div>
+    {% endif %}
+</article>
+{% endblock content_app %}
+

@@ -1,0 +1,249 @@
+<!--
+# fileOverview
+
+                     _    ___
+                    (_)  / __)
+   _   _ _____  ____ _ _| |__ _   _  ___  ____  _____
+  | | | | ___ |/ ___) (_   __) | | |/ _ \|  _ \| ___ |
+   \ V /| ____| |   | | | |  | |_| | |_| | | | | ____|
+    \_/ |_____)_|   |_| |_|   \__  |\___/|_| |_|_____)
+                             (____/
+
+@file CustSite_Web_Verification_Step1-2.0.psd  
+-->
+
+<div class="app--entry page--verify-one">
+
+  <header class="animated fadeIn">
+    <h1
+      class="file-l4-m4-s5__centered"
+    >
+      <a href="{{baseUrl}}verifyOne">Identity Verification</a>
+    </h1>
+    <div class="file-l5-m5-s5__centered">
+      <p>
+        We don't store sensitive information you provide other than what is required 
+        to comply with the relevant laws. We use <a href="https://blockscore.com/" target="_blank">Blockscore</a> for our verification.
+      </p>
+    </div>
+  </header>
+
+  <form
+    name="verify_person_form"
+    class="rank animated fadeIn"
+    ng-submit="updatePerson(person)"
+  >
+    <div class="file-l3-m3-s4__centered">
+
+      <div class="field-block">
+        <nav>
+          <!--ul class="group-field" style="text-align: center;">
+            <li style="width: 100%;">
+              <input
+                name="person--type"
+                ng-model="person.overview.type"
+                type="radio"
+                id="verification__individual"
+                ng-value="1"
+                checked="checked"
+                ng-init="person.overview.type = 1"
+              />
+              <label for="verification__individual">Individual</label>
+            </li>
+            <li>
+              <input
+                name="person--type"
+                ng-model="person.overview.type"
+                type="radio"
+                id="verification__company"
+                ng-value="2"
+                disabled="disabled"
+              />
+              <label for="verification__company">Company</label>
+            </li>
+          </ul-->
+        </nav>
+      </div>
+
+      <div class="field-block">
+        <div class="input-field">
+          <input 
+            autocomplete="off"
+            id="verification__full_name"
+            name="person--full-name"
+            ng-model="person.overview.full_name"
+            type="text"
+            class="validate"
+            required="required"
+          />
+          <label 
+            for="verification__full_name"
+            ng-class="{
+              'active': person.overview.full_name === ''
+            }"
+          >Full Name</label>
+        </div>
+      </div>
+
+      <div class="field-block">
+
+        <!--
+           -<div class="input-field">
+           -  <input 
+           -    autocomplete="off"
+           -    id="verification__address"
+           -    name="person--primary-address"
+           -    ng-model="person.overview.primary_address"
+           -    type="text"
+           -    class="validate"
+           -    placeholder="e.g., 723 Main St 911 Houston, Texas 77002"
+           -  />
+           -  <label
+           -    for="verification__address"
+           -    class="active"
+           -    ng-class="{
+           -      'active': person.overview.primary_address === ''
+           -    }"
+           -  >Address</label>
+           -</div>
+           -->
+
+        <div class="input-field">
+          <input
+            autocomplete="off"
+            type="text"
+            ng-model="person.inputAddress.street1"
+            id="input-address__street1"
+            name="person--inputAddress--street1"
+            class="validate"
+            required="required"
+          />
+          <label
+            for="input-address__street1"
+            class="active"
+            ng-class="{
+               'active': person.inputAddress.street1 === ''
+            }"
+          >Street (### Name St. ###)</label>
+        </div>
+
+        <div class="input-field">
+          <input
+            autocomplete="off"
+            type="text"
+            ng-model="person.inputAddress.city"
+            id="input-address__city"
+            name="person--inputAddress--city"
+            class="validate"
+            required="required"
+          />
+          <label
+            for="input-address__city"
+            class="active"
+            ng-class="{
+               'active': person.inputAddress.city === ''
+            }"
+          >City</label>
+        </div>
+
+        <div class="input-field">
+          <input
+            autocomplete="off"
+            type="text"
+            ng-model="person.inputAddress.state"
+            id="input-address__state"
+            name="person--inputAddress--state"
+            class="validate"
+            required="required"
+          />
+          <label
+            for="input-address__state"
+            class="active"
+            ng-class="{
+               'active': person.inputAddress.state === ''
+            }"
+          >State</label>
+        </div>
+
+        <div class="input-field">
+          <input
+            autocomplete="off"
+            type="text"
+            pattern="(\d{5}([\-]\d{4})?)"
+            ng-model="person.inputAddress.zipCode"
+            id="input-address__zipCode"
+            name="person--inputAddress--zipCode"
+            class="validate"
+            required="required"
+          />
+          <label
+            for="input-address__zipCode"
+            class="active"
+            ng-class="{
+               'active': person.inputAddress.zipCode === ''
+            }"
+          >Zip</label>
+        </div>
+
+      </div>
+
+      <div class="field-block">
+        <div class="input-field">
+          <input 
+            autocomplete="off"
+            id="verification__birthdate"
+            name="person--birthdate"
+            ng-model="person.overview.birthdate"
+            type="text"
+            class="validate"
+            placeholder="YYYY-MM-DD"
+            ui-date-mask
+          />
+          <label
+            for="verification__birthdate"
+            class="active"
+            ng-class="{
+              'active': person.overview.birthdate === ''
+            }"
+          >Birthdate</label>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="input-field">
+          <input 
+            autocomplete="off"
+            id="verification__ss"
+            name="person--ssn"
+            ng-model="person.overview.ssn"
+            type="text"
+            class="validate"
+          />
+          <label 
+            for="verification__ss"
+            ng-class="{
+              'active': person.overview.ssh === ''
+            }"
+          >Last 4 digits of Social Security #</label>
+        </div>
+      </div>
+
+    </div><!-- .centered -->
+
+    <div class="field-block submit-block">
+      <div class="input-field">
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+          <span class="material-labels">Ok, next.</span>
+          <span class="fa fa-arrow-circle-right"></span>
+        </button>
+        <span class="verification__progress">(step 1 of 3)</span>
+      </div>
+    </div>
+
+  </form>
+
+  <!--<div admin-footer-menu></div>-->
+
+  <feedback></feedback>
+
+</div>

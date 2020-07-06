@@ -1,0 +1,205 @@
+<!--
+# fileOverview
+
+@file CustSite_Web_History-6.2.psd  
+-->
+
+<div
+  class="app--entry page--history"
+  ng-class="{
+    'font-effect-3d-float': isAfterdark
+  }"
+>
+
+  <div
+    customer-navigation
+    grid-layout="file-l5-m5-s5__centered"
+    class="rank"
+  ></div>
+
+  <div class="page--open-orders--view">
+
+    <div class="rank">
+      <div
+        bitcoin-prices
+        class="file-l3-m4-s6__centered"
+      ></div>
+    </div>
+
+    <br />
+    <br />
+
+    <form 
+      action=""
+      class="rank"
+    >
+      <div class="scrollable-2 file-l6-m6-s6__centered relativize">
+        <div ng-show="loaded == false">
+          <div class="loader"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>
+        </div>
+        <table
+          ng-table="tableParams" 
+          show-filter="true" 
+          class="table table-bordered table-striped"
+          ng-class="{
+            'empty': (many !== true || none) && loaded
+          }"
+        >
+          <thead class="accessibily-hidden">
+            <tr>
+              <th style="text-align: center;">Timestamp</th>
+              <th>USD Amount</th>
+              <th><span class="fa fa-btc"></span> Amount</th>
+              <th style="text-align: center;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr 
+              ng-repeat="order in $data | filter:{ 'status': '1' }" 
+              ng-show="order.status == '1' || order.confirmed == 'true'"
+            >
+
+              <td 
+                class="timestamp--human-readable__open-order accessibly-hidden"
+                ng-init="a = moment(order.timestamp).toString()"
+                style="text-align: center; display: none;"
+              >
+                <span
+                  data-hint="{{a}}"
+                  class="hint--right"
+                >
+                  <i class="material-icons">alarm_on</i>
+                </span>
+              </td>
+
+              <td 
+                class="amount--human-readable__open-order accessibly-hidden"
+                style="display: none;"
+              >
+                ${{numeral(order.usd).format('0,00')}}
+              </td>
+
+              <td
+                class="btc-amount--human-readable__open-order accessibly-hidden"
+                style="display: none;"
+              >
+                {{order.btc}}
+              </td>
+
+              <td colspan="4">
+                <table>
+                  <tbody>
+                    <tr>
+
+                      <td 
+                        class="timestamp--human-readable__open-order"
+                        style="text-align: center;"
+                      >
+                        <span
+                          data-hint="{{a}}"
+                          class="hint--right"
+                        >
+                          <i class="material-icons">alarm_on</i>
+                        </span>
+                      </td>
+
+                      <td class="amount--human-readable__open-order">
+                        ${{numeral(order.usd).format('0,00')}}
+                      </td>
+
+                      <td class="btc-amount--human-readable__open-order">
+                        {{order.btc}}
+                      </td>
+
+                      <td class="status__open-order" style="text-align: center;">
+                        <span
+                          data-hint="Thanks. We've completed this order."
+                          class="hint--left"
+                          ng-show="order.confirmed == 'true'"
+                        >
+                          <i class="material-icons">done_all</i>
+                        </span>
+                        <span
+                          data-hint="This order is open."
+                          class="hint--left"
+                          ng-show="order.status === '0'">
+                          <i class="material-icons">alarm_on</i>
+                        </span>
+                        <span
+                          data-hint="You've banked for BTC."
+                          class="hint--left"
+                          ng-show="order.cheesed === 'true'"
+                        >
+                          <i class="material-icons">local_pizza</i>
+                        </span>
+                        <span
+                          data-hint="This order has expired."
+                          class="hint--left"
+                          ng-show="order.forced_exp == 'true' || order.expired == 'true'"
+                        >
+                          <i class="material-icons">alarm_off</i>
+                        </span>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td colspan="4" style="padding: 0; text-align: center;">
+
+                        <small ng-show="order.last5 && order.confirmed == 'true'">REF#: {{order.last5}} | {{order.string_construct}}</small>
+                        <small ng-show="order.confirmed == 'true'">
+                          <a href="http://blockchain.info/address/{{order.btc_address}}">
+                          Blockchain Confirmation <span class="fa fa-btc"></span>
+                          </a>
+                        </small>
+
+                        <small ng-show="order.fincen1 == 'true'">
+                          <i class="material-icons">beenhere</i>
+                        </small>
+
+                        <small ng-show="order.expired == 'true' && !order.selfie_link">This order expired. Call to extend time <a href="tel:956-648-2089">956-648-2089</a>.</small>
+
+                        <small ng-show="order.paid == 'true' && order.confirmed != 'true' && order.selfie_link">We're on it. <a href="{{baseUrl_i18n}}order/opened/{{order.$id}}" style="border-bottom: 1px solid gold;">Review your order</a> in detail.</small>
+
+                        &nbsp;
+
+                        <small ng-show="order.forced_exp == 'true'">
+                          Order expired by UTXO, LLC. Call for more information <a href="tel:956-648-2089">956-648-2089</a>.
+                        </small>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot ng-show="(many !== true || none) && loaded">
+            <tr>
+              <td colspan="4">
+                <div
+                  style="text-align: center;"
+                >
+                  <a
+                    data-hint="Place an order"
+                    class="hint--top"
+                    ng-href="{{siteUrl}}/en/#/e24a4f9e18cf2fbba29b82d9b6b899aff70e10ea"
+                  >
+                    <i 
+                      class="material-icons"
+                    >add_shopping_cart</i>
+                  </a>
+                </div>
+                <!--<p>You do not have any opened orders.</p>-->
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+    </form>
+  </div>
+
+  <div admin-footer-menu></div>
+
+</div>
+

@@ -1,0 +1,69 @@
+<!--
+# fileOverview
+
+@file CustSite_Mobile_ConfirmationFollowingUpload-C.psd  
+-->
+
+<style>
+.base-template {
+  height: 100%;
+}
+.base-template .row {
+  height: 100%;
+}
+.base-template .row [ng-view] {
+  height: 100%;
+}
+</style>
+
+<div class="app--entry page--complete-order">
+
+  <div
+    customer-navigation
+    grid-layout="file-l4-m4-s4__centered"
+    class="rank"
+  ></div>
+
+  <form
+    name="complete_order_form"
+    class="rank"
+    ng-submit="updatePerson()"
+  >
+
+    <div class="field-block">
+      <img style="width: 10%" src="/static/images/logo-only.png" />
+      <div ng-show="loaded == false">
+        <div class="loader"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>
+      </div>
+      <p ng-show="loaded == true && !person.order.last5">No order found.</p>
+      <h1 ng-show="person.order.last5">Thank you!</h1>
+      <dl ng-show="person.order.last5">
+        <dt>ref:</dt>
+        <dd ng-show="person.order.last5">
+          {{person.order.last5}} | {{person.order.string_construct}}
+        </dd>
+      </dl>
+      <h3 ng-show="person.order.last5">
+      We’re on it
+      </h3>
+    </div>
+
+    <div class="field-block submit-block">
+      <div class="input-field">
+        <p>
+          You’ll be notified when the
+          transfer is made via sms
+        </p>
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+          <span class="fa fa-star"></span>
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+  <div admin-footer-menu></div>
+
+</div>
+
+

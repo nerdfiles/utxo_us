@@ -1,0 +1,18 @@
+
+html, body {
+  height: 100%;
+}
+
+body.body-class {
+  font-family: $fontCopy1;
+  letter-spacing: 1px;
+  & > div.row {
+    margin-bottom: 0;
+  }
+}
+
+ul.side-nav {
+  overflow: auto;
+}
+
+

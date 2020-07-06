@@ -1,0 +1,183 @@
+/***
+@fileOverview
+                             _    ___       _______
+                            (_)  / __)     (_______)
+           _   _ _____  ____ _ _| |__ _   _ _     _ ____  _____
+          | | | | ___ |/ ___) (_   __) | | | |   | |  _ \| ___ |
+     ______\ V /| ____| |   | | | |  | |_| | |___| | | | | ____|
+    (_______)_/ |_____)_|   |_| |_|   \__  |\_____/|_| |_|_____)
+                                     (____/
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Verify One  */
+
+@include pageHeader() {
+  border-bottom: 2px solid #fff;
+  margin-bottom: 1rem ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 1rem;
+}
+
+
+/* ------------------------------ Identity Verification 1  */
+
+header p {
+  @include anchors($default: $a--utxo-default, $link: $a--utxo-link, $visited: $a--utxo-visited, $hover: $a--utxo-hover, $active: $a--utxo-active) {
+    border-bottom: 1px #fff solid;
+  }
+}
+
+[class*="page--verify-four"],
+[class*="page--verify-three"] {
+  form {
+
+    @media #{$small} {
+      margin-top: 30vw;
+    }
+
+    @media #{$slinder} {
+      margin-top: 30vw;
+    }
+
+    @media #{$medium} {
+      margin-top: 20vw;
+    }
+
+    @media #{$large} {
+      margin-top: 20vw;
+    }
+
+  }
+  [disabled="disabled"].btn--pending {
+    background-color: transparent !important;
+    color: #fff;
+    &:hover {
+      background-color: transparent !important;
+      color: #fff;
+    }
+  }
+}
+
+
+.page--verify-two {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 100%;
+}
+
+.page--VerifyOne,
+.page--VerifyTwo,
+.page--VerifyThree,
+.page--VerifyFour {
+
+  @media #{$small} {
+    footer.cms-footer { 
+      position: absolute;
+      left: -9999px !important;
+    }
+  }
+
+  @media #{$slinder} {
+    footer.cms-footer { 
+      position: absolute;
+      left: -9999px !important;
+    }
+  }
+
+  @media #{$medium} {
+    footer.cms-footer { 
+      position: fixed;
+      left: auto !important;
+    }
+  }
+
+  @media #{$large} {
+    footer.cms-footer { 
+      position: fixed;
+      left: auto !important;
+    }
+  }
+}
+
+.page--verify-four .submit-block,
+.page--verify-three .submit-block,
+.page--verify-two .submit-block {
+
+
+  @media #{$small} {
+    width: 100% !important;
+  }
+
+  @media #{$slinder} {
+    width: 100% !important;
+  }
+
+  @media #{$medium} {
+    width: 50% !important;
+  }
+
+  @media #{$large} {
+    width: 50% !important;
+  }
+}
+
+.field-block li {
+  min-height: 3ch;
+}
+
+.page--verify-one {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  label {
+    font-size: 0.8rem;
+    -webkit-transform: translateY(-140%);
+    -moz-transform: translateY(-140%);
+    -ms-transform: translateY(-140%);
+    -o-transform: translateY(-140%);
+    transform: translateY(-140%);
+  }
+}
+
+.page--verify-one {
+
+  @media #{$small} {
+    padding-top: 100px;
+
+    .submit-block {
+      bottom: 0 !important;
+    }
+  }
+
+  @media #{$slinder} {
+    padding-top: 100px;
+
+    .submit-block {
+      bottom: 0 !important;
+    }
+  }
+
+  @media #{$medium} {
+    padding-top: 0;
+
+    .submit-block {
+      bottom: 0rem !important;
+    }
+  }
+
+  @media #{$large} {
+
+    padding-top: 0;
+
+    .submit-block {
+      bottom: 0rem !important;
+    }
+  }
+
+}

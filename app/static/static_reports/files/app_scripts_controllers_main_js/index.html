@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/scripts/controllers/main.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/scripts/controllers/main.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">70.27</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">175</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">28.97</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.30</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">&#039;use strict&#039;;
+
+/**
+ * @ngdoc function
+ * @name utxoPmc.controller:MainCtrl
+ * @description
+ * # MainCtrl
+ * Controller of the utxoPmc
+ */
+angular.module(&#039;utxoPmc&#039;)
+  .factory(&#039;$api&#039;, function ($http) {
+    var __interface__ = {};
+    __interface__.segmentio = {};
+    __interface__.segmentio.apiKey = function () {
+      var portSpec = $window.location.port != &quot;&quot; ? (&#039;:&#039; + $window.location.port) : &#039;&#039;;
+      var hostname = $window.location.hostname + portSpec;
+      var url = $window.location.protocol + &#039;//&#039; + hostname + &#039;/api/segmentio/apikey&#039;;
+      return $http(url).success(function (responseData) {
+        __interface__.__api__ = {};
+        __interface__.__api__[&#039;/api/segmentio/apikey&#039;] = responseData.data.mainEntity;
+      });
+    };
+    return __interface__;
+
+  })
+  .controller(&#039;MainCtrl&#039;, function ($scope, authentication, $location, $window, person, Ref, segmentio, $api, $http, crypto, localStorageService) {
+
+    /*
+     *$api.segmentio.apiKey().then(function (key) {
+     *  segmentio.load(key.data.content);
+     *});
+     */
+    var portSpec = $window.location.port != &quot;&quot; ? (&#039;:&#039; + $window.location.port) : &#039;&#039;;
+    var hostname = $window.location.hostname + portSpec;
+    var loaded = false;
+
+    $scope.smsAuthentication = {};
+    $scope.smsAuthentication.phone_number = null;
+    $scope.validate_phone_number_form = {};
+    $scope.validate_phone_number_form.validated = false;
+
+    $scope.$watch(&#039;smsAuthentication.phone_number&#039;, function (newVal) {
+      if (newVal === undefined || newVal === null) {
+        return;
+      }
+      if (newVal === &#039;&#039;) {
+        loaded = false;
+      }
+    });
+
+    $scope.$watch(&#039;smsAuthentication.sec_number&#039;, function (newVal, oldVal) {
+      /**
+       * SMS Authentication Number Security
+       */
+      if (viewConfigurator.DEBUG === true) {
+        $location.path(&#039;verifyOne&#039;);
+      }
+
+      if (newVal &amp;&amp; newVal === $scope.validate_phone_number_form.secCheck) {
+
+        Ref.authAnonymously(function(error, authData) {
+          if (error) {
+          } else {
+            var secured_phone = $scope.smsAuthentication.phone_number;
+            var _secured_phone = &#039;&#039; + crypto.encrypt(secured_phone, authData.token);
+            localStorageService.set(&#039;hook&#039;, _secured_phone);
+
+            // Refresh session.
+            person.session.user = authData;
+            if (person.current.overview.terms == &#039;true&#039;) {
+
+              if (person.current.verification) {
+
+                $location.path(&#039;e24a4f9e18cf2fbba29b82d9b6b899aff70e10ea&#039;);
+              } else {
+                $location.path(&#039;verifyOne&#039;);
+
+              }
+            } else {
+              $location.path(&#039;terms&#039;);
+
+            }
+          }
+        });
+
+      }
+    });
+
+    $scope.validate_phone_number = function () {
+      /**
+       * Validate Phone Number to initialize Blockscore
+       */
+      if ($scope.validate_phone_number_form.$invalid === true) {
+        // We&#039;ve received a response from the backend to authenticate the given person (People).
+        return;
+      }
+
+      if (loaded === false) {
+        loaded = true;
+      } else {
+        return;
+      }
+
+      var formObject = $scope.smsAuthentication;
+      formObject.phone_number = $scope.smsAuthentication.phone_number;
+
+      authentication
+        .validate_phone_number(formObject)
+        .then(function (validatedForm) {
+          /**
+           * Successful Validation Condition
+           */
+          $scope.validate_phone_number_form.validated = true;
+          $scope.validate_phone_number_form.s = validatedForm
+          $scope.validate_phone_number_form.sec = validatedForm.data.split(&#039;: &#039;);
+          $scope.validate_phone_number_form.secCheck = _.last($scope.validate_phone_number_form.sec);
+          var phone_number = formObject.phone_number
+          try {
+            // Assuming validation success, pull up the relevant person by phone if available in Firebase.
+            person
+              .get({
+                mode: &#039;byId&#039;,
+                handle: phone_number
+              })
+                .then(function (personData) {
+                  var personData = personData != null ? personData : {};
+                  $scope.validate_phone_number_form.$person = personData;
+
+                  if (personData) {
+                    person.current = personData;
+                  }
+
+                }, function (errorData) {
+                  $scope.validate_phone_number_form.$person = person.current = errorData;
+                });
+          } catch (e) {
+            console.log(e);
+          }
+
+        }, function (errorData) {
+          /**
+           * Error Validation Condition
+           */
+          $scope.validate_phone_number_form.validated = false;
+          $scope.validate_phone_number_form.error = true;
+          $scope.validate_phone_number_form.$person = errorData;
+        });
+
+    };
+
+    $scope.$watchCollection(&#039;validate_phone_number_form.$person&#039;, function (newVal, oldVal) {
+      /**
+       * User Not Found, but User has provided a phone number.
+       *
+       * $person on `$scope.validate_phone_number_form` will no longer be `undefined` but an empty object.
+       */
+      var formConstruct = {};
+      formConstruct.phone_number = $scope.smsAuthentication.phone_number;
+      var _payload = formConstruct;
+
+      // User does not exist, create user with basic properties.
+      if (_payload &amp;&amp; _payload.phone_number &amp;&amp; !person.current.phone_number) {
+
+        person.push({
+          payload: _payload
+        }).then(function (personData) {
+          person.current = personData;
+        }, function (errorData) {
+          person.current = errorData;
+        });
+
+      }
+    });
+
+  });</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

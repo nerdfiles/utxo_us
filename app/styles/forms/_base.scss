@@ -1,0 +1,110 @@
+/* ------------------------------ Forms: Generic  */
+
+label, input, textarea {
+  font-family: $fontCopy1;
+}
+
+fieldset.field-row {
+  border: 0;
+}
+
+form {
+  @extend .rank;
+}
+
+div.input-field {
+
+}
+
+form {
+  color: #fff;
+  input {
+    color: #fff;
+  }
+  .group-field,
+  .input-field,
+  label {
+    text-transform: lowercase;
+  }
+  .group-field {
+    li { }
+    label {
+      color: #fff;
+      font-family: $fontCopy2;
+    }
+    [type="radio"]:not(:checked) + label:before {
+      border-color  : #fff;
+      border-radius : 10%;
+    }
+  }
+}
+
+form {
+  nav {
+    background-color : transparent;
+    box-shadow       : none;
+    height           : auto;
+    line-height      : 1;
+  }
+
+  .verification__progress {
+    display: block;
+  }
+
+  .field-block {
+    .input-field input:not(:focus):not(.valid),
+    .input-field textarea:not(:focus):not(.valid) {
+      border-bottom-color: #fff;
+    }
+
+    .input-field label {
+      color     : #fff;
+      left      : 0;
+      top       : 1rem;
+
+/*
+ *
+ *      @media #{$small} {
+ *        font-size : 2.25vw;
+ *      }
+ *
+ *      @media #{$slinder} {
+ *        font-size : 2.25vw;
+ *      }
+ *
+ *      @media #{$medium} {
+ *        font-size : 2vh;
+ *      }
+ *
+ *      @media #{$large} {
+ *        font-size : 2vh;
+ *      }
+ *
+ */
+
+    }
+  }
+
+  .submit-block {
+    background-color : #71c384;
+    text-align       : center;
+    color            : #fff;
+    padding-top      : 1rem;
+    padding-bottom   : 1.5rem;
+
+    .material-labels {
+      position: relative;
+      top: -3px;
+    }
+
+    .input-field {
+      margin-top: 0;
+    }
+
+    .btn {
+      @include customBtn();
+      background-color: #71c384;
+    }
+
+  }
+}

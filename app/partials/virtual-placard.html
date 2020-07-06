@@ -1,0 +1,57 @@
+<aside
+  class="virtual-placard--inner"
+  ng-show="loaded"
+>
+  <header
+    ng-show="!person.noLocationAvailable"
+    ng-click="acceptDiscoveredLocation()"
+    class="cta"
+  >
+    <span 
+      ng-class="{
+        '~font-effect-3d-float': isAfterdark
+      }"
+      class="cheese-label"
+    >
+      Money deposited
+    </span>
+    <span class="fa fa-arrow-circle-right"></span>
+  </header>
+  <header
+    ng-show="person.noLocationAvailable"
+    ng-click="sendDirections()"
+    class="cta"
+  >
+    <span
+      ng-class="{
+        '~font-effect-3d-float': isAfterdark
+      }"
+      class="cheese-label"
+    >
+      Money deposited
+    </span>
+    <span class="fa fa-arrow-circle-right"></span>
+  </header>
+  <div class="content">
+    <span class="label">order will auto-cancel in</span>
+    <!--
+      @see https://trello.com/c/Ph5xMRq1/67-on-the-money-deposit-part-where-it-says-order-will-self-destruct-change-it-to-you-have-x-amount-of-time-to-deposit-till-auto-can
+       -<span class="label">
+       -  you have
+       -</span>
+       -->
+    <div
+      ng-class="{
+        '~font-effect-3d-float': isAfterdark
+      }"
+      cheese-counter
+    >
+    </div>
+    <!--
+       -<span class="label">
+       -  amount of time to deposit till auto cancel on order
+       -</span>
+       -->
+  </div>
+</aside>
+

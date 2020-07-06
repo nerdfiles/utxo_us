@@ -1,0 +1,24 @@
+{% load page_meta_tags i18n staticfiles cms_tags sekizai_tags django_seo_js %}
+{% load url from future %}
+<link
+  rel="apple-touch-icon"
+  href="{% static 'images/ios/Icon.png' %}"
+/>
+
+<!-- For third generation iPad Retina Display -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'images/ios/Icon-72@2x.png' %}" />
+
+<!-- For iPhone 4 with high-resolution Retina display: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'images/ios/Icon@2x.png' %}" />
+
+<!-- For first-generation iPad: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'images/ios/Icon-72.png' %}" />
+
+<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="{% static 'images/ios/Icon.png' %}" />
+
+<style>
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+</style>

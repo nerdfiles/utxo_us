@@ -1,0 +1,53 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Terms  */
+
+@include pageHeader() {
+  border-bottom: 2px solid #fff;
+  margin-bottom: 1rem ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 1rem;
+}
+
+
+body[class*="page--#agree"] {
+}
+body[class*="page--Terms-agree"] { 
+}
+
+.page--terms {
+  position: absolute;
+  height: 100%;
+
+  @media #{$small} {
+    top: 120px !important;
+  }
+
+  @media #{$slinder} {
+    top: 120px !important;
+  }
+
+  @media #{$medium} {
+    top: 0 !important;
+  }
+
+  @media #{$large} {
+    top: 0 !important;
+
+  }
+
+  .submit-block {
+    position: absolute;
+    bottom: 2rem;
+  }
+  button.btn {
+    width: 100%;
+  }
+}

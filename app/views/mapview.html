@@ -1,0 +1,64 @@
+<!--
+# fileOverview
+
+@file CustSite_Web_MapView-7.0-S-C.psd  
+-->
+
+<div
+  class="app--entry page--map-view"
+  ng-class="{
+    'page--after-dark': !isAfterdark
+  }"
+>
+
+  <div
+    customer-navigation
+    grid-layout="file-l4-m4-s4__centered"
+    class="rank"
+  ></div>
+
+  <div
+    class="callout"
+    ng-show="!isAfterdark"
+  >
+    <div class="callout--inner">
+      <h1>UTXO, after dark.</h1>
+      <p>
+      Please call <a href="tel:7132983982">(713) 298 3982</a>
+      for deposit instructions.
+      </p>
+
+      <div class="warning">
+        <p>don't click until you've deposited</p>
+        <div style="font-size: 2rem; margin-top: 1rem;">
+          <span class="fa fa-long-arrow-down"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div
+    ng-show="isAfterdark"
+    id="map"
+  >
+    <div class="loader"><div class="loader-inner ball-grid-pulse"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+    <!--
+       -<div class="loader">
+       -  <div class="loader-inner cube-transition">
+       -    <div></div>
+       -    <div></div>
+       -  </div>
+       -</div>
+       -->
+  </div>
+
+  <div ng-show="isAfterdark" id="marker-tooltip"></div>
+
+  <div virtual-placard></div>
+
+  <div admin-footer-menu></div>
+
+</div>
+
+

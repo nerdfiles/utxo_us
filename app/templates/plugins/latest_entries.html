@@ -1,0 +1,11 @@
+{% load i18n %}{% spaceless %}
+<div class="plugin plugin-app">
+    <div class="app-latest-entries">
+    {% for terms in latest_termsagreements_list %}
+        {% include "includes/app_item.html" with terms=terms image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+    {% empty %}
+    <p class="app-empty">{% trans "No terms agreement found." %}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endspaceless %}

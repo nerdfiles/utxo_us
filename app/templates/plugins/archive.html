@@ -1,0 +1,31 @@
+{% load i18n %}{% spaceless %}
+<div class="plugin plugin-app">
+    <h3>{% trans "Archive" %}</h3>
+    {% regroup dates by date.year as years %}
+    {% with current_year=year current_month=month %}
+    <ul class="app-archive">
+        {% for year in years %}
+        <li{% if year.grouper == current_year %} class="active"{% endif %}>
+            <a href="{% url 'app:termsagreements-archive' year=year.grouper %}">{{ year.grouper }}</a>
+            <ul>
+                {% for month in year.list %}
+                <li{% if year.grouper == current_year and month.date.month == current_month %} class="active"{% else %} class="month"{% endif %}>
+                    <a href="{% url 'app:termsagreements-archive' year=year.grouper month=month.date|date:"n" %}">
+                        {{ month.date|date:"F" }}
+                        <span>(
+                            {% if month.count > 0 %}
+                            {% blocktrans count termsagreements=month.count %}1 terms agreement{% plural %}{{ termsagreements }} termsagreements{% endblocktrans %}
+                            {% else %}{% trans "0 termsagreements" %}{% endif %}
+                        )</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% empty %}
+        <li class="app-empty"><p>{% trans "No terms agreement found." %}</p></li>
+        {% endfor %}
+    </ul>
+    {% endwith %}
+</div>
+{% endspaceless %}

@@ -1,0 +1,179 @@
+<!--
+# fileOverview
+
+@file CustSite_Web_PlaceOrder-6.0.psd  
+-->
+
+<div class="app--entry page--place-order">
+
+  <div
+    customer-navigation
+    grid-layout="file-l4-m4-s4__centered"
+    class="rank"
+  ></div>
+
+  <div class="page--place-order--view">
+    <div class="rank">
+      <div
+        bitcoin-prices
+        class="file-l3-m4-s6__centered"
+      ></div>
+    </div>
+
+    <br />
+    <br />
+
+    <form
+      name="place_order_form"
+      class="rank"
+      ng-submit="updatePerson(person)"
+      ng-class="{
+        'afterdark-push': isAfterdark
+      }"
+    >
+
+      <div class="file-l5-m5-s5__centered">
+        <div class="field-block">
+          <p>
+            Please choose a certain way to interact with our communications 
+            channels: map versus call-by phone.
+          </p>
+          <div class="input-field">
+
+            <label for="place_order__contact_type">
+              Call us
+
+              <input
+                type="radio"
+                name="contactArea"
+                id="place_order__contact_type"
+                ng-model="contactType"
+                class="validate"
+              />
+
+            </label>
+            <label for="place_order__contact_type">
+              View map
+
+              <input
+                type="radio"
+                name="contactArea"
+                id="place_order__contact_type"
+                ng-model="contactType"
+                class="validate"
+              />
+
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-l5-m5-s5__centered">
+
+        <div class="rank">
+          <div class="field-block file-l3-m3-s6">
+            <div class="input-field">
+              <input 
+                ng-blur="updatePriceExchangeRatesUsd(person)"
+                id="place_order__usd_amount"
+                type="text"
+                ng-model="orderUsd"
+                class="validate"
+              />
+              <label
+                for="place_order__usd_amount"
+                ng-class="{
+                  'font-effect-3d-float': isAfterdark
+                }"
+              ><small>Enter USD amount for order</small></label>
+            </div>
+          </div>
+
+          <div class="field-block file-l3-m3-s6">
+            <div class="input-field">
+              <input 
+                ng-blur="updatePriceExchangeRatesBtc(person)"
+                id="place_order__btc_amount"
+                type="text"
+                ng-model="orderBtc"
+                class="validate"
+              />
+              <label 
+                ng-class="{
+                  'font-effect-3d-float': isAfterdark
+                }"
+                for="place_order__btc_amount"
+              ><small>Or enter an amount of bitcoin</small></label>
+            </div>
+          </div>
+        </div>
+      </div><!-- .centered -->
+
+
+      <div 
+        class="file-l5-m5-s5__centered our-process"
+        ng-class="{
+          'font-effect-3d-float': isAfterdark
+        }"
+      >
+
+        <h2>Our Process</h2>
+        <p style="font-size: .75rem;">
+          1. Your order will remain active for 45 minutes at the quoted bitcoin price.
+          2. You may choose to attend the nearest credit union to deposit the money as shown on the map.
+          3. You must provide your bitcoin address and upload a picture of yourself, the deposit receipt, 
+            a reference # we provide together with your driver's licence, as directed.
+          4. You'll receive an SMS when your bitcoins are dispatched.
+          5. For orders after hours, you'll be given a phone number to call.
+        </p>
+
+      </div>
+
+      <br />
+
+      <div class="field-block submit-block">
+
+        <div id="order-modal" class="modal">
+          <div class="modal-content">
+            <h4>Order</h4>
+            <p>Bitcoin has changed!</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <button
+            class="btn waves-effect waves-light"
+            type="submit"
+            name="action"
+          >
+            <span class="material-labels">Place order</span>
+            <span style="position: relative; top: -2px;" class="fa fa-arrow-circle-right"></span>
+          </button>
+          <div
+            class="animate fadeIn place-order__purse-stats"
+            ng-show="orderBtc && now"
+            ng-class="{
+              'font-effect-3d-float': isAfterdark
+            }"
+          >
+            <span class="order--btc__button">{{orderBtc}}</span>
+            <span class="order--moniker__label">bitcoins</span>
+            <span class="order--satellite__sep">at</span>
+            <span class="order--currency__symbol">$</span>
+            <span class="order--btc__value">{{dataBtcPriceValue}}</span>
+            <span class="order--satellite__sep1">-</span>
+            <span class="order--timestamp__current">{{now}}</span>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <div admin-footer-menu></div>
+
+</div>
+

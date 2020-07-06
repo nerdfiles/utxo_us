@@ -1,0 +1,132 @@
+body.body-class > .row {
+  height: 100%;
+}
+
+:root {
+  overflow: hidden;
+  body.page--Legal {
+
+  }
+}
+
+body.page--Legal {
+
+  section.cms--sub-page {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+  }
+
+  [cms-view] {
+    /*background-color: rgba(222, 222, 222, .5);*/
+    .cms--sub-page {
+      /*h1, p { color: #fff; }*/
+    }
+  }
+
+  .cms--sub-page {
+    p { margin: 0 0 1.325rem; }
+
+    strong {
+      br { display: none; }
+      margin-top: 5ch;
+      width: 100%;
+      float: left;
+      position: absolute;
+      height: 50%;
+      margin-left: 0;
+      span.plugin_picture {
+        position: relative;
+        float: left;
+        width: 50%;
+        overflow: hidden;
+        img { width: 65%; }
+        &:first-child {
+          position: absolute;
+          width: 50%;
+          top: 0;
+        }
+      }
+      img {
+        display: block;
+      }
+      em,
+      i {
+         float: left; 
+         clear: left; 
+         padding-bottom: 20vh; 
+         width: 50%; 
+         position: absolute;
+         padding-top: 16vh;
+         left: 0;
+         z-index: 9999;
+         margin-top: 0rem;
+         &:last-child {
+           left: 50%;
+         }
+      }
+
+    }
+
+  }
+
+}
+
+.sub-page--legal .entry--LeftPanelContentArea {
+  color: #fff;
+  li { color: #fff; }
+
+  ul {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    li {
+      list-style: disc;
+    }
+  }
+
+  font-weight: 200;
+  overflow: scroll;
+
+  display: block;
+
+  height: 50%;
+  max-height: 100%;
+  position: absolute;
+  top: 0;
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+  left: 0;
+  background-color: rgba(0, 0, 0, .9);
+  background-color: #111;
+  padding: 30vh 10vh 30vh 10vh;
+
+  h1, p {
+    color: #fff;
+  }
+
+  h1 {
+    font-family: "Roboto Slab", "Enriqueta", serif;
+    text-transform: lowercase;
+  }
+}
+
+.cms_plugin {
+  /*
+   *img[alt^="Signature"] {
+   *  max-width: 42vh;
+   *}
+   */
+}
+
+.cms_placeholder {
+}
+
+.plugin_picture {
+  img[alt^="Signature"] {
+    max-width: 42vh;
+  }
+}
+

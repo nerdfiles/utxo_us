@@ -1,0 +1,113 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Main  */
+/*
+ *
+ *@include pageHeader() {
+ *  border-bottom: 2px solid #fff;
+ *  margin-bottom: 1rem ;
+ *}
+ *
+ *@include pageHeaderDescription() {
+ *  margin-bottom: 1rem;
+ *}
+ */
+
+[ng-view] {
+  /*position: relative;*/
+}
+
+.page--landing {
+  @extend .vertically-centered;
+
+  form {
+    position: relative;
+
+    @media #{$small} {
+      top: -1rem;
+    }
+
+    @media #{$slinder} {
+      top: -1rem;
+    }
+
+    @media #{$medium} {
+      top: 2rem;
+    }
+
+    @media #{$large} {
+      top: 2rem;
+    }
+
+  }
+
+  h2 {
+
+    margin-bottom: -.15rem;
+    position: relative;
+
+    small {
+      font-size: .85rem;
+      position: absolute;
+      width: 100%;
+      left: auto;
+      margin-top: -3vh;
+      text-indent: 0vw;
+      right: 0;
+      top: 0;
+
+      @media #{$small} {
+        margin-top: -4ch;
+      }
+
+      @media #{$slinder} {
+        margin-top: -4ch;
+      }
+
+      @media #{$medium} {
+        margin-top: -4ch;
+      }
+
+      @media #{$large} {
+        margin-top: -4ch;
+
+      }
+
+    }
+  }
+
+  button {
+    margin-bottom: 2vh;
+  }
+}
+
+[cms-view] .sub-page--home {
+
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  .cms_plugin { }
+
+  .entry--LeftPanelContentArea.inner {
+    background-color: #fff;
+    padding: 30vh 0 30vh 0;
+  }
+
+  p {
+    line-height: 2;
+    color: #444;
+  }
+
+  img[src*="logo"] {
+    max-width: 100%;
+    /*margin-top: -25vh;*/
+  }
+
+}

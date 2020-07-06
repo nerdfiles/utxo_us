@@ -1,0 +1,195 @@
+
+#cms_toolbar > div.cms_structure > div.cms_structure-content > div.cms_dragarea:nth-of-type(1) {
+  left: 50% !important;
+  top: 50vh !important;
+}
+
+#cms_toolbar > div.cms_structure > div.cms_structure-content > div.cms_dragarea:nth-of-type(2) {
+  left: 0 !important;
+  top: 50vh !important;
+}
+
+.cms_dragarea:last-child {
+  top: auto !important;
+  width: 100% !important;
+  bottom: -100vh !important;
+}
+
+body.body-class > .row {
+  height: 100%;
+}
+
+:root {
+  overflow: hidden;
+  body.page--Contact {
+
+  }
+}
+
+body.page--Contact {
+  .message-confirmation {
+    text-align: center;
+  }
+
+  [ng-view] { position: relative; z-index: 99999; }
+
+  section.cms--sub-page {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+  }
+
+  [cms-view] {
+    /*background-color: rgba(222, 222, 222, .5);*/
+    .cms--sub-page {
+      /*h1, p { color: #111; }*/
+    }
+  }
+
+  .cms--sub-page {
+    p { margin: 0 0 1.325rem; }
+
+    strong {
+      br { display: none; }
+      margin-top: 5ch;
+      width: 100%;
+      float: left;
+      position: absolute;
+      height: 50%;
+      margin-left: 0;
+      span.plugin_picture {
+        position: relative;
+        float: left;
+        width: 50%;
+        overflow: hidden;
+        img { width: 65%; }
+        &:first-child {
+          position: absolute;
+          width: 50%;
+          top: 0;
+        }
+      }
+      img {
+        display: block;
+      }
+      em,
+      i {
+         float: left; 
+         clear: left; 
+         padding-bottom: 20vh; 
+         width: 50%; 
+         position: absolute;
+         padding-top: 16vh;
+         left: 0;
+         z-index: 9999;
+         margin-top: 0rem;
+         &:last-child {
+           left: 50%;
+         }
+      }
+
+    }
+
+  }
+
+}
+
+.sub-page--contact .entry--LeftPanelContentArea {
+    font-weight: 200;
+    overflow: scroll;
+    display: block;
+    /*flex-direction: column;*/
+    height: 50%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 0, .9);
+    background-color: #111;
+    color: #fff;
+    padding: 30vh 10vh 30vh 10vh;
+    h1, p {
+      color: #fff;
+    }
+
+    h1 {
+      font-family: "Roboto Slab", "Enriqueta", serif;
+      text-transform: lowercase;
+    }
+
+    dl.telephone { }
+    dl.email { }
+
+    dl.telephone,
+    dl.email {
+      overflow: hidden;
+      dt { float: left; margin-right: 1rem; }
+      dd { float: left; }
+    }
+
+    li.telephone {
+      margin-top: 1rem;
+    }
+
+    .telephone a,
+    .email a {
+      /*
+       *direction    : rtl;
+       *unicode-bidi : bidi-override;
+       */
+    }
+
+    .contact--table {
+      div:last-child {
+        dt {
+          text-align: center;
+          i {
+            font-size: 10vh;
+          }
+        }
+        dd {
+          text-align: center;
+        }
+      }
+    }
+
+    span[itemprop="streetAddress"] {
+      display: block;
+    }
+
+}
+
+.page--contact {
+  padding-bottom: 0 !important;
+  textarea {
+    color: #fff;
+  }
+  .input-field label { color: #fff; }
+  .submit-block {
+    max-height: 7.5ch;
+  }
+}
+
+.cms_plugin {
+  /*
+   *img[alt^="Signature"] {
+   *  max-width: 42vh;
+   *}
+   */
+}
+
+.cms_placeholder {
+}
+
+.plugin_picture {
+  img[alt^="Signature"] {
+    max-width: 42vh;
+  }
+}
+
+

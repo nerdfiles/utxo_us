@@ -1,0 +1,242 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Map  */
+
+@include pageHeader() {
+  border-bottom: 2px solid #fff;
+  margin-bottom: 1rem ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 1rem;
+}
+
+
+$a--utxo-default-nav : #111;
+$a--utxo-link-nav    : #111;
+$a--utxo-visited-nav : #111;
+$a--utxo-hover-nav   : #111;
+$a--utxo-active-nav  : #111;
+
+
+.page--MapView {
+  [cms-footer] {
+    display: none !important;
+  }
+}
+
+.page--map-view {
+  position: absolute;
+
+  @media #{$small} {
+    width: 100% !important;
+    height: 100% !important;
+    padding-bottom: 0 !important;
+  }
+
+  @media #{$slinder} {
+    width: 100% !important;
+    height: 100% !important;
+    padding-bottom: 0 !important;
+  }
+
+  @media #{$medium} {
+    width: 100% !important;
+    height: 100% !important;
+    padding-bottom: 0 !important;
+  }
+
+  @media #{$large} {
+    width: 100% !important;
+    height: 100% !important;
+    padding-bottom: 0 !important;
+  }
+
+
+  top: 0px;
+
+  .loader {
+    /*margin-left: -20px;*/
+  }
+
+  #marker-tooltip {
+    &.viewportConstructHeightR1 {
+      margin-top: 35%;
+      margin-left: -5vw;
+    }
+    &.viewportConstructHeightR2 {
+      margin-top: 35%;
+      margin-left: -5vw;
+    }
+    &.viewportConstructWidthR1 {
+      margin-top: 35%;
+      margin-left: -5vw;
+    }
+    &.viewportConstructWidthR2 {
+      margin-top: 35%;
+      margin-left: -5vw;
+    }
+    top: 3rem !important;
+    right: 0 !important;
+    left: auto !important;
+  }
+
+  #marker-tooltip.viewportConstructWidthR2 {
+
+    @media #{$small} {
+      margin-left: -15%;
+      left: 37% !important;
+      position: relative;
+      margin-top: -135% !important;
+
+      left: 37vw !important;
+      position: relative;
+      margin-top: -106vw !important;
+      margin-top: 0 !important;
+    }
+
+    @media #{$slinder} {
+
+      margin-left: -15%;
+      left: 37% !important;
+      position: relative;
+      margin-top: -135% !important;
+
+      left: 37vw !important;
+      position: relative;
+      margin-top: -106vw !important;
+    }
+
+    @media #{$medium} {
+    }
+
+    @media #{$large} {
+    }
+  }
+
+  #map {
+
+    @media #{$small} {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    @media #{$slinder} {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    @media #{$medium} {
+      width: 50%;
+      max-width: 50%;
+    }
+
+    @media #{$large} {
+      width: 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media #{$small} {
+    width: 100%;
+  }
+
+  @media #{$slinder} {
+    width: 100%;
+  }
+
+  @media #{$medium} {
+    width: 50%;
+  }
+
+  @media #{$large} {
+    width: 50%;
+  }
+
+  [customer-navigation] {
+    a,
+    a:link,
+    a:visited {
+      color: #111;
+
+      /*@include anchors($default: $a--utxo-default-nav, $link: $a--utxo-link-cms, $visited: $a--utxo-visited-cms, $hover: $a--utxo-hover-cms, $active: $a--utxo-active-cms) { }*/
+    }
+  }
+
+  #marker-tooltip {
+    display: none;
+    position: absolute;
+    width: 40ch;
+    height: 20.75ch;
+    margin: 15px;
+    z-index: 9000;
+    font-size: .75rem;
+    color: #fff;
+
+    .label {
+      &:after {
+        content: ':';
+      }
+    }
+    .inner {
+
+    }
+    .deposit-slip,
+    .organization-name,
+    .organization-fin,
+    .result-name {
+      padding: 0 2ch;
+    }
+    .organization-fin {
+      background-color: rgba(78, 147, 181, .9);
+      padding-bottom: 1ch;
+      margin-bottom: .5ch;
+    }
+    .organization-name {
+      background-color: rgba(78, 147, 181, .9);
+    }
+
+    .deposit-slip {
+      background-color: rgba(78, 147, 181, .9);
+      padding-top: 1.5ch;
+    }
+
+    .result-name {
+      padding-bottom: 2ch;
+      background-color: rgba(140, 208, 140, .7);
+      line-height: 1;
+      a {
+        position: relative;
+        top: 1ch;
+      }
+    }
+
+    .utxo--details {
+      .deposit-slip {
+
+      }
+      .organization-fin {
+        .routing-number {
+
+        }
+        .account-number {
+
+        }
+      }
+      .result-name {
+
+      }
+      .organization-name {
+
+      }
+    }
+  }
+
+
+}
+

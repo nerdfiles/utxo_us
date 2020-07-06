@@ -1,0 +1,75 @@
+<!--
+# fileOverview
+
+
+@file CustSite_Web_Verification_Step2-3.0.psd  
+-->
+
+<style>
+.field-block li {
+  text-align: left !important;
+}
+</style>
+
+<div class="app--entry page--verify-two">
+
+  <header>
+    <h1
+      class="file-l4-m4-s4__centered"
+    >
+      <a href="{{baseUrl}}verifyTwo">Identity Verification</a>
+    </h1>
+    <div class="file-l5-m5-s5__centered">
+      <p style="text-align: center;">
+        The following are personal questions about you.
+      </p>
+    </div>
+  </header>
+
+  <form
+    name="verify_question_set_form"
+    class="rank animated fadeIn"
+    ng-submit="updatePerson(person)"
+  >
+    <div class="file-l5-m5-s5__centered">
+
+      <div class="field-block" ng-repeat="question_construct in question_set.questions">
+        <p>{{question_construct.question}}</p>
+        <nav>
+          <ul class="group-field castling__queen-side">
+            <li ng-repeat="answer_construct in question_construct.answers">
+              <input
+                ng-attr-name="question-construct__{{question_construct.id}}"
+                type="radio"
+                ng-model="question_set_answer_set['qc'+(question_construct.id)]"
+                id="question-construct__{{question_construct.id}}--answer-construct__{{answer_construct.id}}"
+                ng-value="answer_construct.id"
+              />
+              <label for="question-construct__{{question_construct.id}}--answer-construct__{{answer_construct.id}}">{{answer_construct.answer}}</label>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+    </div><!-- .centered -->
+
+    <br />
+
+    <div class="field-block submit-block" style="margin-top: -1rem;">
+      <div class="input-field">
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+          <span class="material-labels">Ok, next.</span>
+          <span class="fa fa-arrow-circle-right"></span>
+        </button>
+        <span class="verification__progress">(step 2 of 3)</span>
+      </div>
+    </div>
+
+  </form>
+
+  <!--<div admin-footer-menu></div>-->
+
+  <feedback></feedback>
+
+</div>
+

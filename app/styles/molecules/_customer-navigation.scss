@@ -1,0 +1,140 @@
+/*@include page();*/
+
+$a--utxo-ad-default : #fff;
+$a--utxo-ad-link    : #fff;
+$a--utxo-ad-visited : #fff;
+$a--utxo-ad-hover   : #fff;
+$a--utxo-ad-active  : #fff;
+
+.page--after-dark [customer-navigation] {
+  nav ul {
+    @include anchors($default: $a--utxo-ad-default, $link: $a--utxo-ad-link, $visited: $a--utxo-ad-visited, $hover: $a--utxo-ad-hover, $active: $a--utxo-ad-active) { }
+  }
+}
+
+[customer-navigation] {
+  /*position : absolute;*/
+  z-index  : 10;
+  /*top      : 0;*/
+
+  nav {
+    margin-bottom: 0;
+    height: 0;
+    margin-bottom: 1rem;
+
+    @media #{$small} {
+      margin-top: 2.5rem;
+    }
+
+    @media #{$slinder} {
+      margin-top: 2.5rem;
+    }
+
+    @media #{$medium} {
+      margin-top: .5rem;
+    }
+
+    @media #{$large} {
+      margin-top: .5rem;
+    }
+
+  }
+
+  ul {
+
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    -o-flex-direction  : row;
+    -moz-flex-direction  : row;
+    -webkit-flex-direction  : row;
+    -ms-flex-direction  : row;
+    flex-direction  : row;
+
+    -o-justify-content : center;
+    -moz-justify-content : center;
+    -webkit-justify-content : center;
+    -ms-justify-content : center;
+    justify-content : center;
+
+    margin-bottom: 0;
+  }
+
+  a {
+    line-height: 32px;
+    span {
+      font-weight: 400 !important;
+    }
+  }
+
+  nav ul li a {
+    padding: 0 12px;
+  }
+
+  li.active a {
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, .5) !important;
+  }
+
+  @media #{$small} {
+    left: 0;
+    a { font-size: .75rem; }
+  }
+
+  @media #{$slinder} {
+    left: 0;
+    a { font-size: .75rem; }
+  }
+
+  @media #{$medium} {
+    left: 0;
+    a { font-size: 1rem; }
+  }
+
+  @media #{$large} {
+    left: 0;
+    a { font-size: 1rem; }
+  }
+
+  nav {
+    /*position         : absolute;*/
+    /*top              : 0;*/
+    background-color : transparent;
+    box-shadow       : none;
+    /*left             : 0;*/
+    overflow         : visible;
+    margin-bottom: 1rem;
+
+    @media #{$small} {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    @media #{$slinder} {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    @media #{$medium} {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    @media #{$large} {
+      width: 100%;
+      margin-top: 0;
+    }
+
+  }
+  ul {
+    text-align: center;
+  }
+  li {
+    float: none;
+    display: inline;
+  }
+}
+

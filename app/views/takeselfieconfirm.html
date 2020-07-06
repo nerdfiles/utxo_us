@@ -1,0 +1,150 @@
+<!--
+# fileOverview
+
+@file Selfie Confirmation  
+-->
+
+<div class="app--entry page--take-selfie-confirmation">
+
+  <form
+    name="take_selfie_confirm_form"
+    class="rank"
+  >
+
+    <!--header>
+      <h1
+        class="file-l4-m4-s4__centered"
+      >
+      <a href="{{baseUrl}}">
+        UTXO
+      </a>
+      </h1>
+      <div class="file-l5-m5-s5__centered">
+
+        <div class="rank">
+          <div class="field-block file-l6-m6-s6">
+            <div class="input-field">
+              <input 
+                id="place_sig__btc_address"
+                type="text"
+                class="validate"
+              />
+              <label for="place_order__usd_amount">Enter your bitcoin address</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header-->
+
+    <div
+      class="selfie-container"
+      ng-show="is_iOS == true"
+    >
+      <input
+        type="file"
+        accept="image/*"
+        capture='camera'
+        id="cameraInput"
+        name="cameraInput"
+      />
+      <div
+        class="selfie-snapshot" 
+        ng-show="loadedImg"
+      >
+        <img id="img" src="{{person.order.selfie_link}}" />
+      </div>
+    </div>
+
+    <div
+      class="selfie-container"
+      ng-show="is_iOS == false"
+    >
+
+      <ng-camera
+        ng-show="!person.order.selfie_link"
+        capture-message="Cheers!"
+        countdown="3"
+        output-height="{{viewerHeight}}"
+        output-width="{{viewerWidth}}"
+        viewer-height="{{viewerHeight}}"
+        viewer-width="{{viewerWidth}}"
+        crop-height="{{viewerHeight}}"
+        crop-width="{{viewerWidth}}"
+        image-format="jpeg"
+        jpeg-quality="100"
+        action-message="&#xf030; take selfie"
+        flash-fallback-url="false"
+        snapshot="person.order.selfie_link"
+      ></ng-camera>
+
+      <div class="selfie-snapshot">
+        <img id="img" src="{{person.order.selfie_link}}" />
+      </div>
+
+    </div>
+
+    <!--
+       -<div 
+       -  class="field-block submit-block"
+       ->
+       -  <div class="input-field">
+       -    <button class="remove-selfie" ng-click="remove()" ng-show="person.order.selfie_link">
+       -      <span class="material-labels">Remove</span>
+       -      <span class="fa fa-remove"></span>
+       -    </button>
+       -    <button ng-click="updatePerson(person)" class="btn waves-effect waves-light" type="submit" name="action">
+       -      <span class="material-labels">Submit</span>
+       -      <span class="fa fa-arrow-circle-right"></span>
+       -    </button>
+       -  </div>
+       -</div>
+       -->
+
+    <div
+      class="field-block submit-block"
+      style="
+        height: 9.5vh;
+        z-index: 9999999;
+        margin-top: 62vh;
+        z-index: 9999999;
+      "
+    >
+      <div
+        class="input-field"
+      >
+
+        <button
+          ng-show="person.order.selfie_link"
+          class="remove-selfie"
+          ng-click="remove()"
+          ng-show="person.order.selfie_link"
+        >
+          <span class="material-labels">Remove</span>
+          <span class="fa fa-remove"></span>
+        </button>
+
+        <button 
+          ng-click="updatePerson(person)"
+          class="btn waves-effect waves-light"
+          type="submit"
+          name="action"
+        >
+          <span class="material-labels">Submit</span>
+          <span class="fa fa-arrow-circle-right"></span>
+        </button>
+
+      </div>
+    </div>
+
+  </form>
+
+  <div admin-footer-menu></div>
+
+</div>
+
+
+
+
+
+
+

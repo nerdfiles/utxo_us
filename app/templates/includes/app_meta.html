@@ -1,0 +1,26 @@
+{% load i18n thumbnail cms_tags %}
+
+<ul class="terms-detail">
+    {% if terms.author %}
+    <li>
+        {% trans "by" %} <a href="{% url 'app:termsagreements-author' terms.author.get_username %}">{% if terms.author.get_full_name %}{{ terms.author.get_full_name }}{% else %}{{ terms.author }}{% endif %}</a>
+    </li>
+    {% endif %}
+    <li>
+        {{ terms.date_published|date:"DATE_FORMAT" }}
+    </li>
+</ul>
+<ul class="terms-detail tags">
+    {% if terms.categories.exists %}
+        {% for category in terms.categories.all %}
+            {% if category.slug %}
+                <li class="category_{{ forloop.counter }}"><a href="{% url 'app:termsagreements-category' category=category.slug %}" class="app-categories-{{ category.count }}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}</li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if terms.tags.exists %}
+        {% for tag in terms.tags.all %}
+            <li class="tag_{{ forloop.counter }}"><a href="{% url 'termsagreements-tagged' tag=tag.slug %}" class="app-tag app-tag-{{ tag.count }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}</li>
+        {% endfor %}
+    {% endif %}
+</ul>

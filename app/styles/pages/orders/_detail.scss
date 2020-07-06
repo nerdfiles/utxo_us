@@ -1,0 +1,70 @@
+.page--order-detail {
+
+  form > div:nth-child(1) {
+    margin-top: -7vh;
+  }
+
+  @include DetailView((orders _place)) {
+    background-color: transparent;
+  };
+
+  [customer-navigation] + .rank {
+
+    @media #{$small} {
+      margin-top: 15vh;
+    }
+
+    @media #{$slinder} {
+      margin-top: 15vh;
+    }
+
+    @media #{$medium} {
+      margin-top: 5vh;
+    }
+
+    @media #{$large} {
+      margin-top: 5vh;
+    }
+
+
+  }
+
+  dl.current-order--detail {
+    overflow: hidden;
+
+    @include _flex();
+
+    flex-direction: row;
+    /* flex-shrink: 1; */
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: space-between;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    dt {
+      /*float: left; */
+      flex: 1 1 50%;
+      /*text-align: left;*/
+
+    }
+    dt:nth-child(9) {
+      text-align: center;
+    }
+    dd:nth-child(1n+1) {
+      width: 100%;
+      /*float: left;*/
+    }
+  }
+
+  img {
+    margin: 0 auto;
+  }
+
+  h1 { text-align: center; }
+
+  dl { text-align: center; }
+
+}
+

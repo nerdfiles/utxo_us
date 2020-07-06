@@ -1,0 +1,15 @@
+{% extends "layout/base.html" %}
+{% load i18n staticfiles cms_tags sekizai_tags %}
+
+{% block cmsSubPage %}
+<section class="sub-page--legal cms--sub-page">
+  <div class="entry--LeftPanelContentArea inner">
+    {% placeholder "LeftPanelContentArea" or %}
+      <div class="content--unavailable">
+        <h1>Content unavailable</h1>
+        <p>Select [Edit] at the top right corner of the page to add content.</p>
+      </div>
+    {% endplaceholder %}
+  </div>
+</section>
+{% endblock %}

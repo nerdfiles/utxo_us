@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/scripts/directives/bitcoinprices.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/scripts/directives/bitcoinprices.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">69.90</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">283</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">30.89</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">2.51</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">&#039;use strict&#039;;
+
+/**
+ * @ngdoc directive
+ * @name utxoPmc.directive:bitcoinPrices
+ * @description
+ * # bitcoinPrice
+ */
+angular.module(&#039;utxoPmc&#039;)
+  .directive(&#039;bitcoinPrices&#039;, function ($http, $timeout, $q, $interval, $rootScope, $window) {
+    return {
+      restrict    : &#039;A&#039;,
+      templateUrl : &#039;/static/bitcoin-prices.html&#039;,
+      link        : function postLink($scope, element, attrs) {
+
+        function API() {
+          this.version = &#039;0.0.1&#039;;
+        }
+        var _this = this;
+
+        var btce_version = 3;
+
+        API.prototype.ticker = function(pair){
+          // @see https://btc-e.com/api/3/docs#ticker
+          var obj;
+          var def = $q.defer();
+          var portSpec = $window.location.port != &quot;&quot; ? (&#039;:&#039; + $window.location.port) : &#039;&#039;;
+          var hostname = $window.location.hostname + portSpec;
+          $.ajax({
+                 async : false,
+                 type : &#039;GET&#039;,
+                 //url : &#039;https://btc-e.com/api/&#039;+btce_version+&#039;/ticker/&#039;+pair,
+                 url : $window.location.protocol + &#039;//&#039;+hostname+&#039;/ticker&#039;,
+                 dataType : &#039;json&#039;,
+                 success : function(data) {
+                   def.resolve(data.data.btc_usd);
+                 }
+              });
+
+            return def.promise;
+        };
+
+        API.prototype.trades = function(pair){
+          // @see https://btc-e.com/api/3/docs#trades
+          var obj;
+          $.ajax({
+                 async : false,
+                 type : &#039;GET&#039;,
+                 url : &#039;https://btc-e.com/api/&#039;+btce_version+&#039;/&#039;+pair+&#039;/trades&#039;,
+                 dataType : &#039;json&#039;,
+                 success : function(data){
+                   obj = data
+                 }
+              });
+          return obj;
+        };
+
+        API.prototype.depth = function(pair){
+          // @see https://btc-e.com/api/3/docs#depth
+          var obj;
+          $.ajax({
+                 async : false,
+                 type : &#039;GET&#039;,
+                 url : &#039;https://btc-e.com/api/&#039;+btce_version+&#039;/&#039;+pair+&#039;/depth&#039;,
+                 dataType : &#039;json&#039;,
+                 success : function(data){
+                   obj = data
+                 }
+              });
+          return obj;
+        }
+
+        API.prototype.info = function(){
+          // @see https://btc-e.com/api/3/docs#info
+          var obj;
+          $.ajax({
+                 async : false,
+                 type : &#039;GET&#039;,
+                 url : &#039;https://btc-e.com/api/&#039;+btce_version+&#039;/info&#039;,
+                 dataType : &#039;json&#039;,
+                 success : function(data){
+                   obj = data
+                 }
+              });
+          return obj;
+        };
+
+        API.prototype.historical = function(currency){
+          // @see http://www.coindesk.com/api/
+          var obj;
+          var _currency = currency || &#039;USD&#039;;
+          var params = &#039;?currency=&#039; + _currency;
+          $.ajax({
+            async : false,
+            type : &#039;GET&#039;,
+            url : &#039;https://api.coindesk.com/v1/bpi/historical/close.json&#039; + params,
+            dataType : &#039;json&#039;,
+            success : function(data){
+              obj = data
+            }
+          });
+          return obj;
+        };
+
+        var widthCalc = function () {
+          var def = $q.defer();
+          $timeout(function () {
+            var width = $(&#039;[bitcoin-prices]&#039;).width() / 2;
+            def.resolve(width);
+          }, 750);
+          return def.promise;
+        };
+
+
+        var loader = function () {
+
+          // Bitcoin Historical Prices Ticker Line Graph
+          var seriesData = [];
+          var eur_seriesData = [];
+          var cny_seriesData = [];
+          var api = new API();
+          api.ticker().then(function (data) {
+            $scope.btc_usd = data;
+            $scope.arrow_up = $scope.btc_usd.last &gt; $scope.btc_usd.avg
+          });
+
+          var historical = api.historical();
+
+          if (!historical.bpi) {
+            return;
+          }
+
+          _.forEach(historical.bpi, function (priceConstruct, datetimeKey) {
+            //console.log(priceConstruct);
+            var d = new Date(datetimeKey);
+            seriesData.push({
+              x: Math.round(+d/1000),
+              y: Math.round(priceConstruct / .1)
+            });
+          });
+          var min = Number.MAX_VALUE;
+          var max = Number.MIN_VALUE;
+          for (i = 0; i &lt; seriesData.length; i++) {
+            min = Math.min(min, seriesData[i].y);
+            max = Math.max(max, seriesData[i].y);
+          }
+
+          var logScale = d3.scale.log().domain([min/1.15, max]);
+
+          $rootScope.$watch(&#039;loadedCmsViewReady&#039;, function (newVal, oldVal) {
+            if (newVal) {
+              widthCalc().then(function (_width) {
+
+                var graph = new Rickshaw.Graph({
+                  element  : $(&quot;#chart&quot;)[0],
+                  width    : _width,
+                  height   : 65,
+                  renderer : &#039;line&#039;,
+                  series: [
+                    {
+                      color: &quot;#fff&quot;,
+                      data: seriesData,
+                      name: &quot;&lt;i class=&#039;fa fa-btc&#039;&gt;&lt;/i&gt;&quot;,
+                      scale: logScale
+                    }
+                  ]
+                });
+
+                graph.render();
+
+                var axes = new Rickshaw.Graph.Axis.Time({
+                  graph: graph
+                });
+
+                axes.render();
+              });
+            }
+          });
+        };
+
+        $timeout(function () {
+          loader();
+        }, 300);
+
+        var _now = moment().hour(18);
+        var __now = moment().hour(8);
+        var now = moment();
+        var countDownTime;
+
+        $scope.isAfterdark = now.isAfter(_now) || now.isBefore(__now);
+
+        if (!$scope.isAfterdark) {
+          countDownTime = _now.format(&#039;MM/DD/YYYY HH:MM:SS&#039;);
+        } else {
+          countDownTime = __now.format(&#039;MM/DD/YYYY HH:MM:SS&#039;);
+        }
+
+        var updatePrice = function () {
+
+          // Bitcoin Prices
+          $(document).ready(function() {
+
+            bitcoinprices.init({
+                url: &quot;https://api.bitcoinaverage.com/ticker/all&quot;,
+                priceAttribute: &quot;data-btc-price&quot;,
+                marketRateVariable: &quot;last&quot;,
+                currencies: [
+                  &quot;USD&quot;
+                ],
+                symbols: {
+                    &quot;USD&quot;: &quot;&lt;i class=&#039;fa fa-usd&#039;&gt;&lt;/i&gt;&quot;
+                },
+                defaultCurrency: &quot;USD&quot;,
+                ux : {
+                    clickPrices : true,
+                    menu : true
+                },
+                jQuery: jQuery
+            });
+
+            $timeout(function () {
+              $scope.btcPriceReady = true;
+              $scope.$apply();
+            }, 0);
+
+            $(&#039;.sub-price--countdown&#039;)
+              .countdown(countDownTime, {
+                elapse: true
+              })
+              .on(&#039;update.countdown&#039;, function(event) {
+
+                //console.log(event);
+
+                var $this = $(this);
+                var dataBtcPrice$ = $(&#039;[data-btc-price]&#039;);
+                var dataBtcPriceValue = dataBtcPrice$.text();
+                var _dataBtcPriceValue = dataBtcPriceValue.split(&#039; &#039;);
+
+                $scope.dataBtcPriceValue = parseFloat(dataBtcPriceValue);
+
+                $scope.dataBtcPriceLoaded = true;
+
+                $timeout(function () {
+                  var factor = ($scope.isAfterdark == true) ? 0.06 : 0.15;
+                  var _dd = parseFloat(_dataBtcPriceValue[0]) / (1 + 0.06);
+                  var priceExtension = (parseFloat(_dd) * factor);
+                  var updatedDataBtcPriceValue = parseFloat(_dd) + priceExtension;
+                  $scope.$apply(function () {
+                    $scope.subPrice = parseFloat(updatedDataBtcPriceValue).toFixed(2);
+                  });
+                }, 0);
+
+                if (_.isNaN(event.offset.hours)) {
+                  $timeout(function () {
+                    $scope.unavailableCountdown = true;
+                    $scope.unavailableCountdownIsAfterdark = $scope.unavailableCountdown;
+                    $scope.timerAvailable = false;
+                  }, 0)
+                } else {
+                  $scope.timerAvailable = true;
+                }
+
+                $this.html(event.strftime(&#039;%H:%M:%S&#039;));
+
+              });
+          });
+
+
+
+        };
+
+        updatePrice();
+        var i = $interval(function () {
+          updatePrice();
+        }, 300000); // Updates every 5 minutes.
+
+        $scope.$on(&#039;$locationChangeStart&#039;, function () {
+          $interval.cancel(i);
+        });
+
+      }
+    };
+  });</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

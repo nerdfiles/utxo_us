@@ -1,0 +1,61 @@
+<div
+  ng-class="{
+    'feedback--inner': true
+  }"
+>
+  <form
+    name="persistence__feedback_form"
+    id="persistence__feedback_form"
+  >
+
+    <div class="cta">
+      <i class="material-icons">feedback</i>
+    </div>
+
+    <div class="file-l5-m5-s5__centered standard-input">
+      <div class="input-field">
+        <input
+          id           = "plid"
+          name         = "person__latest_id"
+          ng-model     = "newFeedbackId"
+          type         = "text"
+          class        = "validate"
+          ng-required  = "true"
+          placeholder  = "Enter e-mail or phone"
+        />
+        <input
+          id           = "plf"
+          name         = "person__latest_feedback"
+          ng-model     = "newFeedback"
+          custom-enter = "addFeedback(newFeedback); newFeedback = null"
+          type         = "text"
+          class        = "validate"
+          ng-required  = "true"
+        />
+        <label for="person__latest-feedback">
+          <span 
+            class="feedback-confirmation"
+            ng-show="showConfirmation"
+          >
+            Thanks, we got it!
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="field-block submit-block" style="position: absolute; left: -9999px;">
+      <div class="input-field">
+        <button 
+          class="btn waves-effect waves-light"
+          type="submit"
+          name="action"
+        >
+          <span class="material-labels">Post</span>
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+

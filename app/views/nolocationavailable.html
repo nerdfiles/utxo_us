@@ -1,0 +1,94 @@
+<!--
+# fileOverview
+
+@file CustSite_Mobile_LocationServicesNotEnabled-C.psd  
+-->
+
+<div class="app--entry page--no-location-available" page-style>
+
+  <form
+    name="no_location_available"
+    role="form"
+    class="rank"
+    ng-submit="sendDirections()"
+  >
+
+    <header>
+      <h1 class="file-l4-m4-s4__centered">
+        <div style="margin-bottom: .5rem;">
+          <span class="fa fa-location-arrow"></span>
+        </div>
+        Enable Location Services
+      </h1>
+      <h2>
+      to be directed to our nearest deposit location, or
+      </h2>
+
+      <div class="file-l5-m5-s5__centered">
+
+        <div class="rank">
+          <div class="field-block file-l6-m6-s6">
+
+            <div class="input-field">
+              <input 
+                custom-enter
+                id="order--physical-address"
+                type="text"
+                class="validate"
+                ng-model="person.order.physical_address"
+              />
+              <label for="order--physical-address">Enter your address for directions</label>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="file-l5-m5-s5__centered sep--page">
+        Or
+      </div>
+
+      <div class="file-l5-m5-s5__centered">
+
+        <div class="rank">
+          <div class="field-block file-l6-m6-s6">
+
+            <p class="attend-display">
+              Attend at the nearest co-op credit union. You can find a list available at 
+              <a title="Credit Union" href="https://co-opcreditunions.org/">CU</a>.
+            </p>
+
+            <h3>Deposit details for your order</h3>
+
+            <dl>
+              <dt>Amount:</dt>
+              <dd>USD{{order.usd}} for {{order.btc}}BTC</dd>
+              <dt>Deposit to:</dt>
+              <dd>UTXO, LLC.</dd>
+              <dt>Bank:</dt>
+              <dd>SpaceCity <abbr title="Credit Union">CU</abbr></dd>
+              <dt>Routing:</dt>
+              <dd>28-2938</dd>
+              <dt>Account:</dt>
+              <dd>29849839</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+  </form>
+
+  <div virtual-placard></div>
+
+  <div admin-footer-menu></div>
+
+</div>
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+
+<!--
+# fileOverview
+
+@file Help  
+-->
+
+<div class="app--entry page--login">
+
+  <form
+    action="#"
+    role="form"
+    class="rank"
+  >
+
+    <header>
+      <h1
+        class="file-l4-m4-s4__centered"
+      >
+      <a href="{{baseUrl}}">
+        UTXO
+      </a>
+      </h1>
+      <div class="file-l5-m5-s5__centered">
+
+        <div class="rank">
+          <div class="field-block file-l6-m6-s6">
+            <div class="input-field">
+              <input 
+                id="place_sig__btc_address"
+                type="text"
+                class="validate"
+              />
+              <label for="place_order__usd_amount">Enter your bitcoin address</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="file-l5-m5-s5__centered">
+
+    <h2>Login Page</h2>
+
+    <fieldset>
+      <legend>Oauth</legend>
+      <p>
+        <button  class="btn btn-primary" ng-click="anonymousLogin()">Anonymous</button>
+      </p>
+    </fieldset>
+
+      <p class="form-group">
+        <label for="loginEmail">email</label>
+        <input id="loginEmail" required name="email" type="email" ng-model="email" class="form-control" />
+      </p>
+      <p class="form-group">
+        <label for="loginPass">password</label>
+        <input id="loginPass" required name="pass" type="password" ng-model="pass" class="form-control" />
+      </p>
+      <p class="form-group" ng-cloak ng-show="createMode">
+        <label for="loginConfirm">confirm pass</label>
+        <input id="loginConfirm" required name="confirm" type="password" ng-model="confirm" class="form-control" />
+      </p>
+
+      <p>
+        <button  class="btn btn-primary" ng-click="passwordLogin(email, pass)" ng-hide="createMode">Log In</button>
+        <button  class="btn btn-default" ng-click="createMode = true" ng-hide="createMode">Register</button>
+        <button  class="btn btn-primary" ng-cloak ng-show="createMode"
+                ng-click="createAccount(email, pass, confirm)">Create Account</button>
+        <button  class="btn btn-default" ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
+      </p>
+
+    </div>
+
+    <div class="field-block submit-block">
+      <div class="input-field">
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+          <i class="material-icons">check</i>
+          <span class="material-labels">Confirm</span>
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+  <p ng-show="err" class="bg-danger">{{err}}</p>
+
+  <div admin-footer-menu></div>
+
+</div>
+

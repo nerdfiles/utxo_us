@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/scripts/environment/base.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/scripts/environment/base.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">54.49</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">126</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">33.55</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.81</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/***
+
+  @fileOverview
+
+     _
+    | |
+    | |__  _____  ___ _____
+    |  _ \(____ |/___) ___ |
+    | |_) ) ___ |___ | ____|
+    |____/\_____(___/|_____)
+
+  @description
+
+  Environment config base.
+
+***/
+
+var environment;
+
+(function () {
+  environment = (function() {
+
+    var configInterface;
+    configInterface = {};
+    configInterface.document = window.document;
+    configInterface.location = window.location;
+    configInterface.isFanSubdomain = configInterface.location.pathname.indexOf(&quot;fan&quot;) !== -1;
+    configInterface.isSubtype = configInterface.isFanSubdomain ? &quot;customer&quot; : &quot;merchant&quot;;
+    configInterface.baseTemplateUrl = &#039;/static/&#039;;
+    configInterface.localDevelopment = false;
+    configInterface.rest = {};
+    configInterface.protocol = window.location.protocol || &#039;http:&#039;;
+    configInterface.hostname = window.location.hostname || &#039;local.utxo.ux&#039;;
+    configInterface.port = window.location.port !== &quot;&quot; ? (&#039;:&#039; + window.location.port) : &#039;&#039;;
+    var apiBaseSep = &#039;/&#039;;
+    configInterface.rest.apiBase = configInterface.protocol + &#039;//&#039; + configInterface.hostname + configInterface.port;
+
+    configInterface.rest.order = {};
+    configInterface.rest.order.create = configInterface.rest.apiBase + &#039;/order&#039;;
+    configInterface.rest.order.read = configInterface.rest.apiBase + &#039;/order&#039;;
+    configInterface.rest.order.update = configInterface.rest.apiBase + &#039;/order&#039;;
+    configInterface.rest.orders = {};
+    configInterface.rest.orders.order = {};
+    configInterface.rest.orders.order.base = configInterface.rest.apiBase + &#039;/orders&#039;;
+    configInterface.rest.orders.latest = configInterface.rest.apiBase + &#039;/orders/latest&#039;;
+    configInterface.rest.orders.order.__update__ = function (id, name) {
+      return configInterface.rest.orders.order.base + &#039;/&#039; + id + &#039;/&#039; + name + &#039;/&#039;;
+    };
+
+    configInterface.rest.person = {};
+    configInterface.rest.person.create = configInterface.rest.apiBase + &#039;/verify/person&#039;;
+    configInterface.rest.person.read = configInterface.rest.apiBase + &#039;/verify/person&#039;;
+    configInterface.rest.person.update = configInterface.rest.apiBase + &#039;/verify/person&#039;;
+    configInterface.rest.person.delete = configInterface.rest.apiBase + &#039;/verify/person&#039;;
+    configInterface.rest.person.list = configInterface.rest.apiBase + &#039;/verify/people&#039;;
+
+    configInterface.rest.questionSet = {};
+    configInterface.rest.questionSet.create = configInterface.rest.apiBase + &#039;/question-set&#039;;
+    configInterface.rest.questionSet.read = configInterface.rest.apiBase + &#039;/question-set&#039;;
+    configInterface.rest.questionSet.update = configInterface.rest.apiBase + &#039;/question-set&#039;;
+    configInterface.rest.questionSet.delete = configInterface.rest.apiBase + &#039;/question-set&#039;;
+    configInterface.rest.questionSet.validate = configInterface.rest.apiBase + &#039;/question-set/validate&#039;;
+    configInterface.rest.questionSet.list = configInterface.rest.apiBase + &#039;/question-sets&#039;;
+
+    configInterface.rest.people = {};
+    configInterface.rest.people.index = configInterface.rest.apiBase + &#039;/people&#039;;
+    configInterface.rest.people.person = {};
+    configInterface.rest.people.person.base = configInterface.rest.apiBase + &#039;/people&#039;;
+
+    configInterface.rest.people.person.__base__ = function () {
+      return configInterface.rest.people.person.base + &#039;/&#039;;
+    };
+
+    configInterface.rest.people.person.__get__ = function (id) {
+      return configInterface.rest.people.person.base + &#039;/&#039; + id + &#039;/&#039;;
+    };
+
+    configInterface.rest.people.person.__update__ = function (id, name) {
+      return configInterface.rest.people.person.base + &#039;/&#039; + id + &#039;/&#039; + name + &#039;/&#039;;
+    };
+
+    configInterface.rest.authenticationSms = {};
+    configInterface.rest.authenticationSms.create = configInterface.rest.apiBase + &#039;/authentication/request&#039;;
+
+    configInterface.rest.help = configInterface.rest.apiBase + &#039;/help&#039;;
+
+    configInterface.rest.sendSms = {};
+    configInterface.rest.sendSms.create = configInterface.rest.apiBase + &#039;/a/request&#039;;
+
+    configInterface.rest.maps = {};
+    core_type = &#039;credit-unions/nearest&#039;;
+    configInterface.rest.maps.index = configInterface.rest.apiBase + &#039;/maps/&#039; + core_type;
+
+    if (configInterface.debug == null) {
+      configInterface.debug = {
+        frontEnd: false,
+        api: false,
+        blockscore: false
+      };
+    }
+
+    if (configInterface.api == null) {
+      configInterface.api = {
+        baseUrl: &quot;utxo.firebaseio.com&quot;,
+        version: &quot;v1&quot;,
+        preparedString: &#039;&#039;
+      };
+    }
+
+    if (configInterface.loggly == null) {
+      configInterface.loggly = {
+        logglyApiKey: &#039;&#039;
+      };
+    }
+
+    if (configInterface.google == null) {
+      configInterface.google = {
+        maps: {
+          streetView: &#039;https://maps.googleapis.com/maps/api/streetview&#039;,
+          geocode: &#039;https://maps.googleapis.com/maps/api/geocode/json&#039;,
+          key: &#039;AIzaSyB_42epe3vXXrap9NXf25GmYfzuT6Sxz8U&#039;
+        }
+      };
+    }
+
+    if (configInterface.twilio == null) {
+      configInterface.twilio = {
+        accountSid: &#039;AC2df5751112ce10b674d852abe0fd3b11&#039;,
+        authToken: &#039;a1d6b1737f8f533da81855c690ce2dc0&#039;
+      };
+    }
+
+    if (configInterface.blockscore == null) {
+      configInterface.blockscore = {
+        testKey: &quot;sk_test_e415139895f6cd4edd6c248f2a72ad12&quot;,
+        productionKey: &quot;&quot;
+      };
+    }
+
+    return configInterface;
+
+  })();
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

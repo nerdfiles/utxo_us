@@ -1,0 +1,155 @@
+.body-class [cms-view] {
+  .cms-footer {
+    border-top: 2px #fff solid;
+    padding-top: .5rem;
+  }
+}
+
+.body-class [cms-view] .mini-nav,
+.body-class [cms-view] .cms-footer {
+  background-color : rgba(0, 0, 0, 0.9);
+  color            : #fff;
+}
+
+nav.mini-nav {
+  height: auto;
+  line-height: 1.65;
+}
+
+nav.mini-nav ul {
+  height: auto;
+  margin-left: 0 !important;
+  @media #{$small} {
+    text-align: center;
+  }
+
+  @media #{$slinder} {
+    text-align: center;
+  }
+
+  @media #{$medium} {
+    text-align: left;
+    margin-left: 26px !important;
+  }
+
+  @media #{$large} {
+    text-align: left;
+    margin-left: 26px !important;
+  }
+
+}
+
+nav.mini-nav li {
+  height: auto;
+  float: none;
+  display: inline-block;
+  a {
+    @media #{$small} {
+      padding-left: 2.5px !important;
+      padding-right: 2.5px !important;
+    }
+
+    @media #{$slinder} {
+      padding-left: 2.5px !important;
+      padding-right: 2.5px !important;
+    }
+
+    @media #{$medium} {
+      padding-left: 10px !important;
+    }
+
+    @media #{$large} {
+      padding-left: 10px !important;
+    }
+
+    padding-right: 0 !important; }
+}
+
+nav.mini-nav a {
+  &:first-child {
+
+    height: auto;
+    font-family: $fontCopy2;
+    &:after {
+      content: '.';
+    }
+
+  }
+}
+
+nav.mini-nav ul {
+  overflow: hidden;
+}
+
+footer.cms-footer {
+  position : fixed;
+  width    : 50%;
+  bottom   : 0;
+  text-transform: lowercase;
+  z-index: 9999;
+
+  @media #{$small} {
+    width: 100% !important;
+  }
+
+  @media #{$slinder} {
+    width: 100% !important;
+  }
+
+  @media #{$medium} {
+  }
+
+  @media #{$large} {
+  }
+
+  .djangocms--custom-edit {
+    font-size: .25rem;
+    vertical-align: super;
+    color: #fff;
+    padding: 0;
+    margin-right: .25rem;
+    position: relative;
+    top: .25rem;
+    i {
+      font-size: 1rem !important;
+    }
+  }
+
+}
+
+footer.cms-footer .colophon {
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 0vh 15px 0px;
+  line-height: 1;
+  margin-bottom: 0.5vw;
+  padding-top: .25rem;
+  padding-bottom: .5rem;
+  /*padding-left: 36px;*/
+  @media #{$small} {
+    text-align: center;
+  }
+
+  @media #{$slinder} {
+    text-align: center;
+  }
+
+  @media #{$medium} {
+    text-align: left;
+  }
+
+  @media #{$large} {
+    text-align: left;
+  }
+}
+
+footer.cms-footer .colophon p {
+  margin-top: 0;
+  font-size: .675rem;
+}
+
+footer.cms-footer .colophon a,
+footer.cms-footer .colophon a:link {
+  color: #fff;
+}
+
+

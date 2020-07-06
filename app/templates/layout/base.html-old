@@ -1,0 +1,248 @@
+{% load i18n staticfiles cms_tags sekizai_tags django_seo_js %}
+{% load url from future %}
+<!doctype html>
+
+<html class="no-js">
+  <head>
+    {% seo_js_head %}
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="author" content="UTXO" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block css %}{% endblock %}
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../static/bower_components/materialize/bin/materialize.css" />
+    <link rel="stylesheet" href="../static/bower_components/hint.css/hint.min.css" />
+    <link rel="stylesheet" href="../static/bower_components/keyboard/dist/css/keyboard.min.css" />
+    <link rel="stylesheet" href="../static/bower_components/loaders.css/loaders.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <!-- endbuild -->
+
+    <!--[if IE]>
+        <link href="{% static 'css/ie.css' %}" media="screen, projection" rel="stylesheet" type="text/css" />
+    <![endif]-->
+
+    {% render_block "css" %}
+
+    <base href="/">
+
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/bower_components/materialize/bin/materialize.css" />
+    <link rel="stylesheet" href="/static/bower_components/rickshaw/src/css/detail.css" />
+    <link rel="stylesheet" href="/static/bower_components/rickshaw/src/css/graph.css" />
+    <link rel="stylesheet" href="/static/bower_components/rickshaw/src/css/legend.css" />
+
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,300italic,300,700,700italic' />
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' />
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Enriqueta' />
+
+    <script src="/static/bower_components/loadcss/loadCSS.js"></script>
+    <script>
+      var styleList = [
+        'https://fonts.googleapis.com/icon?family=Material+Icons',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css',
+        '/static/bower_components/hint.css/hint.min.css'
+      ];
+    </script>
+    <script id="loadcss">
+      for (var i = 0; i < styleList.length; ++i) {
+        loadCSS( styleList[i], document.getElementById("loadcss") );
+      }
+    </script>
+    <noscript>
+      <link rel="stylesheet" href='https://fonts.googleapis.com/icon?family=Material+Icons' />
+      <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css' />
+      <link rel="stylesheet" href='/static/bower_components/hint.css/hint.min.css' />
+    </noscript>
+
+    <link
+      rel="apple-touch-icon"
+      href="{% static 'img/apple-touch-icon.png' %}"
+    />
+
+    {# block meta #}
+        {# if meta #}
+            {# include "meta_mixin/meta.html" #}
+        {# endif #}
+    {# endblock meta #}
+
+  </head>
+
+  <body
+    class="utxo_us body-class {% block body_class %}base-template page--{% page_attribute "page_title"%} {% endblock %}"
+    ng-app="utxoPmc"
+    ng-cloak
+  >
+
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    {% cms_toolbar %}
+
+    <div class="row">
+
+      <!--
+
+                                      _
+       ____ ____   ___ _ _____ ____ _| |_  ____ _   _
+      / ___)    \ /___|_) ___ |  _ (_   _)/ ___) | | |
+     ( (___| | | |___ |_| ____| | | || |_| |   | |_| |
+      \____)_|_|_(___/(_)_____)_| |_| \__)_|    \__  |
+                                                (____/
+
+      -->
+
+      <div
+        cms-view
+          class="col s12 m6 l6"
+      >
+
+        {% block cmsSubPage %}
+        {% endblock %}
+
+        <footer class="cms-footer">
+          <div class="inner">
+            <nav class="mini-nav">
+              <ul class="nav-list">
+                <li class="nav-listing"><a href="/#/">Home</a></li>
+                <li class="nav-listing"><a href="/about">About</a></li>
+                <li class="nav-listing"><a href="/contact">Contact</a></li>
+                <li class="nav-listing"><a href="/legal">Legal</a></li>
+              </ul>
+            </nav>
+            <div class="colophon">
+              <p>Copyright &copy; 2015. <a href="http://thecryptostandard.com/">The CryptoStandard</a>. All Rights Reserved.</p>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+
+      <!--
+
+                                       _
+       _____ ____  ____ _ _____ ____ _| |_  ____ _   _
+      (____ |  _ \|  _ (_) ___ |  _ (_   _)/ ___) | | |
+      / ___ | |_| | |_| || ____| | | || |_| |   | |_| |
+      \_____|  __/|  __(_)_____)_| |_| \__)_|    \__  |
+            |_|   |_|                           (____/
+
+      -->
+
+      <div
+        ng-view
+          class="col s12 m6 l6"
+      >
+      </div>
+      {% render_placeholder terms_instance.terms_content "640" %}
+      {% placeholder "RightPanelContentArea" or %}
+      {% endplaceholder %}
+
+    </div>
+
+    <!--
+      -     <script>
+      -       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+      -       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+      -       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+      -       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      -       ga('create', 'UA-XXXXX-X');
+      -       ga('send', 'pageview');
+      -    </script>
+    -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="../static/bower_components/jquery/dist/jquery.js"></script>
+    <script src="../static/bower_components/materialize/bin/materialize.js"></script>
+    <script src="../static/bower_components/angular/angular.js"></script>
+    <script src="../static/bower_components/firebase/firebase.js"></script>
+    <script src="../static/bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="../static/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../static/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="../static/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="../static/bower_components/angular-messages/angular-messages.js"></script>
+    <script src="../static/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../static/bower_components/angular-route/angular-route.js"></script>
+    <script src="../static/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../static/bower_components/angular-touch/angular-touch.js"></script>
+    <script src="../static/bower_components/d3/d3.js"></script>
+    <script src="../static/bower_components/rickshaw/rickshaw.js"></script>
+    <script src="../static/bower_components/loadcss/loadCSS.js"></script>
+    <script src="../static/bower_components/jquery.countdown/dist/jquery.countdown.js"></script>
+    <script src="../static/bower_components/moment/moment.js"></script>
+    <script src="../static/bower_components/ngmap/build/scripts/ng-map.js"></script>
+    <script src="../static/bower_components/ngstorage/ngStorage.js"></script>
+    <script src="../static/bower_components/ngGeolocation/ngGeolocation.js"></script>
+    <script src="../static/bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="../static/bower_components/keyboard/dist/js/jquery.keyboard.min.js"></script>
+    <script src="../static/bower_components/keyboard/dist/layouts/keyboard-layouts-combined.min.js"></script>
+    <script src="../static/bower_components/keyboard/dist/layouts/keyboard-layouts-greywyvern.min.js"></script>
+    <script src="../static/bower_components/keyboard/dist/layouts/keyboard-layouts-microsoft.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="/static/environment/base.js"></script>
+        <script src="/static/app.js"></script>
+        <script src="/static/controllers/main.js"></script>
+        <script src="/static/angularfire/config.js"></script>
+        <script src="/static/angularfire/firebase.ref.js"></script>
+        <script src="/static/controllers/chat.js"></script>
+        <script src="/static/filters/reverse.js"></script>
+        <script src="/static/services/authentication.js"></script>
+        <script src="/static/services/bank.js"></script>
+        <script src="/static/services/browser.js"></script>
+        <script src="/static/services/crypto.js"></script>
+        <script src="/static/services/payments.js"></script>
+        <script src="/static/services/person.js"></script>
+        <script src="/static/services/sound.js"></script>
+        <script src="/static/services/map.js"></script>
+        <script src="/static/angularfire/auth.js"></script>
+        <script src="/static/controllers/login.js"></script>
+        <script src="/static/controllers/account.js"></script>
+        <script src="/static/directives/ngShowAuth.js"></script>
+        <script src="/static/directives/ngHideAuth.js"></script>
+        <script src="/static/directives/bitcoinprices.js"></script>
+        <script src="/static/directives/customernavigation.js"></script>
+        <script src="/static/directives/contactfooter.js"></script>
+        <script src="/static/directives/adminfootermenu.js"></script>
+        <script src="/static/directives/djangocontentgrabber.js"></script>
+        <script src="/static/routes.js"></script>
+        <script src="/static/controllers/help.js"></script>
+        <script src="/static/controllers/contact.js"></script>
+        <script src="/static/controllers/verifyone.js"></script>
+        <script src="/static/controllers/verifytwo.js"></script>
+        <script src="/static/controllers/verifythree.js"></script>
+        <script src="/static/controllers/verifyfour.js"></script>
+        <script src="/static/controllers/placeorder.js"></script>
+        <script src="/static/controllers/terms.js"></script>
+        <script src="/static/controllers/openorders.js"></script>
+        <script src="/static/controllers/history.js"></script>
+        <script src="/static/controllers/mapview.js"></script>
+        <script src="/static/controllers/refnumber.js"></script>
+        <script src="/static/controllers/genericerror.js"></script>
+        <script src="/static/controllers/takeselfie.js"></script>
+        <script src="/static/controllers/takeselfieconfirm.js"></script>
+        <script src="/static/controllers/nolocationavailable.js"></script>
+        <script src="/static/controllers/afterdarkhowtopay.js"></script>
+        <!-- endbuild -->
+
+    {% block js %}{% endblock %}
+
+    {% render_block "js" %}
+
+  </body>
+
+</html>
+

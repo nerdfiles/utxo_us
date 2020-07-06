@@ -1,0 +1,230 @@
+@mixin tickerChart($context: "bitcoin-prices") {
+
+  [#{$context}] {
+    #chart {
+      display: inline-block;
+    }
+
+    #legend {
+      display  : inline-block;
+      position : relative;
+      left     : 8px;
+    }
+
+    #legend_container {
+      position : absolute;
+      right    : 0;
+      bottom   : 26px;
+      width    : 0;
+    }
+
+    #chart_container {
+      float    : left;
+      position : relative;
+    }
+
+  }
+
+}
+
+@include tickerChart($context: "bitcoin-prices");
+
+.rickshaw_graph .x_tick {
+  border-left: none !important;
+}
+
+#chart > div:nth-child(6) {
+  position: absolute;
+  left: -9999px !important;
+}
+
+[bitcoin-prices] {
+  min-height: 20ch;
+  position: relative;
+
+  figure {
+
+    @media #{$small} {
+      margin-top: 0;
+    }
+
+    @media #{$slinder} {
+      margin-top: 0;
+    }
+
+    @media #{$medium} {
+      margin-top: 2rem;
+    }
+
+    @media #{$large} {
+      margin-top: 2rem;
+    }
+
+  }
+}
+
+[bitcoin-prices] {
+  min-height: 20ch;
+  position: relative;
+
+  figure {
+    position: absolute;
+    width: 100%;
+    margin-left: -1rem;
+    background-color: transparent;
+  }
+
+  #chart_container { max-height: 55px; }
+
+  @media #{$small} {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  @media #{$slinder} {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  @media #{$medium} {
+
+  }
+
+  @media #{$large} {
+  }
+
+  figure {
+
+    color: #fff;
+
+    figcaption {
+      position: relative;
+      @media #{$small} {
+        text-align: center;
+        right: 1.25ch;
+      }
+
+      @media #{$slinder} {
+        text-align: center;
+        right: 1.25ch;
+      }
+
+      @media #{$medium} {
+        text-align: center;
+        right: 0;
+      }
+
+      @media #{$large} {
+        text-align: center;
+        right: 0;
+      }
+    }
+
+    .sub-price--prefix {
+      margin-left: -50px;
+    }
+
+    .prices-subline {
+      position: relative;
+      left: 4ch;
+      top: -1rem;
+      font-size: .85rem;
+    }
+
+    .base-price .fa {
+
+      margin-right : .15rem;
+      position     : absolute;
+      left         : auto;
+      line-height  : 1.2;
+      margin-top   : .5rem;
+      top          : 0;
+
+      @media #{$small} {
+        font-size: 3.5rem;
+        margin-left: -215px;
+      }
+
+      @media #{$slinder} {
+        font-size: 3.5rem;
+        margin-left: -215px;
+      }
+
+      @media #{$medium} {
+        font-size: 3.5rem;
+        margin-left: -230px;
+      }
+
+      @media #{$large} {
+        font-size: 3.5rem;
+        margin-left: -230px;
+      }
+
+    }
+
+    .clickable-price {
+      letter-spacing: 0;
+      @media #{$small} {
+        font-size: 3.75rem;
+        margin-left: 0;
+      }
+
+      @media #{$slinder} {
+        font-size: 3.75rem;
+        margin-left: 0;
+      }
+
+      @media #{$medium} {
+        font-size: 3.75rem;
+        margin-left: 0rem;
+      }
+
+      @media #{$large} {
+        font-size: 3.75rem;
+        margin-left: 0rem;
+      }
+
+
+      color        : #fff;
+      margin-right : 0;
+    }
+    .sep--large {
+      font-size: 1.325rem;
+      margin-left: -1rem;
+
+    }
+
+    .ticker-arrow {
+      color: #00E676;
+      i {
+        position: absolute;
+        top: -1.5rem;
+      }
+    }
+
+    .ticker-arrow.down {
+      color: red;
+    }
+  }
+
+  .base-price,
+  .sep--large,
+  .base-price--currency,
+  .ticker-arrow {
+    position: relative;
+    left: 2.25rem;
+  }
+
+}
+
+.field-block {
+}
+
+label {
+  font-family : $fontCopy1;
+}
+
+input[type="text"] {
+  font-size: 1.325rem;
+}
+

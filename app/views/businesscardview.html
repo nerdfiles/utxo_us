@@ -1,0 +1,46 @@
+<!--
+# fileOverview ./app/views/businesscardview.html
+-->
+
+<div
+  class="app--entry page--businesscard-view"
+  ng-class="{
+    'page--after-dark': !isAfterdark
+  }"
+>
+
+  <div
+    customer-navigation
+    grid-layout="file-l4-m4-s4__centered"
+    class="rank"
+  ></div>
+
+  <div
+    class="callout"
+    ng-show="!isAfterdark"
+  >
+    <div class="callout--inner">
+      <h1>UTXO</h1>
+      <p>
+      Please call <a href="tel:7132983982">(713) 298 3982</a>
+      for deposit instructions.
+      </p>
+
+      <div class="warning">
+        <p>don't click until you've deposited</p>
+        <div style="font-size: 2rem; margin-top: 1rem;">
+          <span class="fa fa-long-arrow-down"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div virtual-placard></div>
+
+  <div admin-footer-menu></div>
+
+</div>
+
+
+

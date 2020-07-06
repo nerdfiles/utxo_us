@@ -1,0 +1,170 @@
+/***
+@fileOverview
+
+@description
+
+***/
+
+/* ------------------------------ Pages: Take Selfie Confirmation  */
+
+
+@include pageHeader() {
+  border-bottom: 2px solid #fff;
+  margin-bottom: 1rem ;
+}
+
+@include pageHeaderDescription() {
+  margin-bottom: 1rem;
+}
+
+
+.page--take-selfie-confirmation {
+  width: 100%;
+  form {
+    background-color: #006699;
+  }
+
+  .selfie-snapshot {
+
+    position : absolute;
+    width    : 100%;
+    top      : 0 !important;
+    right    : auto;
+    bottom   : auto !important;
+    height   : 100%;
+    left     : 0;
+    overflow : hidden;
+    z-index: 1;
+    top: -120px !important;
+
+    img {
+      width         : 100vh;
+      /* object-fit : cover; */
+      height        : 50vw;
+      margin        : 0px 0 0 -10%;
+      opacity       : 1;
+      width         : auto;
+      height        : auto;
+      margin        : 0;
+      bottom        : auto;
+      position      : absolute;
+      border        : none !important;
+    }
+  }
+
+  button {
+    width            : 100%;
+    background-color : #CDDC39;
+    background-color : #004566;
+    text-transform   : uppercase;
+    height           : 9.5vh;
+    border           : none;
+    cursor           : pointer;
+    z-index          : 99999999;
+    padding          : 1vh 0;
+    top              : 2vh;
+    position         : absolute;
+    font-family      : "Roboto Slab", "Enriqueta", serif;
+    font-size        : 5vh;
+    right            : 0;
+  }
+
+  button.remove-selfie {
+    z-index: 99999999;
+    top: -70px;
+  }
+
+  ng-camera {
+
+    /*
+     *position: relative;
+     *top: -10vh;
+     */
+    max-width: 100%;
+    width: 100%;
+    top: -120px;
+    position: absolute;
+    video {
+      background-color: #006699;
+    }
+
+    .ng-camera-countdown {
+      position: relative;
+      background-color: transparent;
+      color: #fff;
+      /*min-height: 5vh;*/
+      background-color: #9E9E9E;
+      border-radius: 100px;
+      @extend .font-effect-3d-float !optional;
+      top: 50%;
+      background: repeating-radial-gradient(
+        circle,
+        purple,
+        purple 10px,
+        #4b026f 10px, 
+        #4b026f 20px
+      );
+      /* top: 0; */
+      /* right: 0; */
+      /* left: auto; */
+      text-align      : center;
+      font-size       : 5vh;
+      position        : absolute;
+      z-index         : 999999;
+      height          : 100px;
+      width           : 100px;
+      font-size       : 5vh;
+      tis_iOSop             : 50%;
+      left            : 50%;
+      margin-left     : -50px;
+      vertical-align  : middle;
+      display         : table-cell;
+      margin-top      : -50px;
+      display         : flex;
+      flex-direction  : column;
+      justify-content : center;
+      p {
+        text-align: center;
+        font-size: 2rem;
+      }
+    }
+
+  }
+
+  .fa {
+    position: relative;
+    top: -3px;
+  }
+
+  .submit-block {
+    height: 9.5vh;
+    z-index: 9999999;
+    .input-field {
+      margin-top: 0;
+      position: absolute;
+      width: 100%;
+      bottom: 15vh;
+    }
+  }
+
+  .selfie-snapshot img {
+    opacity: 0;
+    display: none !important;
+  }
+
+  .selfie-snapshot img[src^="data"] {
+    opacity: 1;
+    width: 100%;
+    display: block !important;
+  }
+
+
+}
+
+.selfie-container[aria-hidden="false"] {
+  width    : 100%;
+  height   : 100%;
+  top      : 120px;
+  position : absolute;
+}
+

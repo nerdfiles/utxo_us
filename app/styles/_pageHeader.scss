@@ -1,0 +1,18 @@
+@mixin pageHeader() {
+  header {
+    color: #fff;
+
+    h1 a {
+      border-bottom: none;
+    }
+
+    h1 {
+      font-family: 'Roboto Slab', 'Enriqueta', serif;
+      text-align: center;
+      line-height: 2;
+      font-size: 2rem;
+      @content;
+    }
+  }
+}
+
