@@ -35,7 +35,7 @@ djangocms-snippet==1.5
 djangocms-teaser==0.1
 djangocms-text-ckeditor==2.6.0
 djangocms-video==0.1
-djangorestframework==3.2.2
+djangorestframework==3.11.2
 djangorestframework-recursive==0.1.1
 djangular==0.2.7
 docutils==0.12
