@@ -74,7 +74,7 @@ graphviz==0.4.7
 html5lib==0.9999999
 httplib2==0.9.1
 ipython==3.1.0
-Jinja2==2.8
+Jinja2==2.11.3
 jmespath==0.7.1
 logilab-common==1.0.2
 MarkupSafe==0.23
