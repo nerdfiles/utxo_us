@@ -87,7 +87,7 @@ psycopg2==2.6
 py-bcrypt==0.4
 pyasn1==0.1.8
 pydot==1.0.2
-Pygments==2.0.2
+Pygments==2.7.4
 pylint==1.4.3
 pyparsing==2.0.3
 pyslack-real==0.5.3
