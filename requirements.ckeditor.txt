@@ -10,7 +10,7 @@ cmsplugin-filer==0.10.2
 colorama==0.3.3
 configobj==5.0.6
 coverage==4.0a5
-Django==1.8.4
+Django==2.2.24
 django-admin-enhancer==1.0.0
 django-angular==0.7.15
 django-appconf==1.0.1

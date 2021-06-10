@@ -1,5 +1,5 @@
 # Framework
-Django==1.8.1
+Django==2.2.24
 
 # Libs
 coverage==4.0a5
