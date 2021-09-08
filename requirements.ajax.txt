@@ -81,7 +81,7 @@ logilab-common==1.0.2
 MarkupSafe==0.23
 ordereddict==1.1
 pep8==1.6.2
-Pillow==2.9.0
+Pillow==8.3.2
 prompt-toolkit==0.50
 psycopg2==2.6
 py-bcrypt==0.4
